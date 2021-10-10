@@ -10,6 +10,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 import { Switch, Route, Redirect } from "react-router-dom";
+import EditProfile from "./pages/EditProfile";
 import Home from "./pages/Home";
 import Tables from "./pages/Tables";
 import Billing from "./pages/Billing";
@@ -34,6 +35,7 @@ function App() {
           <Route exact path="/billing" component={Billing} />
           <Route exact path="/rtl" component={Rtl} />
           <Route exact path="/profile" component={Profile} />
+          <Route exact path="/editprofile" component={EditProfile} />
           <Redirect from="*" to="/dashboard" />
         </Main>
       </Switch>
