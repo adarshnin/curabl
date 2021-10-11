@@ -54,7 +54,7 @@ const MeetingFooter = (props) => {
   return (
     <div className="meeting-footer">
       <div
-        className={"meeting-icons " + (!streamState.mic ? "active" : "")}
+        className={"meeting-icons " + (!streamState.mic ? "activeb" : "")}
         data-tip={streamState.mic ? "Mute Audio" : "Unmute Audio"}
         onClick={micClick}
       >
@@ -64,7 +64,7 @@ const MeetingFooter = (props) => {
         />
       </div>
       <div
-        className={"meeting-icons " + (!streamState.video ? "active" : "")}
+        className={"meeting-icons " + (!streamState.video ? "activeb" : "")}
         data-tip={streamState.video ? "Hide Video" : "Show Video"}
         onClick={onVideoClick}
       >

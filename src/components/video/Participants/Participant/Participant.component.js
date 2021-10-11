@@ -41,7 +41,7 @@ export const Participant = (props) => {
         )}
         <div className="name">
           {currentParticipant.name}
-          {currentUser ? "(You)" : ""}
+          {currentUser ? " (You)" : ""}
         </div>
       </Card>
     </div>
