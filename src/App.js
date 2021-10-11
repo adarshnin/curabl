@@ -18,6 +18,7 @@ import Rtl from "./pages/Rtl";
 import Profile from "./pages/Profile";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
+import VideoIndex from "./pages/VideoIndex";
 import Main from "./components/layout/Main";
 import "antd/dist/antd.css";
 import "./assets/styles/main.css";
@@ -36,6 +37,7 @@ function App() {
           <Route exact path="/rtl" component={Rtl} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/editprofile" component={EditProfile} />
+          <Route exact path="/call" component={VideoIndex} />
           <Redirect from="*" to="/dashboard" />
         </Main>
       </Switch>
