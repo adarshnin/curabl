@@ -21,9 +21,9 @@ function VideoCall(props) {
     return localStream;
   };
   useEffect(async () => {
-    const stream = await getUserStream();
-    stream.getVideoTracks()[0].enabled = false;
-    props.setMainStream(stream);
+    // const stream = await getUserStream();
+    // stream.getVideoTracks()[0].enabled = false;
+    // props.setMainStream(stream);
 
     connectedRef.on("value", (snap) => {
       if (snap.val()) {

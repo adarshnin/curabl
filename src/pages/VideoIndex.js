@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import "./VideoIndex.css";
 import VideoCall from "./VideoCall";
 import reportWebVitals from "./reportWebVitals";
