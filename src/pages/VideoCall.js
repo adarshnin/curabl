@@ -1,104 +1,44 @@
-import MainScreen from "../components/video/MainScreen/MainScreen";
-import firepadRef, { db, userName } from "../server/firebase";
-import "./VideoCall.css";
-import { useEffect } from "react";
-import {
-  setMainStream,
-  addParticipant,
-  setUser,
-  removeParticipant,
-  updateParticipant,
-} from "../store/actioncreator";
-import { connect } from "react-redux";
+import React from "react";
 
-function VideoCall(props) {
-  const getUserStream = async () => {
-    const localStream = await navigator.mediaDevices.getUserMedia({
-      audio: true,
-      video: true,
-    });
+const VideoConference = () => {
+    const jitsiContainerId = "jitsi-container-id";
+    const [jitsi, setJitsi] = React.useState({});
 
-    return localStream;
-  };
-  useEffect(async () => {
-    // const stream = await getUserStream();
-    // stream.getVideoTracks()[0].enabled = false;
-    // props.setMainStream(stream);
+    const loadJitsiScript = () => {
+        let resolveLoadJitsiScriptPromise = null;
 
-    connectedRef.on("value", (snap) => {
-      if (snap.val()) {
-        const defaultPreference = {
-          audio: true,
-          video: false,
-          screen: false,
-        };
-        const userStatusRef = participantRef.push({
-          userName,
-          preferences: defaultPreference,
+        const loadJitsiScriptPromise = new Promise(resolve => {
+            resolveLoadJitsiScriptPromise = resolve;
         });
-        props.setUser({
-          [userStatusRef.key]: { name: userName, ...defaultPreference },
+
+        const script = document.createElement("script");
+        script.src = "https://meet.jit.si/external_api.js";
+        script.async = true;
+        script.onload = () => resolveLoadJitsiScriptPromise(true);
+        document.body.appendChild(script);
+
+        return loadJitsiScriptPromise;
+    };
+
+    const initialiseJitsi = async () => {
+        if (!window.JitsiMeetExternalAPI) {
+            await loadJitsiScript();
+        }
+
+        const _jitsi = new window.JitsiMeetExternalAPI("meet.jit.si/curabl-room#config.prejoinPageEnabled=true", {
+            parentNode: document.getElementById(jitsiContainerId)
         });
-        userStatusRef.onDisconnect().remove();
-      }
-    });
-  }, []);
 
-  const connectedRef = db.database().ref(".info/connected");
-  const participantRef = firepadRef.child("participants");
+        setJitsi(_jitsi);
+    };
 
-  const isUserSet = !!props.user;
-  const isStreamSet = !!props.stream;
+    React.useEffect(() => {
+        initialiseJitsi();
 
-  useEffect(() => {
-    if (isStreamSet && isUserSet) {
-      participantRef.on("child_added", (snap) => {
-        const preferenceUpdateEvent = participantRef
-          .child(snap.key)
-          .child("preferences");
-        preferenceUpdateEvent.on("child_changed", (preferenceSnap) => {
-          props.updateParticipant({
-            [snap.key]: {
-              [preferenceSnap.key]: preferenceSnap.val(),
-            },
-          });
-        });
-        const { userName: name, preferences = {} } = snap.val();
-        props.addParticipant({
-          [snap.key]: {
-            name,
-            ...preferences,
-          },
-        });
-      });
-      participantRef.on("child_removed", (snap) => {
-        props.removeParticipant(snap.key);
-      });
-    }
-  }, [isStreamSet, isUserSet]);
+        return () => jitsi?.dispose?.();
+    }, []);
 
-  return (
-    <div className="VideoCall">
-      <MainScreen />
-    </div>
-  );
-}
-
-const mapStateToProps = (state) => {
-  return {
-    stream: state.mainStream,
-    user: state.currentUser,
-  };
+    return <div id={jitsiContainerId} style={{ height: 720, width: "100%" }} />;
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setMainStream: (stream) => dispatch(setMainStream(stream)),
-    addParticipant: (user) => dispatch(addParticipant(user)),
-    setUser: (user) => dispatch(setUser(user)),
-    removeParticipant: (userId) => dispatch(removeParticipant(userId)),
-    updateParticipant: (user) => dispatch(updateParticipant(user)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(VideoCall);
+export default VideoConference;
