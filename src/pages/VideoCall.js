@@ -12,7 +12,7 @@ const VideoConference = () => {
         });
 
         const script = document.createElement("script");
-        script.src = "https://meet.jit.si/external_api.js";
+        script.src = "https://video.curabl.me/external_api.js";
         script.async = true;
         script.onload = () => resolveLoadJitsiScriptPromise(true);
         document.body.appendChild(script);
@@ -25,7 +25,7 @@ const VideoConference = () => {
             await loadJitsiScript();
         }
 
-        const _jitsi = new window.JitsiMeetExternalAPI("meet.jit.si/curabl-room#config.prejoinPageEnabled=true", {
+        const _jitsi = new window.JitsiMeetExternalAPI("video.curabl.me/curabl-room#config.prejoinPageEnabled=true", {
             parentNode: document.getElementById(jitsiContainerId)
         });
 
