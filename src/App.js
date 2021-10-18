@@ -18,8 +18,9 @@ import Rtl from "./pages/Rtl";
 import Profile from "./pages/Profile";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
-import VideoCall from "./pages/VideoCall";
+// import VideoCall from "./pages/VideoCall
 import Main from "./components/layout/Main";
+import TabToolbar from "./pages/Tabs";
 import "antd/dist/antd.css";
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
@@ -37,7 +38,9 @@ function App() {
           <Route exact path="/rtl" component={Rtl} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/editprofile" component={EditProfile} />
-          <Route exact path="/call" component={VideoCall} />
+          {/* <Toolbar> */}
+          <Route exact path="/call" component={TabToolbar} />
+          {/* </Toolbar> */}
           <Redirect from="*" to="/dashboard" />
         </Main>
       </Switch>

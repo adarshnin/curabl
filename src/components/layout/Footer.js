@@ -24,23 +24,14 @@ function Footer() {
             © 2021, made with
             {<HeartFilled />} by
             <a href="#pablo" className="font-weight-bold" target="_blank">
-              Creative Tim
+              curabl Team
             </a>
-            for a better web.
+            for better healthcare.
           </div>
         </Col>
         <Col xs={24} md={12} lg={12}>
           <div className="footer-menu">
             <ul>
-              <li className="nav-item">
-                <a
-                  href="#pablo"
-                  className="nav-link text-muted"
-                  target="_blank"
-                >
-                  Creative Tim
-                </a>
-              </li>
               <li className="nav-item">
                 <a
                   href="#pablo"

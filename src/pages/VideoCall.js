@@ -1,5 +1,6 @@
 import React from "react";
-
+// import Toolbar from "../components/layout/Toolbar";
+// import TabToolbar from "../components/layout/Tabs";
 const VideoConference = () => {
     const jitsiContainerId = "jitsi-container-id";
     const [jitsi, setJitsi] = React.useState({});
@@ -38,7 +39,24 @@ const VideoConference = () => {
         return () => jitsi?.dispose?.();
     }, []);
 
-    return <div id={jitsiContainerId} style={{ height: 720, width: "100%" }} />;
+    //  return <div id={jitsiContainerId} style={{ height: 720, width: "100%" }} />
+    return (
+        <>
+            <div id={jitsiContainerId} style={{ height: 720, width: "100%", float: "right", position: "relative" }} />
+
+            {/* <TabToolbar>
+            </TabToolbar> */}
+            {/* <Toolbar>
+            </Toolbar> */}
+        </>
+
+    )
+
+
+
+
+
+
 };
 
 export default VideoConference;

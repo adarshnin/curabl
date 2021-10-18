@@ -197,7 +197,7 @@ function Sidenav({ color }) {
   return (
     <>
       <div className="brand">
-        
+
         <span><img src={logo} alt="" /></span>
       </div>
       <hr />
@@ -309,7 +309,7 @@ function Sidenav({ color }) {
           </NavLink>
         </Menu.Item>
       </Menu>
-      <div className="aside-footer">
+      {/* <div className="aside-footer">
         <div
           className="footer-box"
           style={{
@@ -325,7 +325,7 @@ function Sidenav({ color }) {
             DOCUMENTATION
           </Button>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
