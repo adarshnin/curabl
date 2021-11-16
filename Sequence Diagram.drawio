@@ -1,26 +1,48 @@
-<mxfile host="app.diagrams.net" modified="2021-11-16T04:10:25.504Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36" etag="pdBH3kTLp0jZY7vr3pWg" version="15.7.4" type="github">
+<mxfile host="app.diagrams.net" modified="2021-11-16T04:21:13.272Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36" etag="uo5Wdwd_ZJZyn3_Dmfv2" version="15.7.4" type="github">
   <diagram id="kgpKYQtTHZ0yAKxKKP6v" name="Page-1">
-    <mxGraphModel dx="946" dy="543" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="652" dy="374" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="yxkUopUPHEhHwRwqRZRT-1" value="Auth Server" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="120" y="400" width="110" height="40" as="geometry" />
+        <mxCell id="yxkUopUPHEhHwRwqRZRT-11" value="" style="shape=umlLifeline;participant=umlActor;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;verticalAlign=top;spacingTop=36;outlineConnect=0;size=70;" vertex="1" parent="1">
+          <mxGeometry x="50" y="370" width="40" height="410" as="geometry" />
         </mxCell>
-        <mxCell id="yxkUopUPHEhHwRwqRZRT-2" value="Profile Server" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="250" y="400" width="110" height="40" as="geometry" />
+        <mxCell id="yxkUopUPHEhHwRwqRZRT-12" value="Nginx Server" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="120" y="400" width="100" height="380" as="geometry" />
         </mxCell>
-        <mxCell id="yxkUopUPHEhHwRwqRZRT-3" value="Event Bus / Manager" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="380" y="400" width="110" height="40" as="geometry" />
+        <mxCell id="yxkUopUPHEhHwRwqRZRT-21" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;" vertex="1" parent="yxkUopUPHEhHwRwqRZRT-12">
+          <mxGeometry x="40" y="70" width="10" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="yxkUopUPHEhHwRwqRZRT-4" value="Chat Server" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="510" y="400" width="110" height="40" as="geometry" />
+        <mxCell id="yxkUopUPHEhHwRwqRZRT-13" value="Apppointments Server" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="960" y="400" width="100" height="380" as="geometry" />
         </mxCell>
-        <mxCell id="yxkUopUPHEhHwRwqRZRT-5" value="Video Conferencing Server" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="640" y="400" width="110" height="40" as="geometry" />
+        <mxCell id="yxkUopUPHEhHwRwqRZRT-14" value="Payments Server" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="840" y="400" width="100" height="380" as="geometry" />
         </mxCell>
-        <mxCell id="yxkUopUPHEhHwRwqRZRT-7" value="Actor" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
-          <mxGeometry x="60" y="380" width="30" height="60" as="geometry" />
+        <mxCell id="yxkUopUPHEhHwRwqRZRT-15" value="Video Conferencing Server" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="720" y="400" width="100" height="380" as="geometry" />
+        </mxCell>
+        <mxCell id="yxkUopUPHEhHwRwqRZRT-16" value="Chat Server" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="600" y="400" width="100" height="380" as="geometry" />
+        </mxCell>
+        <mxCell id="yxkUopUPHEhHwRwqRZRT-17" value="Event Bus / Manager" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="480" y="400" width="100" height="380" as="geometry" />
+        </mxCell>
+        <mxCell id="yxkUopUPHEhHwRwqRZRT-18" value="Profile Server" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="360" y="400" width="100" height="380" as="geometry" />
+        </mxCell>
+        <mxCell id="yxkUopUPHEhHwRwqRZRT-22" value="Login" style="html=1;verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;rounded=0;" edge="1" target="yxkUopUPHEhHwRwqRZRT-21" parent="1" source="yxkUopUPHEhHwRwqRZRT-11">
+          <mxGeometry x="-0.1149" y="10" relative="1" as="geometry">
+            <mxPoint x="100" y="470" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="110" y="480" />
+              <mxPoint x="130" y="480" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yxkUopUPHEhHwRwqRZRT-23" value="Auth Server" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="240" y="400" width="100" height="380" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
