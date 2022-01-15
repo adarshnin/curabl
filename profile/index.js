@@ -16,6 +16,7 @@ const app = express();
 // Database Connections
 try {
   mongoose.connect(mongoDb.MONGO_URL_LOCAL);
+  console.log("Database in action");
 } catch (error) {
   console.error(error);
 }

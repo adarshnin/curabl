@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Password = require("../services/password");
 
 const { Schema } = mongoose;
 
@@ -11,11 +12,11 @@ const addressSchema = new Schema({
     postalCode: String,
 });
 
-
 const contactGroup = {
     email: {
         type: String,
         required: [true, "Email Required"],
+        unique: true,
     },
     contactNo: [String],
     address: addressSchema,
@@ -29,28 +30,34 @@ const clinicSchema = new Schema({
     email: {
         type: String,
         required: [true, "Clinic Mail Required"],
+        unique: true,
     }
 });
 
-const nameSchema = new Schema({
+const nameSchema = {
     firstName: String,
     middleName: String,
     lastName: String,
-});
+};
 
 const identityGroup = {
-    userName: String,
     designation: {
         type: String,
-        enum: ['Dr.', 'Mr.', 'Er.', 'Prof.'],
-        default: 'Dr.'
+        enum: ['Dr.', 'Mr.','Mrs.','Miss', 'Er.', 'Prof.'],
+        default: 'Mr.'
     },
-    imrNumber: String,
+    imrNumber: {
+        type: String,
+    },
     name: {
         type: nameSchema,
         required: [true, "Name Required"]
     },
 };
+
+const chargesSchema = new Schema({
+    consultation: Number,
+});
 
 const infoGroup = {
     dob: Date,
@@ -70,11 +77,6 @@ const profileSchema = new Schema({
     ...identityGroup,
     ...infoGroup,
     ...contactGroup,
-    clinic: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'clinicSchema',
-        // required: true,
-    },
     isDoctor: {
         type: Boolean,
         required: [true, "Need to be either doctor or patient"]
@@ -83,6 +85,14 @@ const profileSchema = new Schema({
         type: String,
         required: [true, "Needs password for authentication"],
     },
+    clinic: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'clinicSchema',
+        // required: true,
+    },
+    fees: {
+        type: chargesSchema,
+    }
 },
     // {
     //     toJSON: {
@@ -96,7 +106,7 @@ const profileSchema = new Schema({
     // },
 );
 
-profileSchema.pre("save", async (next) => {
+profileSchema.pre("save", async function (next) {
     if (this.isModified('password')) {
         const hashed = await Password.toHash(this.get('password'));
         this.set('password', hashed);
