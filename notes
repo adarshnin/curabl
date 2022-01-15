@@ -1,7 +1,17 @@
 Ghanshyam
 
-    Doctor scheduling
+    Doctor scheduling store
         Start time
         end time
         duration - 10 min, 15min ?
-        
+    On doctor side, show the booked slots
+        When clicked on slot, show addtional details - patient details
+
+Adarsh
+
+
+    optional - 
+    Gap time in time slots
+
+Chaitanya
+

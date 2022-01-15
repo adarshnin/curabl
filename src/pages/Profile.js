@@ -32,6 +32,7 @@ import convesionImg5 from "../assets/images/face-2.jpg";
 import project1 from "../assets/images/home-decor-1.jpeg";
 import project2 from "../assets/images/home-decor-2.jpeg";
 import project3 from "../assets/images/home-decor-3.jpeg";
+import Appointment from "./Appointment"
 
 function Profile() {
   const [imageURL, setImageURL] = useState(false);
@@ -189,49 +190,6 @@ function Profile() {
       ></Card>
 
       <Row gutter={[24, 0]}>
-        <Col span={24} md={8} className="mb-24 ">
-          <Card
-            bordered={false}
-            className="header-solid h-full"
-            title={<h6 className="font-semibold m-0">Platform Settings</h6>}
-          >
-            <ul className="list settings-list">
-              <li>
-                <h6 className="list-header text-sm text-muted">ACCOUNT</h6>
-              </li>
-              <li>
-                <Switch defaultChecked />
-
-                <span>Email me when someone follows me</span>
-              </li>
-              <li>
-                <Switch />
-                <span>Email me when someone answers me</span>
-              </li>
-              <li>
-                <Switch defaultChecked />
-                <span>Email me when someone mentions me</span>
-              </li>
-              <li>
-                <h6 className="list-header text-sm text-muted m-0">
-                  APPLICATION
-                </h6>
-              </li>
-              <li>
-                <Switch defaultChecked />
-                <span>New launches and projects</span>
-              </li>
-              <li>
-                <Switch defaultChecked />
-                <span>Monthly product updates</span>
-              </li>
-              <li>
-                <Switch defaultChecked />
-                <span>Subscribe to newsletter</span>
-              </li>
-            </ul>
-          </Card>
-        </Col>
         <Col span={24} md={8} className="mb-24">
           <Card
             bordered={false}
@@ -273,6 +231,17 @@ function Profile() {
                 </a>
               </Descriptions.Item>
             </Descriptions>
+          </Card>
+        </Col>
+        <Col span={24} md={8} className="mb-24 ">
+          <Card
+            bordered={false}
+            className="header-solid h-full"
+            title={<h6 className="font-semibold m-0" align="center">Book Appointment</h6>}
+          >
+            <Appointment>
+
+            </Appointment>
           </Card>
         </Col>
         <Col span={24} md={8} className="mb-24">
