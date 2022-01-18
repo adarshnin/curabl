@@ -1,7 +1,8 @@
 doctor_id
 date
 timeslot
-    evening/morning
+    evening
+    morning
     hour
     minute
 
