@@ -95,29 +95,31 @@ const EditProfile = () => {
             } catch (err) {
                 console.error(err);
             }
-            data = res.data;
-            console.log(data);
-            setUserId(data.id);
-            delete data.id;
-            setUser(data);
-            form.setFieldsValue({
-                firstname: data?.name?.firstName,
-                middlename: data?.name?.middleName,
-                lastname: data?.name?.lastName,
-                email: data?.email,
-                phone: data?.contactNo,
-                dob: moment(data?.dob),
-                gender: data?.gender,
-                bloodg: data?.bloodGroup,
-                houseno: data?.address?.houseNo,
-                street: data?.address?.street,
-                landmark: data?.address?.landmark,
-                city: data?.address?.area,
-                district: data?.address?.district,
-                state: data?.address?.state,
-                country: data?.address?.country,
-                pincode: data?.address?.postalCode,
-            })
+            if (res?.data) {
+                data = res.data;
+                console.log(data);
+                setUserId(data.id);
+                delete data.id;
+                setUser(data);
+                form.setFieldsValue({
+                    firstname: data?.name?.firstName,
+                    middlename: data?.name?.middleName,
+                    lastname: data?.name?.lastName,
+                    email: data?.email,
+                    phone: data?.contactNo,
+                    dob: moment(data?.dob),
+                    gender: data?.gender,
+                    bloodg: data?.bloodGroup,
+                    houseno: data?.address?.houseNo,
+                    street: data?.address?.street,
+                    landmark: data?.address?.landmark,
+                    city: data?.address?.area,
+                    district: data?.address?.district,
+                    state: data?.address?.state,
+                    country: data?.address?.country,
+                    pincode: data?.address?.postalCode,
+                })
+            }
             return () => {
 
             };
@@ -173,7 +175,7 @@ const EditProfile = () => {
     const handleFileUploadChange = (d) => {
         const filelist = [...d.filelist];
         filelist = filelist.slice(-1);
-        
+
     };
 
     return (
@@ -421,11 +423,11 @@ const EditProfile = () => {
                             action=""
                             extra="Upload your Profile Picture"
                         >
-                            <Upload 
+                            <Upload
                                 action='https://www.mocky.io/v2/5cc8019d300000980a055e76'
                                 onChange={handleFileUploadChange}
-                                multiple={true}
-                                fileList={fileList}>
+                                // fileList={fileList}
+                                multiple={true}>
                                 <Button icon={<UploadOutlined />}>Upload</Button>
                             </Upload>
                         </Form.Item>
