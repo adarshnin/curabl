@@ -23,7 +23,13 @@ try {
 
 // External Middlewares
 app.use(express.json());
+app.use(express.urlencoded({
+  extended: true,
+}));
 app.use(cors());
+
+// File Upload Middlewares
+app.use('/uploads/avatars', express.static('uploads/avatars'));
 
 // Custom Middlewares
 app.use('/profile', profileRoute);

@@ -1,14 +1,17 @@
 const mongoose = require("mongoose");
 const Password = require("../services/password");
+const {ageCalculator} = require('../libs/utils');
 
 const { Schema } = mongoose;
 
 const addressSchema = new Schema({
     houseNo: String,
-    area: String,
     street: String,
-    city: String,
+    landmark: String,
+    area: String, // Village/City/Town
+    district: String,
     state: String,
+    country: String,
     postalCode: String,
 });
 
@@ -18,7 +21,7 @@ const contactGroup = {
         required: [true, "Email Required"],
         unique: true,
     },
-    contactNo: [String],
+    contactNo: String,
     address: addressSchema,
 };
 
@@ -43,8 +46,7 @@ const nameSchema = {
 const identityGroup = {
     designation: {
         type: String,
-        enum: ['Dr.', 'Mr.','Mrs.','Miss', 'Er.', 'Prof.'],
-        default: 'Mr.'
+        enum: ['Dr.', 'Mr.', 'Mrs.', 'Miss', 'Er.', 'Prof.'],
     },
     imrNumber: {
         type: String,
@@ -53,6 +55,7 @@ const identityGroup = {
         type: nameSchema,
         required: [true, "Name Required"]
     },
+    description: String,
 };
 
 const chargesSchema = new Schema({
@@ -61,12 +64,12 @@ const chargesSchema = new Schema({
 
 const infoGroup = {
     dob: Date,
-    age: Number,
+    age: String,
     gender: {
         type: String,
-        enum: ['male', 'female'],
+        enum: ['male', 'female', 'other'],
     },
-    profileImage: Buffer,
+    profileImage: String,
     bloodGroup: {
         type: String,
         enum: ['O+', 'A+', 'B+', 'AB+', 'O+', 'O-', 'A-', 'B-', 'AB-'],
@@ -94,16 +97,21 @@ const profileSchema = new Schema({
         type: chargesSchema,
     }
 },
-    // {
-    //     toJSON: {
-    //         transform(doc, ret) {
-    //             ret.id = ret._id;
-    //             delete ret._id;
-    //             delete ret.password;
-    //             delete ret.__v;
-    //         }
-    //     }
-    // },
+    {
+        toJSON: {
+            transform(doc, ret) {
+                if(ret.dob) {
+                    ret.age = ageCalculator(ret.dob);
+                } else {
+                    delete ret.age;
+                }
+                ret.userId = ret._id;
+                delete ret._id;
+                delete ret.password;
+                delete ret.__v;
+            }
+        }
+    },
 );
 
 profileSchema.pre("save", async function (next) {
