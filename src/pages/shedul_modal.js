@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { Modal, Button, Card,TimePicker,InputNumber } from 'antd';
-import {time_sheduling} from "./select_time";
+import { Modal, Button, Card, TimePicker, InputNumber } from 'antd';
+import { time_sheduling } from "./select_time";
 
 // .site-card-border-less-wrapper {
 //   padding: 30px;
@@ -38,14 +38,16 @@ class Modal_shed extends React.Component {
 
   render() {
     const { visible, loading } = this.state;
+    const format = 'HH:mm';
+
     return (
       <>
         <Button type="primary" onClick={this.showModal}>
-          Open Modal with customized footer
+          Edit Slots
         </Button>
         <Modal
           visible={visible}
-          title="Title"
+          title="Select Times"
           onOk={this.handleOk}
           onCancel={this.handleCancel}
           footer={[
@@ -55,25 +57,29 @@ class Modal_shed extends React.Component {
             <Button key="submit" type="primary" loading={loading} onClick={this.handleOk}>
               Submit
             </Button>,
-            
+
           ]}
         >
-          
+
           <div >
-            <Card title="Card title" bordered={false} style={{ width: 300 }}>
-            <time_sheduling/>
-            <p>Morning</p>
-            <TimePicker.RangePicker />
-            <p>Evening</p>
-            <TimePicker.RangePicker />
-            <p>Slot period (in mins)</p>
-            <InputNumber min={1} max={60} defaultValue={10} onChange={onChange} />
-            <p>waiting time between slots(in mins)</p>
-            <InputNumber min={1} max={10} defaultValue={5} onChange={onChange} />
+            <Card bordered={false} style={{ width: 300 }}>
+              <time_sheduling />
+              <p>Morning
+                <TimePicker.RangePicker format={format} />
+              </p>
+              <p>Evening
+                <TimePicker.RangePicker format={format} />
+              </p>
+              <p>Slot period (in mins)<br></br>
+                <InputNumber min={1} max={60} defaultValue={10} onChange={onChange} />
+              </p>
+              <p>Waiting time between slots(in mins)
+                <InputNumber min={1} max={10} defaultValue={5} onChange={onChange} />
+              </p>
             </Card>
           </div>
-                   
-          
+
+
         </Modal>
       </>
     );
