@@ -53,6 +53,7 @@ function timeSlotValidator(slotTime) {
         0
     );
 
+    // const isValid = (slotTime.getTime() >= morningStartTime.getTime() && slotTime.getTime() <= morningEndTime.getTime()) || (slotTime.getTime() >= eveningStartTime.getTime() && slotTime.getTime() <= eveningEndTime.getTime());
     const isValid = (slotTime.getTime() >= morningStartTime.getTime() && slotTime.getTime() <= morningEndTime.getTime()) || (slotTime.getTime() >= eveningStartTime.getTime() && slotTime.getTime() <= eveningEndTime.getTime());
 
     console.log("@@@ = ", isValid);
@@ -64,7 +65,7 @@ function Appointment() {
         <div className="Appointment">
             <DayTimePicker
                 timeSlotSizeMinutes={15}
-                timeSlotValidator={timeSlotValidator}
+                // timeSlotValidator={timeSlotValidator}
             />;
         </div>
     )

@@ -4,8 +4,9 @@ import React from 'react';
 // const {dateFns} = require('date-fns');
 
 const now = new Date();
-    const offsetHours = dateFns.getHours(now);
-console.log(now ,offsetHours);
+const offsetHours = dateFns.getHours(now);
+console.log(now, offsetHours);
+console.log(new Date())
 
 function generateTimeSlots(selectedDate, slotSizeMinutes) {
   const isToday = dateFns.isToday(new Date(selectedDate));
@@ -14,19 +15,18 @@ function generateTimeSlots(selectedDate, slotSizeMinutes) {
   let start = selectedDate;
   if (isToday) {
     const now = new Date();
-    const offsetHours = dateFns.getHours(now);
-
+    const offsetHours = 5;
+    
     // "Pad" the start time with the amount of hours of the current time, to
     // prevent rendering time slots of the past
     start = dateFns.addHours(start, offsetHours);
-    console.log(start);
+    start = dateFns.addMinutes(start, 30);
+    console.log("start" , start);
 
     // The start positions might still be in the past in terms of minutes
     // So "pad" the start time with the slot size, to prevent rendering time
     // slots of the past
-    while (start <= now) {
-      start = dateFns.addMinutes(start, slotSizeMinutes);
-    }
+ 
   }
 
   const end = dateFns.addDays(selectedDate, 1);
@@ -41,4 +41,4 @@ function generateTimeSlots(selectedDate, slotSizeMinutes) {
   return timeSlots;
 }
 
-console.log(generateTimeSlots(new Date(), "15"));
+console.log(generateTimeSlots(new Date(), 15));
