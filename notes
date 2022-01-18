@@ -1,10 +1,12 @@
-doctor_id
-date
-timeslot
-    evening
-    morning
-    hour
-    minute
+Appointment
+    doctor_id
+    date
+    timeslot
+        evening
+        morning
+        hour
+        minute
+    Status - Free, Booked, or In process
 
 
 

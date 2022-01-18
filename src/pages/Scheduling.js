@@ -11,7 +11,7 @@ import { Button, DatePicker, Layout, Calendar, Select, Radio, Col, Row, Typograp
 
 const Listbox = styled.ul`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   grid-auto-rows: min-content;
   grid-gap: 1em;
   list-style: none;
@@ -55,41 +55,43 @@ function Scheduling() {
 
     return (
         // center the element
-        <div className="Scheduling" style={{}}>
-            <Card bordered={true} style={{ width: 450, height: 600 }}>
+        <div className="Scheduling" style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+        }}>
+            <Card bordered={true} style={{ width: 1050, height: 600 }}>
 
                 {/* <Layout> */}
-                <Header style={{ padding: '10px', marginLeft: '12%' }}>
+                <Header style={{ padding: '10px', display: 'flex', justifyContent: 'space-around' }}>
                     <DatePicker
                         disabledDate={(current) => {
                             return moment().add(-1, 'days') >= current
                         }}
                         format="DD-MM-YYYY"
                         onChange={onChange} />
-                    <span>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    </span>
+                 
                     <Modal_shed /></Header>
                 <Content>
                     <>
-                        <Divider orientation="left"> Your Slots</Divider>
                         {/* 
                         <List style={{ overflow: 'auto', height: '220px' }}
-                            // header={<div>Header</div>}
-                            // footer={<div>Footer</div>}
-                            bordered
-                            dataSource={morning_schedule}
-                            renderItem={item => (
-                                <List.Item>
-                                    <Typography.Text mark>{item}</Typography.Text>
-                                    <Button type="primary" danger>
-                                        Delete
-                                    </Button>
-                                </List.Item>
+                        // header={<div>Header</div>}
+                        // footer={<div>Footer</div>}
+                        bordered
+                        dataSource={morning_schedule}
+                        renderItem={item => (
+                            <List.Item>
+                            <Typography.Text mark>{item}</Typography.Text>
+                            <Button type="primary" danger>
+                            Delete
+                            </Button>
+                            </List.Item>
                             )}
                         /> */}
 
-                        <Listbox style={{ overflow: 'auto', height: '420px' }}>
+                        <Divider orientation="left"> Your Slots</Divider>
+                        <Listbox style={{ overflow: 'auto', height: '420px'}}>
                             {sched.map(slot => {
                                 // const isValid = validator ? validator(slot) : true;
                                 return (
