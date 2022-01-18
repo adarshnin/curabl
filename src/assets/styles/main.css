@@ -4,6 +4,12 @@
   display:none;
 }
 
+/* for card in sheduling.js */
+.site-card-border-less-wrapper {
+  padding: 30px;
+  background: #ececec;
+}
+
 body {
   padding: 0 0 30px 0;
   background-color: #fafafa;
