@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import {
   Row,
@@ -14,6 +14,7 @@ import {
   Upload,
   message,
 } from "antd";
+import axios from "axios";
 
 import {
   FacebookOutlined,
@@ -22,6 +23,7 @@ import {
   VerticalAlignTopOutlined,
 } from "@ant-design/icons";
 
+import { addressTranslator } from '../libs/utils'
 import BgProfile from "../assets/images/bg-profile.jpg";
 import profilavatar from "../assets/images/face-1.jpg";
 import convesionImg from "../assets/images/face-3.jpg";
@@ -35,8 +37,34 @@ import project3 from "../assets/images/home-decor-3.jpeg";
 import Appointment from "./Appointment"
 
 function Profile() {
+  const serverURL = process.env.REACT_APP_SERVER_URL;
   const [imageURL, setImageURL] = useState(false);
   const [, setLoading] = useState(false);
+  const [user, setUser] = useState();
+  const [userId, setUserId] = useState();
+
+  useEffect(() => {
+    const getUser = async () => {
+      let res, data;
+      try {
+        console.log(serverURL);
+        res = await axios.post(`${serverURL}/profile/getUser`, {
+          email: "jaysean@example.com",
+        });
+      } catch (err) {
+        console.error(err);
+      }
+      data = res.data;
+      console.log(data);
+      setUserId(data.id);
+      delete data.id;
+      setUser(data);
+      return () => {
+
+      };
+    };
+    getUser();
+  }, []);
 
   const getBase64 = (img, callback) => {
     const reader = new FileReader();
@@ -165,8 +193,8 @@ function Profile() {
                 <Avatar size={74} shape="square" src={profilavatar} />
 
                 <div className="avatar-info">
-                  <h4 className="font-semibold m-0">Sarah Jacob</h4>
-                  <p>CEO / Co-Founder</p>
+                  <h4 className="font-semibold m-0">{`${user?.name?.firstName} ${user?.name?.lastName}`}</h4>
+                  <p>{user?.isDoctor ? "Doctor" : "Patient"}</p>
                 </div>
               </Avatar.Group>
             </Col>
@@ -199,25 +227,30 @@ function Profile() {
             bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}
           >
             <p className="text-dark">
-              {" "}
-              Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer
-              is no. If two equally difficult paths, choose the one more painful
-              in the short term (pain avoidance is creating an illusion of
-              equality).{" "}
+              {" "}{user?.description}{" "}
             </p>
             <hr className="my-25" />
-            <Descriptions title="Oliver Liam">
+            <Descriptions title={`${user?.name?.firstName} ${user?.name?.lastName}`}>
               <Descriptions.Item label="Full Name" span={3}>
-                Sarah Emily Jacob
+                {`${user?.designation} ${user?.name?.firstName} ${user?.name?.middleName} ${user?.name?.lastName}`}
               </Descriptions.Item>
               <Descriptions.Item label="Mobile" span={3}>
-                (44) 123 1234 123
+                {user?.contactNo}
               </Descriptions.Item>
               <Descriptions.Item label="Email" span={3}>
-                sarahjacob@mail.com
+                {user?.email}
+              </Descriptions.Item>
+              <Descriptions.Item label="Blood Group" span={3}>
+                {user?.bloodGroup}
+              </Descriptions.Item>
+              <Descriptions.Item label="Date of Birth" span={3}>
+                {new Date(user?.dob).toLocaleDateString()}
+              </Descriptions.Item>
+              <Descriptions.Item label="Address" span={3}>
+                {addressTranslator(user?.address)}
               </Descriptions.Item>
               <Descriptions.Item label="Location" span={3}>
-                USA
+                {addressTranslator(user?.address)}
               </Descriptions.Item>
               <Descriptions.Item label="Social" span={3}>
                 <a href="#pablo" className="mx-5 px-5">

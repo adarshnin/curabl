@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Form,
     Input,
@@ -11,12 +11,18 @@ import {
     Button,
     AutoComplete,
     DatePicker,
+    Upload,
 } from 'antd';
+import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
 import {
     Card,
     Typography,
     Descriptions,
 } from "antd";
+import axios from 'axios';
+import moment from 'moment';
+
+import { nameTranslator } from '../libs/utils';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -72,10 +78,71 @@ const tailFormItemLayout = {
 };
 
 const EditProfile = () => {
+    const serverURL = process.env.REACT_APP_SERVER_URL;
     const [form] = Form.useForm();
+    const [user, setUser] = useState();
+    const [userId, setUserId] = useState();
+    const [filelist, setFilelist] = useState([]);
 
-    const onFinish = (values) => {
+    useEffect(() => {
+        const getUser = async () => {
+            let res, data;
+            try {
+                console.log(serverURL);
+                res = await axios.post(`${serverURL}/profile/getUser`, {
+                    email: "jaysean@example.com",
+                });
+            } catch (err) {
+                console.error(err);
+            }
+            data = res.data;
+            console.log(data);
+            setUserId(data.id);
+            delete data.id;
+            setUser(data);
+            form.setFieldsValue({
+                firstname: data?.name?.firstName,
+                middlename: data?.name?.middleName,
+                lastname: data?.name?.lastName,
+                email: data?.email,
+                phone: data?.contactNo,
+                dob: moment(data?.dob),
+                gender: data?.gender,
+                bloodg: data?.bloodGroup,
+                houseno: data?.address?.houseNo,
+                street: data?.address?.street,
+                landmark: data?.address?.landmark,
+                city: data?.address?.area,
+                district: data?.address?.district,
+                state: data?.address?.state,
+                country: data?.address?.country,
+                pincode: data?.address?.postalCode,
+            })
+            return () => {
+
+            };
+        };
+        getUser();
+    }, []);
+
+    const onFinish = async (values) => {
+        let res, data;
+        values = {
+            ...values,
+            id: userId,
+            $update: true,
+        }
         console.log('Received values of form: ', values);
+        try {
+            res = await axios.post(`${serverURL}/profile/`, values);
+        } catch (err) {
+            console.error(err);
+        }
+        data = res.data;
+        console.log(data);
+        setUserId(data.id);
+        delete data.id;
+        setUser(data);
     };
 
     const prefixSelector = (
@@ -103,6 +170,12 @@ const EditProfile = () => {
     );
     const [autoCompleteResult, setAutoCompleteResult] = useState([]);
 
+    const handleFileUploadChange = (d) => {
+        const filelist = [...d.filelist];
+        filelist = filelist.slice(-1);
+        
+    };
+
     return (
         <>
 
@@ -128,12 +201,36 @@ const EditProfile = () => {
                         <Title level={5} style={{ marginLeft: 20 }}>Personal Details</Title>
 
                         <Form.Item
-                            label="Full Name"
-                            name="fullname"
+                            label="First Name"
+                            name="firstname"
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your Full Name!',
+                                    message: 'Please input your First Name!',
+                                },
+                            ]}
+                        >
+                            <Input maxLength="50" />
+                        </Form.Item>
+                        <Form.Item
+                            label="Middle Name"
+                            name="middlename"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your Middle Name!',
+                                },
+                            ]}
+                        >
+                            <Input maxLength="50" />
+                        </Form.Item>
+                        <Form.Item
+                            label="Last Name"
+                            name="lastname"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your Last Name!',
                                 },
                             ]}
                         >
@@ -179,7 +276,7 @@ const EditProfile = () => {
                                     message: 'Please input your Date of Birth!',
                                 },
                             ]}>
-                            <DatePicker />
+                            <DatePicker value={user?.dob} />
                         </Form.Item>
                         <Form.Item
                             name="gender"
@@ -224,7 +321,7 @@ const EditProfile = () => {
 
                         <Form.Item
                             label="Apartment Number"
-                            name="apartmentno"
+                            name="houseno"
                             rules={[
                                 {
                                     required: true,
@@ -315,22 +412,22 @@ const EditProfile = () => {
                         >
                             <Input maxLength="6" />
                         </Form.Item>
-
-
                         <Form.Item
-                            name="agreement"
-                            valuePropName="checked"
-                            rules={[
-                                {
-                                    validator: (_, value) =>
-                                        value ? Promise.resolve() : Promise.reject(new Error('Should accept agreement')),
-                                },
-                            ]}
-                            {...tailFormItemLayout}
+                            name="profilePicture"
+                            label="Profile Picture"
+                            multiple={false}
+                            listType="picture-card"
+                            showUploadList={false}
+                            action=""
+                            extra="Upload your Profile Picture"
                         >
-                            <Checkbox>
-                            I agree to the <a href="">Terms and Conditions</a>
-                            </Checkbox>
+                            <Upload 
+                                action='https://www.mocky.io/v2/5cc8019d300000980a055e76'
+                                onChange={handleFileUploadChange}
+                                multiple={true}
+                                fileList={fileList}>
+                                <Button icon={<UploadOutlined />}>Upload</Button>
+                            </Upload>
                         </Form.Item>
                         <Form.Item {...tailFormItemLayout}>
                             <Button type="primary" htmlType="submit">
