@@ -54,11 +54,13 @@ function Profile() {
       } catch (err) {
         console.error(err);
       }
-      data = res.data;
-      console.log(data);
-      setUserId(data.id);
-      delete data.id;
-      setUser(data);
+      if(res?.data) {
+        data = res.data;
+        console.log(data);
+        setUserId(data.id);
+        delete data.id;
+        setUser(data);
+      }
       return () => {
 
       };
