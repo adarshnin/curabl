@@ -1,3 +1,23 @@
+Appointment
+    doctor_id
+    date
+    timeslot
+        evening
+        morning
+        hour
+        minute
+    Status - Free, Booked, or In process
+
+
+
+How to store times?
+
+    Timezone - IST
+    HH:MM or separate hour, minute variable
+
+
+
+
 Ghanshyam
 
     Doctor scheduling store

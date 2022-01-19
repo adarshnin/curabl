@@ -7,7 +7,6 @@ import Billing from "./pages/Billing";
 import Payment from "./pages/Payment";
 import Appointment from "./pages/Appointment";
 import Scheduling from "./pages/Scheduling";
-import Rtl from "./pages/Rtl";
 import Profile from "./pages/Profile";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
@@ -31,7 +30,6 @@ function App() {
           <Route exact path="/payment" component={Payment} />
           <Route exact path="/appointment" component={Appointment} />
           <Route exact path="/scheduling" component={Scheduling} />
-          <Route exact path="/rtl" component={Rtl} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/editprofile" component={EditProfile} />
           {/* <Toolbar> */}
