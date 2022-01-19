@@ -40,7 +40,8 @@ Chaitanya
 
 Points:
     Check apperance of pages on different Displays
-
+    Split payment page into two ? for window resize issues
+    
 Things left:
     Chat
     Video calls
