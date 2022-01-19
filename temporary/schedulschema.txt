@@ -1,0 +1,10 @@
+intment
+    doctor_id :  string
+    date: date
+    slottime 
+    slotperiod:
+    url:
+    userid:
+    paymentid:string
+    dayperoiod: evening/afternoon.
+    Status - Free, Booked, or In process
