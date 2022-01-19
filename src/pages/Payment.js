@@ -67,8 +67,8 @@ function Payment() {
 			},
 			prefill: {
 				name,
-				email: 'sdfdsjfh2@ndsfdf.com',
-				phone_number: '9899999999'
+				contact: "+919834783982",
+				email: 'dev.patel@gmail.com'
 			}
 		}
 		const paymentObject = new window.Razorpay(options)
@@ -76,21 +76,27 @@ function Payment() {
 	}
 
 	return (
+
 		<div className="Payment" style={{
-			display: 'flex',
+			// display: 'flex',
 			alignItems: 'center',
 			justifyContent: 'center',
+			marginLeft: 'auto',
+			marginRight: 'auto',
+			width: '1560px',
+			overflow: 'auto'
 		}}>
 
+			<Card bordered={true} style={{
+				width: "100%", height: "100%"
+			}}>
 
-			<Card bordered={true} style={{ width: 1050, height: 600 }}>
-
-				<Header style={{ padding: '10px', display: 'flex', justifyContent: 'flex-start', fontWeight: 'bolder' }}>
+				<Header style={{ padding: '10px', display: 'flex', justifyContent: 'flex-start', fontWeight: 'bolder', fontSize: "18px" }}>
 					Consultation
 				</Header>
 				{/* </Layout> */}
 				<Row>
-					<Col span={11} style={{ fontWeight: '600', textAlign: "left", display:'grid', gridRowGap: '23px', padding: "74px" }}>
+					<Col span={11} style={{ fontWeight: '600', textAlign: "left", display: 'grid', gridRowGap: '23px', padding: "74px" }}>
 						Dr. Rahul Prakash
 						<br />
 						<br />
@@ -108,17 +114,18 @@ function Payment() {
 					<Col span={11}>
 						<Divider style={{ fontWeight: '600' }} orientation="left"> Payment Summary</Divider>
 
-						<div className="Summary" style={{ display: 'grid', padding: '74px', justifyContent: 'space-between', fontWeight: '600', gridTemplateColumns: '50% 50%', gridRowGap: '23px' }} >
-							<div>Amount</div> $199
+						<div className="Summary" style={{ display: 'grid', padding: '74px', justifyContent: 'space-evenly', fontWeight: '600', gridTemplateColumns: '75% 25%', gridRowGap: '23px' }} >
+							<div>Amount</div> ₹ 99
 							<div>Name</div> Mr. Dev Patel
 							<div>Email-id: </div> dev.patel@gmail.com
+							<div>Mobile: </div> +91 9834783982
 							<div>Mode of Consultation:</div> Online
 						</div>
 						<div className="Paybutton">
-							<img style={{ margin: "14px" }} width="243" height="14" src={pay_logo} alt="Logo" />
+							<img style={{ marginLeft: "11%" }} width="243" height="14" src={pay_logo} alt="Logo" />
 							<Button
 								type="primary"
-								style={{ background: "rgb(74, 112, 246)" }}
+								style={{ background: "rgb(74, 112, 246)", marginLeft: "26%" }}
 								onClick={displayRazorpay}
 								target="_blank"
 								rel="noopener noreferrer">
@@ -138,6 +145,7 @@ function Payment() {
 
 
 		</div >
+
 	)
 }
 

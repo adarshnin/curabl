@@ -11,7 +11,7 @@ import { Button, DatePicker, Layout, Calendar, Select, Radio, Col, Row, Typograp
 
 const Listbox = styled.ul`
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(10, 1fr);
   grid-auto-rows: min-content;
   grid-gap: 1em;
   list-style: none;
@@ -60,9 +60,10 @@ function Scheduling() {
             alignItems: 'center',
             justifyContent: 'center',
         }}>
-            <Card bordered={true} style={{ width: 1050, height: 600 }}>
+            <Card bordered={true} style={{ width: "100%", height: "100%" }}>
 
                 {/* <Layout> */}
+                <Header style = {{fontWeight: 900, fontSize: "22px"}} orientation="left">Upcoming Slots</Header>
                 <Header style={{ padding: '10px', display: 'flex', justifyContent: 'space-around' }}>
                     <DatePicker
                         disabledDate={(current) => {
@@ -70,7 +71,7 @@ function Scheduling() {
                         }}
                         format="DD-MM-YYYY"
                         onChange={onChange} />
-                 
+
                     <Modal_shed /></Header>
                 <Content>
                     <>
@@ -90,8 +91,7 @@ function Scheduling() {
                             )}
                         /> */}
 
-                        <Divider orientation="left"> Your Slots</Divider>
-                        <Listbox style={{ overflow: 'auto', height: '420px'}}>
+                        <Listbox style={{ overflow: 'auto', height: '420px' }}>
                             {sched.map(slot => {
                                 // const isValid = validator ? validator(slot) : true;
                                 return (
