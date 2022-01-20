@@ -1,23 +1,21 @@
-const app = require('express')()
-const path = require('path')
+const express = require("express");
 const shortid = require('shortid')
-const Razorpay = require('razorpay')
-const cors = require('cors')
-const bodyParser = require('body-parser')
 
-app.use(cors())
-app.use(bodyParser.json())
+const path = require('path')
+
+const router = express.Router();
+const Razorpay = require('razorpay')
 
 const razorpay = new Razorpay({
 	key_id: 'rzp_test_0hZp9kVsVmGcXe',
 	key_secret: 'zHQZvxf6ZspYyglbsXc7l7MZ'
 })
 
-app.get('/logo.png', (req, res) => {
-	res.sendFile(path.join(__dirname, 'logo.png'))
+router.get('/logo.png', (req, res) => {
+	res.sendFile(path.join(__dirname, '../public/images/logo.png'))
 })
 
-app.post('/verification', (req, res) => {
+router.post('/verification', (req, res) => {
 	// do a validation
 	const secret = '12345678'
 
@@ -41,7 +39,7 @@ app.post('/verification', (req, res) => {
 	res.json({ status: 'ok' })
 })
 
-app.post('/razorpay', async (req, res) => {
+router.post('/razorpay', async (req, res) => {
 	const payment_capture = 1
 	const amount = 99
 	const currency = 'INR'
@@ -66,6 +64,4 @@ app.post('/razorpay', async (req, res) => {
 	}
 })
 
-app.listen(1337, () => {
-	console.log('Listening on 1337')
-})
+module.exports = router;

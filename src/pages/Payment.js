@@ -37,7 +37,42 @@ const __DEV__ = document.domain === 'localhost'
 
 function Payment() {
 	const [name, setName] = useState('Mehul')
-
+	const data = [
+		{
+			title: "Amount",
+			value: "₹ 99",
+		},
+		{
+			title: "Name",
+			value: "Mr. Dev Patel",
+		},
+		{
+			title: "Email-id",
+			value: "dev.patel@gmail.com",
+		},
+		{
+			title: "Mobile",
+			value: "+91 9834783982",
+		},
+		{
+			title: "Mode of Consultation",
+			value: "Online",
+		},
+	];
+	const data_appointment = [
+		{
+			title: "Doctor",
+			value: "Dr. Rahul Prakash",
+		},
+		{
+			title: "Appointment Time",
+			value: "11:15 AM",
+		},
+		{
+			title: "Date",
+			value: "26 Jan 2022",
+		},
+	];
 	async function displayRazorpay() {
 		const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js')
 
@@ -69,6 +104,9 @@ function Payment() {
 				name,
 				contact: "+919834783982",
 				email: 'dev.patel@gmail.com'
+			},
+			theme: {
+				"color": "#086cfc"
 			}
 		}
 		const paymentObject = new window.Razorpay(options)
@@ -77,74 +115,98 @@ function Payment() {
 
 	return (
 
-		<div className="Payment" style={{
-			// display: 'flex',
-			alignItems: 'center',
-			justifyContent: 'center',
-			marginLeft: 'auto',
-			marginRight: 'auto',
-			width: '1560px',
-			overflow: 'auto'
-		}}>
+		<div className="Payment">
+			<Row gutter={[24, 0]}>
+				<Col span={24} md={8} className="mb-24">
+					<Card
+						bordered={false}
+						className="header-solid h-full ant-invoice-card"
+						title={[<h6 className="font-semibold m-0">Appointment</h6>]}
 
-			<Card bordered={true} style={{
-				width: "100%", height: "100%"
-			}}>
-
-				<Header style={{ padding: '10px', display: 'flex', justifyContent: 'flex-start', fontWeight: 'bolder', fontSize: "18px" }}>
-					Consultation
-				</Header>
-				{/* </Layout> */}
-				<Row>
-					<Col span={11} style={{ fontWeight: '600', textAlign: "left", display: 'grid', gridRowGap: '23px', padding: "74px" }}>
-						Dr. Rahul Prakash
-						<br />
-						<br />
-						Appointment Time - 11:15 AM
-						<br />
-						Date - 26/01/2022
-						<br />
-						<br />
-						Kindly join at time to avoid any delays
-						<br />
-					</Col>
-					<Col span={2}>
-						<Divider type="vertical" style={{ height: "100%", borderColor: '#b0b2b5' }} />
-					</Col>
-					<Col span={11}>
-						<Divider style={{ fontWeight: '600' }} orientation="left"> Payment Summary</Divider>
-
-						<div className="Summary" style={{ display: 'grid', padding: '74px', justifyContent: 'space-evenly', fontWeight: '600', gridTemplateColumns: '75% 25%', gridRowGap: '23px' }} >
-							<div>Amount</div> ₹ 99
-							<div>Name</div> Mr. Dev Patel
-							<div>Email-id: </div> dev.patel@gmail.com
-							<div>Mobile: </div> +91 9834783982
-							<div>Mode of Consultation:</div> Online
-						</div>
-						<div className="Paybutton">
-							<img style={{ marginLeft: "11%" }} width="243" height="14" src={pay_logo} alt="Logo" />
-							<Button
-								type="primary"
-								style={{ background: "rgb(74, 112, 246)", marginLeft: "26%" }}
-								onClick={displayRazorpay}
-								target="_blank"
-								rel="noopener noreferrer">
-								Pay Now
-							</Button>
-						</div>
-					</Col>
-				</Row>
-				<Footer style={{ fontWeight: '600', textAlign: 'left' }}>
-					<p>Contact Us</p>
-				</Footer>
-				<Footer style={{ fontWeight: '300', textAlign: 'left' }}>
-					Phone: 9327432847
-					<p>Email: admin@curabl.me</p>
-				</Footer>
-			</Card>
+					>
+						<List
+							itemLayout="horizontal"
+							className="invoice-list"
+							dataSource={data_appointment}
+							renderItem={(item) => (
+								<List.Item>
+									<List.Item.Meta
+										title={item.title}
+									/>
+									<div className="amount">{item.value}</div>
+								</List.Item>
+							)}
+						/>
+						<p></p>
+						{/* <Footer style={{ fontWeight: '400', textAlign: 'left', marginTop: "48%"}}> */}
+						<Footer style={{ fontWeight: '400', textAlign: 'left', position: 'absolute', bottom: 0 }}>
+							* Kindly join at time to avoid any delays
+						</Footer>
 
 
-		</div >
+					</Card>
+				</Col>
+				<Col span={24} md={8} className="mb-24">
+					<Card
+						bordered={false}
+						className="header-solid h-full ant-invoice-card"
+						title={[<h6 className="font-semibold m-0">Payment Summary</h6>]}
+
+					>
+						<List
+							itemLayout="horizontal"
+							className="invoice-list"
+							dataSource={data}
+							renderItem={(item) => (
+								<List.Item>
+									<List.Item.Meta
+										title={item.title}
+									/>
+									<div className="amount">{item.value}</div>
+								</List.Item>
+							)}
+						/>
+						<p></p>
+						<List
+							itemLayout="horizontal"
+							className="invoice-list"
+						>
+
+							<List.Item>
+								<List.Item.Meta
+									title={<img style={{}} width="350" height="20" src={pay_logo} alt="Logo" />
+									}
+								/>
+								<div className="amount">
+									{
+										<Button
+											type="primary"
+											style={{ background: "rgb(74, 112, 246)", }}
+											onClick={displayRazorpay}
+											target="_blank"
+											rel="noopener noreferrer">
+											Pay Now
+										</Button>
+									}
+								</div>
+							</List.Item>
+
+						</List>
+
+
+						<Footer style={{ fontWeight: '600', textAlign: 'left' }}>
+							<p></p>
+							Contact Us
+						</Footer>
+						<Footer style={{ fontWeight: '300', textAlign: 'left' }}>
+							Phone: 9327432847
+							<p>Email: admin@curabl.me</p>
+						</Footer>
+					</Card>
+				</Col>
+			</Row>
+		</div>
+
 
 	)
 }
