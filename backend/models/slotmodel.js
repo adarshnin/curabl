@@ -26,15 +26,15 @@ const schedulingSchema = new mongoose.Schema({
     },
     url:{
         type: String,
-        required: true
+        required: false
     },
     userid:{
         type: String,
-        required: true
+        required: false
     },
     paymentid:{
         type: String,
-        required: true
+        required: false
     },
     // evening/afternoon.
     dayperoiod: {
