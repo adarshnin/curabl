@@ -11,7 +11,7 @@ const razorpay = new Razorpay({
 	key_secret: 'zHQZvxf6ZspYyglbsXc7l7MZ'
 })
 
-app.get('/logo.png', (req, res) => {
+router.get('/logo.png', (req, res) => {
 	res.sendFile(path.join(__dirname, '../public/images/logo.png'))
 })
 
