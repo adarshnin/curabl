@@ -47,7 +47,8 @@ class Modal_shed extends React.Component {
 
   handleOk = async () => {
     this.setState({ loading: true });
-    console.log("slottime",this.state.user.MstartTime[0].format("h:mm"));
+    console.log("slottime",this.state.user.EstartTime[0].format("HH:mm"));
+    console.log("slottime",this.state.user.EstartTime[0]);
     const serverURL = process.env.REACT_APP_SERVER_URL;
     let res, data;
           try {
@@ -58,10 +59,10 @@ class Modal_shed extends React.Component {
                     "Date": "Wed Jan 19 2022 21:27:11 GMT+0530 (India Standard Time)",
                     "waitingPeriod" : this.state.user.waitingPeriod,
                     "slotperiod": this.state.user.slotPeriod,
-                    "MstartTime":this.state.user.MstartTime[0].format("h:mm"),
-                    "MendTime":this.state.user.MstartTime[1].format("h:mm"),
-                    "EstartTime":this.state.user.EstartTime[0].format("h:mm"),
-                    "EendTime":this.state.user.EstartTime[1].format("h:mm")
+                    "MstartTime":this.state.user.MstartTime[0].format("HH:mm"),
+                    "MendTime":this.state.user.MstartTime[1].format("HH:mm"),
+                    "EstartTime":this.state.user.EstartTime[0].format("HH:mm"),
+                    "EendTime":this.state.user.EstartTime[1].format("HH:mm")
                     
                     
                 });

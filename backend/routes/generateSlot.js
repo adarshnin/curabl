@@ -12,7 +12,7 @@ const moment = require("moment");
 const express = require("express");
 
 const router = express.Router();
-const Users = require("../models/signupmodel");
+const slotmodeltemplate = require("../models/slotmodel");
 
 
 
@@ -45,9 +45,45 @@ router.post("/", async (req, res) => {
         eveningSlot = generateSlot(info.EstartTime,info.EendTime,info.slotperiod,info.waitingPeriod);
         console.log("morningSlot",morningSlot);
         console.log("evening",eveningSlot);
-        res.send(morningSlot.concat(evening));
-        
-        
+        slots = morningSlot.concat(eveningSlot);
+        console.log(slots);
+        {slots.map(slot => {
+            // const isValid = validator ? validator(slot) : true;
+            var slot_period = ""
+            if( moment(slot,"HH:mm") < moment("15:00", "HH:mm")){
+                slot_period = "morning";
+            }else{
+                slot_period = "evening";
+            }
+            // console.log(slot);
+            const userslot = new slotmodeltemplate({
+                doctorId: info.doctorId,
+                Date: info.Date,
+                slottime : slot,
+                slotperiod: info.slotperiod,
+                url: "",
+                userid : "",
+                paymentid: "",
+                dayperoiod: slot_period,
+                Status : "free"
+            });
+            // res.send("temp"); 
+            // console.log("donecheck");
+            userslot.save()
+            .then(data =>{
+                
+                console.log(data);
+            })
+            .catch(error =>{
+                res.send("fail to generate slot");
+                console.log(error);
+                return;
+            })
+            // res.sendStatus( 201);
+            console.log("done");
+            
+        })}    
+        res.send("Done");
 
     } catch (error) {
         // res.status(400).send(error);
@@ -55,6 +91,7 @@ router.post("/", async (req, res) => {
         console.log("in catch", error);
         res.render("login", data);
     }
+
 });
 
 module.exports = router;
