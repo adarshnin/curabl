@@ -18,6 +18,7 @@ var testAPIRouter = require('./routes/testAPI');
 var signupRouter = require('./routes/signup');
 var signinRouter = require('./routes/signin');
 var slotRouter = require('./routes/schedules');
+var generateSlot = require('./routes/generateSlot');
 
 
 
@@ -42,6 +43,15 @@ app.use('/testAPI', testAPIRouter);
 app.use('/signup', signupRouter);
 app.use('/signin', signinRouter);
 app.use('/addslot', slotRouter);
+app.use('/generateSlot', generateSlot);
+
+
+
+
+
+
+
+
 
 // app.use('/app', signupRouter);
 

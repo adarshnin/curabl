@@ -1,0 +1,11 @@
+{
+    	"doctorId": "123",
+        "Date": "Wed Jan 19 2022 21:27:11 GMT+0530 (India Standard Time)",
+        "slottime" : "12:00",
+        "slotperiod": "15",
+        "url": "http//",
+        "userid" : "usr123",
+        "paymentid": "pyt1235",
+        "dayperoiod": "evening",
+        "Status" : "free"
+}
