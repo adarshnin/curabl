@@ -1,10 +1,15 @@
+/* To make text unselectable */
+body{
+  user-select: none; 
+  /* Standard */
+}
 /* This will hide unclickable time slots */
 /* this will hide div with class div_class_name */
 .dlXWNb {     
   display:none;
 }
 
-/* for card in sheduling.js */
+/* for card in scheduling.js */
 .site-card-border-less-wrapper {
   padding: 30px;
   background: #ececec;
