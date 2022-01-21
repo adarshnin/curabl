@@ -42,6 +42,9 @@ Chaitanya
 Points:
     Check apperance of pages on different Displays
     Split payment page into two ? for window resize issues
+
+Issues:
+    Scheduling: When new date is selected, and slot times are submitted, the slots are still empty. useState wont work as modal file is used
     
 Things left:
     Chat

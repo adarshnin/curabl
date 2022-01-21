@@ -12,29 +12,25 @@ import axios from 'axios';
 import { Button, DatePicker, Layout, Calendar, Select, Radio, Col, Row, Typography, Empty, Card, List, Divider, Space } from 'antd';
 
 const Listbox = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-auto-rows: min-content;
-  grid-gap: 1em;
-  list-style: none;
-  margin: 0;
-  padding: 1em;
-  height: 355px;
-  overflow: auto;
-  border-top: 1px solid ${props => props.theme.secondary};
+display: grid;
+grid-template-columns: repeat(9, 1fr);
+grid-auto-rows: min-content;
+grid-gap: 1em;
+list-style: none;
+margin: 0;
+padding: 1em;
+height: 355px;
+overflow: auto;
+border-top: 1px solid ${props => props.theme.secondary};
 `;
 const ListItem = styled.li`
-    
-  padding: 0.75em 0.5em;
-  border: 1px solid;
-  background-color: lightblue;
-  margin: 0;
-  text-align: center;
-//   not required
-  :hover {
-    cursor: ${props => (props.isValid ? 'pointer' : 'inherit')};
-    color: ${props => (props.isValid ? "props.theme.primary" : 'inherit')};
-  }
+padding: 0.75em 0.5em;
+border: 1px solid;
+background-color: lightblue;
+margin: 0;
+cursor: pointer;
+text-align: center;
+min-width: 99px;
 `;
 const { Header, Footer, Content } = Layout;
 
@@ -84,17 +80,19 @@ function Scheduling() {
     
 
     return (
-        // center the element
-        <div className="Scheduling" style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-        }}>
-            <Card bordered={true} style={{ width: "100%", height: "100%" }}>
+        <div className="Scheduling" >
+            <Row gutter={[24, 0]}>
+                <Col span={24} md={24} className="mb-24">
+                    <Card bordered={false}
+                        className="header-solid h-full ant-invoice-card"
+                    >
 
-                {/* <Layout> */}
-                <Header style = {{fontWeight: 900, fontSize: "22px"}} orientation="left">Upcoming Slots</Header>
-                <Header style={{ padding: '10px', display: 'flex', justifyContent: 'space-around' }}>
+
+                        {/* <Layout> */}
+                        <Header style={{ fontWeight: 900, fontSize: "22px" }} orientation="left">Upcoming Slots</Header>
+                        <Header style={{ padding: '10px', display: 'flex', justifyContent: 'space-around' }}>
+                            
+        
                     <DatePicker
                         disabledDate={(current) => {
                             return moment().add(-1, 'days') >= current
@@ -146,9 +144,12 @@ function Scheduling() {
                 {/* </Layout> */}
             </Card>
 
-        </div>
 
-        //   mountNode,
+
+                    
+                </Col>
+            </Row>
+        </div>
     )
 };
 

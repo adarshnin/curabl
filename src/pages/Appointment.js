@@ -20,7 +20,6 @@ const Listbox = styled.ul`
   list-style: none;
   margin: 0;
   padding: 1em;
-
   height: 355px;
   overflow: auto;
   border-top: 1px solid ${props => props.theme.secondary};
@@ -170,7 +169,7 @@ function Appointment() {
     
 
     return (
-        <div className="Scheduling">
+        <div className="Appointment">
             <Row gutter={[24, 0]}>
                 <Col span={24} md={8} className="mb-24">
                     <Card bordered={false}
