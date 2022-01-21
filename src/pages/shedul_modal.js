@@ -52,11 +52,11 @@ class Modal_shed extends React.Component {
     const serverURL = process.env.REACT_APP_SERVER_URL;
     let res, data;
           try {
-              console.log(serverURL);
+              console.log("this is date",this.props.Date,this.props);
                 res = await axios.post(` http://localhost:9000/generateSlot`, {
                     
                     "doctorId": "123",
-                    "Date": "Wed Jan 19 2022 21:27:11 GMT+0530 (India Standard Time)",
+                    "Date": this.props.Date,
                     "waitingPeriod" : this.state.user.waitingPeriod,
                     "slotperiod": this.state.user.slotPeriod,
                     "MstartTime":this.state.user.MstartTime[0].format("HH:mm"),
@@ -107,7 +107,7 @@ class Modal_shed extends React.Component {
 
           <div >
             <Card bordered={false} style={{ width: 300 }}>
-              <time_sheduling />
+              {/* <time_sheduling /> */}
               <p>Morning
                 <TimePicker.RangePicker
                  format={format}
@@ -127,7 +127,7 @@ class Modal_shed extends React.Component {
                  min={1}
                  max={60}
                  
-                 required="true"
+                 required={true}
                  value = {user.slotPeriod}
                  onChange	={this.handleslotPeriod}
                 />

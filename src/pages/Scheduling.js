@@ -1,9 +1,11 @@
 // Doctor
 
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Modal_shed from "./shedul_modal";
 import moment from 'moment'
 import styled from 'styled-components';
+import axios from 'axios';
+
 
 
 
@@ -44,14 +46,42 @@ function onSelect(value) {
 }
 
 function Scheduling() {
+
     var morning_schedule = [9, 9.15, 9.30, 9.45, 10, 10.15, 10.30, 10.45, 11, 11.15, 11.30, 11.45, 12, 12.15, 34, 3434, 98, 65, 23432, 536, 4, 3436, 76, 123, 87, 3444, 171, 43, 4550];
     var evening_schedule = [6, 6.34, 7.45, 8, 8.34, 8.7545, 9, 10, 11];
-    const [sched, changeDate] = useState(morning_schedule);
+    const [schedule, setschedule] = useState([]);
 
-    function onChange(date, dateString) {
-        changeDate(evening_schedule);
-        console.log(dateString);
+    async function onChange(date, dateString) {
+        // changeDate(evening_schedule);
+        Datechange(date)
+        console.log("date check",moment(date, 'DD/MM/YYYY', true).format(),date.format("YYYY-MM-DD"), moment(date.format("YYYY-MM-DD")));
+        var res = "";
+        try{
+            res = await axios.post(`http://localhost:9000/getSlot`, {
+                Date:date.format("DD-MM-YYYY")
+        });
+        } catch (err) {
+            console.error(err);
+        }
+        if(res?.data){
+            if (res.data.length <1){
+                console.log("empty");
+                setschedule([])
+            }
+            else{
+                // console.log(res.data);
+                console.log(res.data[0],res.data[0].slottime);
+                setschedule(res.data);
+            }
+            // setschedule(res.data);
+        }
+
     }
+
+    const [date , Datechange ] = useState(moment())
+    console.log(date);
+    // useEffect(()=>{},[date]);
+    
 
     return (
         // center the element
@@ -70,9 +100,13 @@ function Scheduling() {
                             return moment().add(-1, 'days') >= current
                         }}
                         format="DD-MM-YYYY"
-                        onChange={onChange} />
+                        allowClear={false}
+                        value={date}
+                        onChange={onChange}
+                        
+                        />
 
-                    <Modal_shed /></Header>
+                    <Modal_shed Date={date.format("DD-MM-YYYY")} /></Header>
                 <Content>
                     <>
                         {/* 
@@ -92,15 +126,15 @@ function Scheduling() {
                         /> */}
 
                         <Listbox style={{ overflow: 'auto', height: '420px' }}>
-                            {sched.map(slot => {
+                            {schedule.map(slot => {
                                 // const isValid = validator ? validator(slot) : true;
                                 return (
                                     <ListItem
-                                        key={slot}
+                                        key={slot.slottime}
                                         // isValid={isValid}
-                                        onClick={() => alert(slot)}
+                                        onClick={() => alert(slot.slottime)}
                                     >
-                                        {slot}
+                                        {slot.slottime}
                                     </ListItem>
                                 );
                             })}

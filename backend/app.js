@@ -20,6 +20,8 @@ var signinRouter = require('./routes/signin');
 var slotRouter = require('./routes/schedules');
 var generateSlot = require('./routes/generateSlot');
 var paymentRouter = require('./routes/payment');
+var getslotRouter = require('./routes/getslot');
+
 
 
 
@@ -45,6 +47,8 @@ app.use('/signup', signupRouter);
 app.use('/signin', signinRouter);
 app.use('/addslot', slotRouter);
 app.use('/generateSlot', generateSlot);
+app.use('/getSlot', getslotRouter);
+
 
 
 

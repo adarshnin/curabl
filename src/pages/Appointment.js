@@ -5,6 +5,8 @@ import Modal_shed from "./shedul_modal";
 import moment from 'moment'
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+
 
 
 
@@ -30,7 +32,7 @@ const ListItem = styled.li`
   margin: 0;
   cursor: pointer;
   text-align: center;
-  min-width: 99px;
+//   min-width: 99px;
 
 `;
 const { Header, Footer, Content } = Layout;
@@ -45,8 +47,48 @@ function onSelect(value) {
 function Appointment() {
     var morning_schedule = [9, 9.15, 9.30, 9.45, 10, 10.15, 10.30, 10.45, 11, 11.15, 11.30, 11.45, 12, 12.15, 34, 3434, 98, 65, 23432, 536, 4, 3436, 76, 123, 87, 3444, 171, 43, 4550];
     var evening_schedule = [6, 6.34, 7.45, 8, 8.34, 8.7545, 9, 10, 11];
-    const [date, changeDate] = useState("");
+    const [date, Datechange] = useState("");
     const [timeslot, submitted] = useState("");
+    const [schedule, setschedule] = useState([]);
+
+
+    // function onChange(date, dateString) {
+    //     changeDate(dateString);
+    //     // Selected a date or changed , picked
+    //     console.log(dateString);
+    // }
+    async function onChange(date, dateString) {
+        // changeDate(evening_schedule);
+        Datechange(date)
+        console.log("date check",moment(date, 'DD/MM/YYYY', true).format(),date.format("YYYY-MM-DD"), moment(date.format("YYYY-MM-DD")));
+        var res = "";
+        try{
+            res = await axios.post(`http://localhost:9000/getSlot`, {
+                Date:date.format("DD-MM-YYYY")
+        });
+        } catch (err) {
+            console.error(err);
+        }
+        if(res?.data){
+            if (res.data.length <1){
+                console.log("empty");
+                setschedule([])
+            }
+            else{
+                // console.log(res.data);
+                console.log(res.data[0],res.data[0].slottime);
+                setschedule(res.data);
+            }
+            // setschedule(res.data);
+        }
+
+    }
+
+    function onSelectSlot(slot) {
+        // When a slot is selected
+        submitted(slot);
+        console.log(slot, " Slot is selected")
+    }
 
     const timeSlotsContent = (<div>
         <Header style={{ fontWeight: 900, fontSize: "22px" }} orientation="left">Select Slot</Header>
@@ -56,23 +98,23 @@ function Appointment() {
                     return moment().add(-1, 'days') >= current
                 }}
                 format="DD-MM-YYYY"
+                allowClear={false}
                 onChange={onChange} />
 
         </Header>
         <Content>
             <>
                 <Listbox style={{ overflow: 'auto', height: '420px' }}>
-                    {morning_schedule.map(slot => {
+                    {schedule.map(slot => {
                         // const isValid = validator ? validator(slot) : true;
-                        return (
-                            <ListItem
-                                key={slot}
-
-                                // isValid={isValid}
-                                onClick={() => onSelectSlot(slot)}
-                            >
-                                {slot}
-                            </ListItem>
+                        return (                            
+                        <ListItem
+                            key={slot.slottime}
+                            // isValid={isValid}
+                            onClick={() => onSelectSlot(slot.slottime)}
+                        >
+                            {slot.slottime}
+                        </ListItem>
                         );
                     })}
                 </Listbox>
@@ -125,17 +167,7 @@ function Appointment() {
         content = submitContent;
     }
 
-    function onChange(date, dateString) {
-        changeDate(dateString);
-        // Selected a date or changed , picked
-        console.log(dateString);
-    }
-
-    function onSelectSlot(slot) {
-        // When a slot is selected
-        submitted(slot);
-        console.log(slot, " Slot is selected")
-    }
+    
 
     return (
         <div className="Scheduling">

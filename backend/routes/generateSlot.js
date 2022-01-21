@@ -1,24 +1,14 @@
-// import moment from 'moment';
 const moment = require("moment");
-// var x = {
-//     nextSlot: 30,
-//     breakTime: [
-//         ['11:00', '14:00'], ['16:00', '18:00']
-//     ],
-//     startTime: '8:00',
-//     endTime: '20:00'
-// };
-
 const express = require("express");
-
 const router = express.Router();
 const slotmodeltemplate = require("../models/slotmodel");
 
 
 
+
 function generateSlot(startTime,endtime,slotperiod,waitingtime){
     var slotTime = moment(startTime, "HH:mm");
-    console.log(slotTime.format("h:mm"));
+    // console.log(slotTime.format("h:mm"));
 
     var endTime = moment(endtime, "HH:mm");
     var nextSlot = parseInt(slotperiod) + parseInt(waitingtime);
@@ -39,14 +29,14 @@ router.post("/", async (req, res) => {
     try {
         const info = req.body;
         
-        console.log(info);
+        console.log("this info",info);
         
         morningSlot = generateSlot(info.MstartTime,info.MendTime,info.slotperiod,info.waitingPeriod);
         eveningSlot = generateSlot(info.EstartTime,info.EendTime,info.slotperiod,info.waitingPeriod);
-        console.log("morningSlot",morningSlot);
-        console.log("evening",eveningSlot);
+        // console.log("morningSlot",morningSlot);
+        // console.log("evening",eveningSlot);
         slots = morningSlot.concat(eveningSlot);
-        console.log(slots);
+        // console.log(slots);
         {slots.map(slot => {
             // const isValid = validator ? validator(slot) : true;
             var slot_period = ""
@@ -58,7 +48,7 @@ router.post("/", async (req, res) => {
             // console.log(slot);
             const userslot = new slotmodeltemplate({
                 doctorId: info.doctorId,
-                Date: info.Date,
+                date: info.Date,
                 slottime : slot,
                 slotperiod: info.slotperiod,
                 url: "",
@@ -72,7 +62,7 @@ router.post("/", async (req, res) => {
             userslot.save()
             .then(data =>{
                 
-                console.log(data);
+                console.log(data.date);
             })
             .catch(error =>{
                 res.send("fail to generate slot");
@@ -80,7 +70,7 @@ router.post("/", async (req, res) => {
                 return;
             })
             // res.sendStatus( 201);
-            console.log("done");
+            // console.log("done");
             
         })}    
         res.send("Done");
@@ -97,4 +87,3 @@ router.post("/", async (req, res) => {
 module.exports = router;
 
 
-// console.log("Time slots: ", times[1]);
