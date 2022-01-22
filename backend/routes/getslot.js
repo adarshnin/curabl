@@ -9,7 +9,7 @@ router.post("/", async (req, res) => {
         var Date = req.body.Date;
         // Date = moment(Date);
         console.log(Date);
-        slotmodeltemplate.find({ date:Date}).sort({ slottime: -1 }).exec((err, data) => {
+        slotmodeltemplate.find({ date:Date}).sort({ slottime: 1 }).exec((err, data) => {
                 if(err){
                     res.send("No Data found");
                     console.log(err);

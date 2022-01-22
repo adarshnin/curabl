@@ -23,13 +23,8 @@ var paymentRouter = require('./routes/payment');
 var getslotRouter = require('./routes/getslot');
 var reserveslotRouter = require('./routes/reserveSlots.js');
 
-
-
-
-
 const app = express();
 dotenv.config();
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

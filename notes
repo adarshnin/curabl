@@ -1,6 +1,5 @@
 Issues:
     Scheduling: When new date is selected, and slot times are submitted, the slots are still empty. useState wont work as modal file is used
-    Show slots in ascending order
     /payment should be inaccessible from URL
     
 Things left:

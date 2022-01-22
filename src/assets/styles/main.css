@@ -1,12 +1,10 @@
-/* To make text unselectable */
 body{
+  /* To make text unselectable */
   user-select: none; 
-  /* Standard */
 }
-/* This will hide unclickable time slots */
-/* this will hide div with class div_class_name */
-.dlXWNb {     
-  display:none;
+img {
+  /* To disable copy image */
+  pointer-events: none;
 }
 
 /* for card in scheduling.js */

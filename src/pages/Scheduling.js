@@ -34,12 +34,6 @@ min-width: 99px;
 `;
 const { Header, Footer, Content } = Layout;
 
-function onPanelChange(value, mode) {
-    console.log(value, mode);
-}
-function onSelect(value) {
-    console.log(value, "date selecteed");
-}
 
 function Scheduling() {
 
@@ -49,7 +43,7 @@ function Scheduling() {
 
     async function onChange(date, dateString) {
         // changeDate(evening_schedule);
-        Datechange(date)
+        changeDate(date)
         console.log("date check",moment(date, 'DD/MM/YYYY', true).format(),date.format("YYYY-MM-DD"), moment(date.format("YYYY-MM-DD")));
         var res = "";
         try{
@@ -74,7 +68,7 @@ function Scheduling() {
 
     }
 
-    const [date , Datechange ] = useState(moment())
+    const [date , changeDate ] = useState(moment())
     console.log(date);
     // useEffect(()=>{},[date]);
     
