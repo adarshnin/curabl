@@ -1,5 +1,3 @@
-
-
 import {
 	Row,
 	Col,
@@ -12,12 +10,14 @@ import {
 	Layout,
 } from "antd";
 import { Divider } from 'antd';
-
+import { useLocation } from 'react-router-dom'
 
 import React, { useState } from 'react'
 import logo from '../assets/images/logo.svg'
 import pay_logo from '../assets/images/payment_logos.png'
+const { Countdown } = Statistic;
 const { Header, Footer, Content } = Layout;
+
 
 function loadScript(src) {
 	return new Promise((resolve) => {
@@ -36,7 +36,10 @@ function loadScript(src) {
 const __DEV__ = document.domain === 'localhost'
 
 function Payment() {
-	const [name, setName] = useState('Mehul')
+	const location = useLocation()
+	const { from, data_slot } = location.state;
+	console.log("@@@@@@@@", from, data_slot);
+
 	const data = [
 		{
 			title: "Amount",
@@ -66,11 +69,11 @@ function Payment() {
 		},
 		{
 			title: "Appointment Time",
-			value: "11:15 AM",
+			value: data_slot.timeslot,
 		},
 		{
 			title: "Date",
-			value: "26 Jan 2022",
+			value: data_slot.date,
 		},
 	];
 	async function displayRazorpay() {
@@ -81,7 +84,7 @@ function Payment() {
 			return
 		}
 
-		const data = await fetch('http://localhost:1337/razorpay', { method: 'POST' }).then((t) =>
+		const data = await fetch('http://localhost:9000/payment/razorpay', { method: 'POST' }).then((t) =>
 			t.json()
 		)
 
@@ -94,14 +97,14 @@ function Payment() {
 			order_id: data.id,
 			name: 'Consultation fee',
 			description: 'curabl',
-			image: 'http://localhost:1337/logo.png',
+			image: 'http://localhost:9000/payment/logo.png',
 			handler: function (response) {
 				alert(response.razorpay_payment_id)
 				alert(response.razorpay_order_id)
 				alert(response.razorpay_signature)
 			},
 			prefill: {
-				name,
+				name: "Dev Patel",
 				contact: "+919834783982",
 				email: 'dev.patel@gmail.com'
 			},
@@ -130,10 +133,10 @@ function Payment() {
 							dataSource={data_appointment}
 							renderItem={(item) => (
 								<List.Item>
-									<List.Item.Meta
+									<List.Item.Meta style={{ marginLeft: '10%' }}
 										title={item.title}
 									/>
-									<div className="amount">{item.value}</div>
+									<div className="amount" style={{ marginRight: '13%' }}>{item.value}</div>
 								</List.Item>
 							)}
 						/>
@@ -151,7 +154,12 @@ function Payment() {
 						bordered={false}
 						className="header-solid h-full ant-invoice-card"
 						title={[<h6 className="font-semibold m-0">Payment Summary</h6>]}
-
+						extra={[
+							<Countdown title="Timer"
+								value={Date.now() + 10 * 30000}
+								onFinish={() => alert("Payment timeout")}
+							/>
+						]}
 					>
 						<List
 							itemLayout="horizontal"

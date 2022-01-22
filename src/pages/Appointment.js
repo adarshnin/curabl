@@ -6,10 +6,6 @@ import moment from 'moment'
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
-
-
-
 import { Button, DatePicker, Layout, Calendar, Select, Radio, Col, Row, Typography, Empty, Card, List, Divider, Space } from 'antd';
 
 const Listbox = styled.ul`
@@ -36,59 +32,13 @@ const ListItem = styled.li`
 `;
 const { Header, Footer, Content } = Layout;
 
-function onPanelChange(value, mode) {
-    console.log(value, mode);
-}
-function onSelect(value) {
-    console.log(value, "date selecteed");
-}
-
 function Appointment() {
     var morning_schedule = [9, 9.15, 9.30, 9.45, 10, 10.15, 10.30, 10.45, 11, 11.15, 11.30, 11.45, 12, 12.15, 34, 3434, 98, 65, 23432, 536, 4, 3436, 76, 123, 87, 3444, 171, 43, 4550];
     var evening_schedule = [6, 6.34, 7.45, 8, 8.34, 8.7545, 9, 10, 11];
-    const [date, Datechange] = useState("");
+    const [date, changeDate] = useState("");
     const [timeslot, submitted] = useState("");
     const [schedule, setschedule] = useState([]);
-
-
-    // function onChange(date, dateString) {
-    //     changeDate(dateString);
-    //     // Selected a date or changed , picked
-    //     console.log(dateString);
-    // }
-    async function onChange(date, dateString) {
-        // changeDate(evening_schedule);
-        Datechange(date)
-        console.log("date check",moment(date, 'DD/MM/YYYY', true).format(),date.format("YYYY-MM-DD"), moment(date.format("YYYY-MM-DD")));
-        var res = "";
-        try{
-            res = await axios.post(`http://localhost:9000/getSlot`, {
-                Date:date.format("DD-MM-YYYY")
-        });
-        } catch (err) {
-            console.error(err);
-        }
-        if(res?.data){
-            if (res.data.length <1){
-                console.log("empty");
-                setschedule([])
-            }
-            else{
-                // console.log(res.data);
-                console.log(res.data[0],res.data[0].slottime);
-                setschedule(res.data);
-            }
-            // setschedule(res.data);
-        }
-
-    }
-
-    function onSelectSlot(slot) {
-        // When a slot is selected
-        submitted(slot);
-        console.log(slot, " Slot is selected")
-    }
-
+    const doctorID = "123";
     const timeSlotsContent = (<div>
         <Header style={{ fontWeight: 900, fontSize: "22px" }} orientation="left">Select Slot</Header>
         <Header style={{ padding: '10px', alignContent: "left" }}>
@@ -106,14 +56,14 @@ function Appointment() {
                 <Listbox style={{ overflow: 'auto', height: '420px' }}>
                     {schedule.map(slot => {
                         // const isValid = validator ? validator(slot) : true;
-                        return (                            
-                        <ListItem
-                            key={slot.slottime}
-                            // isValid={isValid}
-                            onClick={() => onSelectSlot(slot.slottime)}
-                        >
-                            {slot.slottime}
-                        </ListItem>
+                        return (
+                            <ListItem
+                                key={slot.slottime}
+                                // isValid={isValid}
+                                onClick={() => onSelectSlot(slot.slottime)}
+                            >
+                                {slot.slottime}
+                            </ListItem>
                         );
                     })}
                 </Listbox>
@@ -149,14 +99,29 @@ function Appointment() {
                 </List.Item>
                 <List.Item style={{ marginLeft: '33%' }}>
                     <List.Item.Meta
-                        title={<Button type='primary'>Confirm Schedule</Button>
+                        title={
+                            <Link
+                                to={{
+                                    pathname: "/payment",
+                                    state: {
+                                        from: 'appointment', data_slot: { date: date, timeslot: timeslot, doctorID: doctorID }
+                                    }
+                                }
+                                } >
+                                <Button type='primary'
+                                    onClick={() =>
+
+                                        reserveSlot(date, timeslot, doctorID)
+                                    }
+                                >Confirm Schedule</Button>
+                            </Link>
                         }
                     />
                 </List.Item>
 
             </List>
 
-        </div>);
+        </div >);
 
     let content;
 
@@ -164,9 +129,78 @@ function Appointment() {
         content = timeSlotsContent;
     } else {
         content = submitContent;
+        console.log("newww contennntt");
+    }
+    async function reserveSlot(date, timeslot, doctorId) {
+        var res = "", res1 = ""
+        try {
+            res = await axios.post(`http://localhost:9000/reserveSlot/processing`, {
+                date: date,
+                timeslot: timeslot,
+                doctorId: doctorId
+            });
+        } catch (err) {
+            console.error(err);
+        }
+        if (res?.data) {
+            console.log(res.data);
+
+            try {
+                res1 = await axios.post(`http://localhost:9000/reserveSlot/startBackendTimer`, {
+                    date: date,
+                    timeslot: timeslot,
+                    doctorId: doctorId
+                });
+            } catch (err) {
+                console.error(err);
+            }
+            if (res1?.data)
+                console.log(res1.data);
+        }
+
+
     }
 
-    
+    async function onChange(date, dateString) {
+        // changeDate(evening_schedule);
+        console.log("in onChange functioonnn@");
+        console.log("begore changeDate", date);
+        changeDate(date.format("DD-MM-YYYY"))
+        console.log("date check", moment(date, 'DD/MM/YYYY', true).format(), date.format("YYYY-MM-DD"), moment(date.format("YYYY-MM-DD")));
+        var res = "";
+        try {
+            res = await axios.post(`http://localhost:9000/getSlot`, {
+                Date: date.format("DD-MM-YYYY")
+            });
+        } catch (err) {
+            console.error(err);
+        }
+        if (res?.data) {
+            if (res.data.length < 1) {
+                console.log("empty");
+                setschedule([])
+            }
+            else {
+                // console.log(res.data);
+                console.log(res.data[0], res.data[0].slottime);
+                setschedule(res.data);
+            }
+            // setschedule(res.data);
+        }
+
+    }
+    // function onChange(date, dateString) {
+    //     changeDate(dateString);
+    //     // Selected a date or changed , picked
+    //     console.log(dateString);
+    // }
+    function onSelectSlot(slot) {
+        // When a slot is selected
+        console.log("in onSelectSlot function")
+        submitted(slot);
+        console.log(slot, " Slot is selected")
+        // alert(" Slot is selected")
+    }
 
     return (
         <div className="Appointment">
@@ -176,9 +210,6 @@ function Appointment() {
                         className="header-solid h-full ant-invoice-card"
                     >
                         {content}
-
-
-
                     </Card>
                 </Col>
             </Row>

@@ -21,6 +21,8 @@ var slotRouter = require('./routes/schedules');
 var generateSlot = require('./routes/generateSlot');
 var paymentRouter = require('./routes/payment');
 var getslotRouter = require('./routes/getslot');
+var reserveslotRouter = require('./routes/reserveSlots.js');
+
 
 
 
@@ -48,16 +50,8 @@ app.use('/signin', signinRouter);
 app.use('/addslot', slotRouter);
 app.use('/generateSlot', generateSlot);
 app.use('/getSlot', getslotRouter);
-
-
-
-
-
-
-
-
-
-app.use('/payment/razorpay', paymentRouter);
+app.use('/reserveSlot', reserveslotRouter);
+app.use('/payment', paymentRouter);
 
 // app.use('/app', signupRouter);
 
