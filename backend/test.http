@@ -1,7 +1,11 @@
 POST http://localhost:9000/app/signup
 Content-Type: application/application/json
 {
-    "fullName": "ghanshyam",
+    "firstName": "ghanshyam",
+
+    "middleName": "parag",
+
+    "lastName": "patil",
     
     "email": "temp@gmail.com",
    

@@ -2,7 +2,7 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './uploads/avatars')
+    cb(null, '../public/uploads/avatars')
   },
   filename: function (req, file, cb) {
     cb(null, `${Date.now()}_${file.originalname}`)
@@ -28,4 +28,4 @@ const upload = multer({
   limits: limits,
 });
 
-module.exports = upload;
+module.exports = {upload};
