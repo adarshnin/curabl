@@ -4,7 +4,7 @@ const { checkSchema } = require('express-validator');
 
 // Custom Imports
 const { Patient, Doctor } = require('../models');
-const { convertJsonToDot, upload, assignPropsVal, assignPropsBooleanVal } = require('../utils');
+const { assignEmptyObj, convertJsonToDot, upload, assignPropsVal, assignPropsBooleanVal } = require('../utils');
 const { userValidationSchema, validateRequest } = require('../validators');
 
 // Define
