@@ -1,38 +1,22 @@
-Appointment
-    doctor_id
-    date
-    timeslot
-        evening
-        morning
-        hour
-        minute
-    Status - Free, Booked, or In process
-
-
-
-How to store times?
-
-    Timezone - IST
-    HH:MM or separate hour, minute variable
-
+Issues:
+    Scheduling: When new date is selected, and slot times are submitted, the slots are still empty. useState wont work as modal file is used
+    /payment should be inaccessible from URL
+    
+Things left:
+    Chat
+    Video calls
+    Profile - Searching doctors/disease - fever, dengue /services
+    Patient side display slots - Book - Payment
+    Sign in / Up
+    Google sign up ? integration?
+    
 change svgs of other pages
 
-
 Ghanshyam
-
-    Doctor scheduling store
-        Start time
-        end time
-        duration - 10 min, 15min ?
-    On doctor side, show the booked slots
         When clicked on slot, show addtional details - patient details
 
 Adarsh
 
-
-    optional - 
-    Gap time in time slots
-    Date must be selected to get slots, state must be changed
 
 Chaitanya
 
@@ -43,14 +27,3 @@ Points:
     Check apperance of pages on different Displays
     Split payment page into two ? for window resize issues
 
-Issues:
-    Scheduling: When new date is selected, and slot times are submitted, the slots are still empty. useState wont work as modal file is used
-    
-Things left:
-    Chat
-    Video calls
-    Profile - Searching doctors/disease - fever, dengue /services
-    Patient side display slots - Book - Payment
-    Sign in / Up
-    Google sign up ? integration?
-    

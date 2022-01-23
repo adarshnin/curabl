@@ -20,11 +20,9 @@ var generateSlot = require('./routes/generateSlot');
 var paymentRouter = require('./routes/payment');
 var getslotRouter = require('./routes/getslot');
 var profileRouter = require('./routes/profile');
-
-
+var reserveslotRouter = require('./routes/reserveSlots.js');
 
 const app = express();
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -45,16 +43,8 @@ app.use('/signin', signinRouter);
 app.use('/addslot', slotRouter);
 app.use('/generateSlot', generateSlot);
 app.use('/getSlot', getslotRouter);
-
-
-
-
-
-
-
-
-
-app.use('/payment/razorpay', paymentRouter);
+app.use('/reserveSlot', reserveslotRouter);
+app.use('/payment', paymentRouter);
 
 
 
