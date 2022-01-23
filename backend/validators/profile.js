@@ -1,6 +1,150 @@
 const { signUpSchema } = require('./signup');
 const { bloodGroup, designation, countries, country, gender, } = require('../arrays');
 
+const houseNo = {
+  in: 'body',
+  optional: { options: { nullable: true } },
+  trim: true,
+  isString: {
+    errorMessage: 'invalid houseNo',
+    bail: true,
+  },
+  isLength: {
+    errorMessage: 'houseNo should be max 30 characters',
+    options: { max: 30 },
+    bail: true,
+  }
+};
+const street = {
+  in: 'body',
+  optional: { options: { nullable: true } },
+  trim: true,
+  isString: {
+    errorMessage: 'invalid street',
+    bail: true,
+  },
+  isLength: {
+    errorMessage: 'street should be max 30 characters',
+    options: { max: 30 },
+    bail: true,
+  }
+};
+const landmark = {
+  in: 'body',
+  optional: { options: { nullable: true } },
+  trim: true,
+  isString: {
+    errorMessage: 'invalid landmark',
+    bail: true,
+  },
+  isLength: {
+    errorMessage: 'landmark should be max 30 characters',
+    options: { max: 30 },
+    bail: true,
+  }
+};
+const area = {
+  in: 'body',
+  optional: { options: { nullable: true } },
+  trim: true,
+  isString: {
+    errorMessage: 'invalid area',
+    bail: true,
+  },
+  isLength: {
+    errorMessage: 'area should be max 30 characters',
+    options: { max: 30 },
+    bail: true,
+  }
+};// Village/City/Town
+const district = {
+  in: 'body',
+  optional: { options: { nullable: true } },
+  isString: {
+    errorMessage: 'invalid district',
+    bail: true,
+  },
+  isLength: {
+    errorMessage: 'district should be max 30 characters',
+    options: { max: 30 },
+    bail: true,
+  }
+};
+const state = {
+  in: 'body',
+  optional: { options: { nullable: true } },
+  trim: true,
+  isString: {
+    errorMessage: 'invalid state',
+    bail: true,
+  },
+  isLength: {
+    errorMessage: 'state should be max 30 characters',
+    options: { max: 30 },
+    bail: true,
+  },
+  custom: {
+    bail: true,
+    errorMessage: 'given state is not in the given country',
+    options: (value, { req }) => {
+      if (req.body && req.body.address && req.body.address.country) {
+        return country[req.body.address.country].states.find(ele => ele === value);
+      }
+    },
+  }
+};
+const nation = {
+  in: 'body',
+  optional: { options: { nullable: true } },
+  trim: true,
+  isString: {
+    errorMessage: 'invalid country',
+    bail: true,
+  },
+  isIn: {
+    errorMessage: 'country should be max 30 characters',
+    options: [countries],
+    bail: true,
+  }
+};
+const postalCode = {
+  in: 'body',
+  optional: { options: { nullable: true } },
+  trim: true,
+  isPostalCode: {
+    options: 'IN',
+    bail: true,
+  },
+};
+const contactNo = {
+  in: 'body',
+  optional: { options: { nullable: true } },
+  trim: true,
+  isMobilePhone: {
+    errorMessage: 'Invalid mobile phone number',
+    // options: 'IN',
+    bail: true,
+  }
+};
+const address = {
+  in: 'body',
+  optional: { options: { nullable: true } },
+  customSanitizer: {
+    options: (value) => {
+      console.log(value);
+      if (typeof value === 'string') {
+        return JSON.parse(value);
+      }
+      return value;
+    }
+  },
+  isObject: {
+    errorMessage: 'address should be an object',
+    bail: true,
+  },
+};
+
+
 const userValidationSchema = {
   'isDoctor': signUpSchema['isDoctor'],
   'password': signUpSchema['password'],
@@ -101,148 +245,16 @@ const userValidationSchema = {
       bail: true,
     }
   },
-  '*.*.address': {
-    in: 'body',
-    optional: { options: { nullable: true } },
-    customSanitizer: {
-      options: (value) => {
-        console.log(value);
-        if (typeof value === 'string') {
-          return JSON.parse(value);
-        }
-        return value;
-      }
-    },
-    isObject: {
-      errorMessage: 'address should be an object',
-      bail: true,
-    },
-  },
-  '*.address.houseNo': {
-    in: 'body',
-    optional: { options: { nullable: true } },
-    trim: true,
-    isString: {
-      errorMessage: 'invalid houseNo',
-      bail: true,
-    },
-    isLength: {
-      errorMessage: 'houseNo should be max 30 characters',
-      options: { max: 30 },
-      bail: true,
-    }
-  },
-  '*.address.street': {
-    in: 'body',
-    optional: { options: { nullable: true } },
-    trim: true,
-    isString: {
-      errorMessage: 'invalid street',
-      bail: true,
-    },
-    isLength: {
-      errorMessage: 'street should be max 30 characters',
-      options: { max: 30 },
-      bail: true,
-    }
-  },
-  '*.address.landmark': {
-    in: 'body',
-    optional: { options: { nullable: true } },
-    trim: true,
-    isString: {
-      errorMessage: 'invalid landmark',
-      bail: true,
-    },
-    isLength: {
-      errorMessage: 'landmark should be max 30 characters',
-      options: { max: 30 },
-      bail: true,
-    }
-  },
-  '*.address.area': {
-    in: 'body',
-    optional: { options: { nullable: true } },
-    trim: true,
-    isString: {
-      errorMessage: 'invalid area',
-      bail: true,
-    },
-    isLength: {
-      errorMessage: 'area should be max 30 characters',
-      options: { max: 30 },
-      bail: true,
-    }
-  },// Village/City/Town
-  '*.address.district': {
-    in: 'body',
-    optional: { options: { nullable: true } },
-    isString: {
-      errorMessage: 'invalid district',
-      bail: true,
-    },
-    isLength: {
-      errorMessage: 'district should be max 30 characters',
-      options: { max: 30 },
-      bail: true,
-    }
-  },
-  '*.address.state': {
-    in: 'body',
-    optional: { options: { nullable: true } },
-    trim: true,
-    isString: {
-      errorMessage: 'invalid state',
-      bail: true,
-    },
-    isLength: {
-      errorMessage: 'state should be max 30 characters',
-      options: { max: 30 },
-      bail: true,
-    },
-    custom: {
-      bail: true,
-      errorMessage: 'given state is not in the given country',
-      options: (value, { req }) => {
-        if (req.body && req.body.address && req.body.address.country) {
-          return country[req.body.address.country].states.find(ele => ele === value);
-        }
-      },
-    }
-  },
-  '*.address.country': {
-    in: 'body',
-    optional: { options: { nullable: true } },
-    trim: true,
-    isString: {
-      errorMessage: 'invalid country',
-      bail: true,
-    },
-    isIn: {
-      errorMessage: 'country should be max 30 characters',
-      options: [countries],
-      bail: true,
-    }
-  },
-  '*.address.postalCode': {
-    in: 'body',
-    optional: { options: { nullable: true } },
-    trim: true,
-    isPostalCode: {
-      options: 'IN',
-      bail: true,
-    },
-  },
-  '*.contactNo': {
-    in: 'body',
-    optional: { options: { nullable: true } },
-    trim: true,
-    isMobilePhone: {
-      errorMessage: 'Invalid mobile phone number',
-      // options: 'IN',
-      bail: true,
-    }
-  },
+  address,
+  'address.houseNo': houseNo,
+  'address.street': street,
+  'address.landmark': landmark,
+  'address.area': area,
+  'address.district': district,
+  'address.state': state,
+  'address.country': nation,
+  'address.postalCode': postalCode,
+  contactNo,
   'dob': {
     in: 'body',
     optional: { options: { nullable: true } },
@@ -380,6 +392,16 @@ const userValidationSchema = {
       bail: true,
     },
   },
+  'clinic.contactNo': contactNo,
+  'clinic.address': address,
+  'clinic.address.houseNo': houseNo,
+  'clinic.address.street': street,
+  'clinic.address.landmark': landmark,
+  'clinic.address.area': area,
+  'clinic.address.district': district,
+  'clinic.address.state': state,
+  'clinic.address.country': nation,
+  'clinic.address.postalCode': postalCode,
   'clinic.licenseNo': {
     in: 'body',
     optional: { options: { nullable: true } },

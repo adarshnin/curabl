@@ -12,7 +12,7 @@ const assignPropsBooleanVal = (propsArr, data, userData) => {
 
 const assignEmptyObj = (propsArr, userData) => {
   propsArr.forEach(prop => {
-    if (userData[prop]) userData[prop] = {};
+    if (!userData[prop]) userData[prop] = {};
   });
 }
 
