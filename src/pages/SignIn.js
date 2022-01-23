@@ -13,6 +13,8 @@ import {
   Switch,
 } from "antd";
 import signinbg from "../assets/images/img-signin.jpg";
+import axios from 'axios';
+
 import {
   DribbbleOutlined,
   TwitterOutlined,
@@ -108,6 +110,11 @@ export default class SignIn extends Component {
   render() {
     const onFinish = (values) => {
       console.log("Success:", values);
+      <Link to="/dashboard">
+                    {template}
+                    <span> Dashboard</span>
+      </Link>
+
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -128,12 +135,7 @@ export default class SignIn extends Component {
                     <span> Dashboard</span>
                   </Link>
                 </Menu.Item>
-                <Menu.Item key="2">
-                  <Link to="/profile">
-                    {profile}
-                    <span>Profile</span>
-                  </Link>
-                </Menu.Item>
+                
                 <Menu.Item key="3">
                   <Link to="/sign-up">
                     {signup}
@@ -148,9 +150,7 @@ export default class SignIn extends Component {
                 </Menu.Item>
               </Menu>
             </div>
-            <div className="header-col header-btn">
-              <Button type="primary">FREE DOWNLOAD</Button>
-            </div>
+            
           </Header>
           <Content className="signin">
             <Row gutter={[24, 0]} justify="space-around">
