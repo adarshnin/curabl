@@ -21,6 +21,7 @@ var paymentRouter = require('./routes/payment');
 var getslotRouter = require('./routes/getslot');
 var profileRouter = require('./routes/profile');
 var reserveslotRouter = require('./routes/reserveSlots.js');
+var BookSlotRouter =  require('./routes/booked');
 
 const app = express();
 
@@ -45,6 +46,7 @@ app.use('/generateSlot', generateSlot);
 app.use('/getSlot', getslotRouter);
 app.use('/reserveSlot', reserveslotRouter);
 app.use('/payment', paymentRouter);
+app.use('/bookSlot', BookSlotRouter);
 
 
 

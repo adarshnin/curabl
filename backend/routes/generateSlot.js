@@ -54,8 +54,8 @@ router.post("/", async (req, res) => {
                 url: "",
                 userid : "",
                 paymentid: "",
-                dayperoiod: slot_period,
-                Status : "free"
+                dayperiod: slot_period,
+                status : "free"
             });
             // res.send("temp"); 
             // console.log("donecheck");

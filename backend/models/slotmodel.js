@@ -9,8 +9,6 @@ const schedulingSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    
-    
     date:{
         type: String,
         required:true
@@ -36,14 +34,22 @@ const schedulingSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    orderid:{
+        type: String,
+        required: false
+    },
+    signature:{
+        type: String,
+        required: false
+    },
     // evening/afternoon.
-    dayperoiod: {
+    dayperiod: {
         type: String,
         required: true
     },
 
     // Free, Booked, or In process
-    Status :{
+    status :{
         type: String,
         required: true
     }
