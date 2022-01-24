@@ -1,7 +1,10 @@
 Issues:
     Scheduling: When new date is selected, and slot times are submitted, the slots are still empty. useState wont work as modal file is used
+    GET doctor name from ID
     /payment should be inaccessible from URL
-    
+    morning/evening should be only on frontend. doctor should be able to select any number of slots
+    renew certificates
+
 Things left:
     Chat
     Video calls

@@ -49,7 +49,7 @@ function Appointment() {
     const [schedule, setschedule] = useState([]);
     const [loading, setLoading] = useState(false);
     const [slotStatus, setStatus] = useState(false);
-    const doctorID = "123";
+    const doctorID = "123", patientID = "test123";
     let redirection;
 
     if (slotStatus) {
@@ -58,7 +58,7 @@ function Appointment() {
             to={{
                 pathname: "/payment",
                 state: {
-                    from: 'appointment', data_slot: { date: date, timeslot: timeslot, doctorID: doctorID }
+                    from: 'appointment', data_slot: { date: date, timeslot: timeslot, doctorID: doctorID, patientID: patientID }
                 }
             }
             } />);

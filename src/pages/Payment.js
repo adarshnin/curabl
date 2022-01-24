@@ -215,11 +215,12 @@ function Payment() {
 				changePaymentStatus(response.razorpay_payment_id);
 
 				// Send payment details to backend
-				var res = "";
+				var res = "", res1 = "";
 				try {
 					res = await axios.post(`http://localhost:9000/bookSlot`, {
 						date: data_slot.date,
 						doctorId: data_slot.doctorID,
+						patientId: data_slot.patientID,
 						timeslot: data_slot.timeslot,
 						paymentID: response.razorpay_payment_id,
 						orderID: response.razorpay_order_id,
@@ -230,6 +231,19 @@ function Payment() {
 				}
 				if (res?.data) {
 					console.log(res.data);
+					try {
+						res1 = await axios.post(`http://localhost:9000/myappointments/newAppointment`, {
+							date: data_slot.date,
+							slottime: data_slot.timeslot,
+							doctorId: data_slot.doctorID,
+							patientId: data_slot.patientID,
+						});
+					} catch (err) {
+						console.error(err);
+					}
+					if (res1?.data) {
+						console.log(res1.data);
+					}
 				}
 			},
 			prefill: {

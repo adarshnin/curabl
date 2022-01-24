@@ -76,10 +76,7 @@ router.post("/", async (req, res) => {
         res.send("Done");
 
     } catch (error) {
-        // res.status(400).send(error);
-        var data = { error: "Unauthorized Access!", data: "You have entered invalid credentials." }
-        console.log("in catch", error);
-        res.render("login", data);
+        res.send( error);
     }
 
 });
