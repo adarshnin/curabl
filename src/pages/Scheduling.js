@@ -1,14 +1,9 @@
 // Doctor
-
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal_shed from "./shedul_modal";
 import moment from 'moment'
 import styled from 'styled-components';
 import axios from 'axios';
-
-
-
-
 import { Button, DatePicker, Layout, Calendar, Select, Radio, Col, Row, Typography, Empty, Card, List, Divider, Space } from 'antd';
 
 const Listbox = styled.ul`
@@ -44,23 +39,23 @@ function Scheduling() {
     async function onChange(date, dateString) {
         // changeDate(evening_schedule);
         changeDate(date)
-        console.log("date check",moment(date, 'DD/MM/YYYY', true).format(),date.format("YYYY-MM-DD"), moment(date.format("YYYY-MM-DD")));
+        console.log("date check", moment(date, 'DD/MM/YYYY', true).format(), date.format("YYYY-MM-DD"), moment(date.format("YYYY-MM-DD")));
         var res = "";
-        try{
+        try {
             res = await axios.post(`http://localhost:9000/getSlot`, {
-                Date:date.format("DD-MM-YYYY")
-        });
+                Date: date.format("DD-MM-YYYY")
+            });
         } catch (err) {
             console.error(err);
         }
-        if(res?.data){
-            if (res.data.length <1){
+        if (res?.data) {
+            if (res.data.length < 1) {
                 console.log("empty");
                 setschedule([])
             }
-            else{
+            else {
                 // console.log(res.data);
-                console.log(res.data[0],res.data[0].slottime);
+                console.log(res.data[0], res.data[0].slottime);
                 setschedule(res.data);
             }
             // setschedule(res.data);
@@ -68,10 +63,10 @@ function Scheduling() {
 
     }
 
-    const [date , changeDate ] = useState(moment())
+    const [date, changeDate] = useState(moment())
     console.log(date);
     // useEffect(()=>{},[date]);
-    
+
 
     return (
         <div className="Scheduling" >
@@ -80,67 +75,46 @@ function Scheduling() {
                     <Card bordered={false}
                         className="header-solid h-full ant-invoice-card"
                     >
-
-
-                        {/* <Layout> */}
                         <Header style={{ fontWeight: 900, fontSize: "22px" }} orientation="left">Upcoming Slots</Header>
                         <Header style={{ padding: '10px', display: 'flex', justifyContent: 'space-around' }}>
-                            
-        
-                    <DatePicker
-                        disabledDate={(current) => {
-                            return moment().add(-1, 'days') >= current
-                        }}
-                        format="DD-MM-YYYY"
-                        allowClear={false}
-                        value={date}
-                        onChange={onChange}
-                        
-                        />
 
-                    <Modal_shed Date={date.format("DD-MM-YYYY")} /></Header>
-                <Content>
-                    <>
-                        {/* 
-                        <List style={{ overflow: 'auto', height: '220px' }}
-                        // header={<div>Header</div>}
-                        // footer={<div>Footer</div>}
-                        bordered
-                        dataSource={morning_schedule}
-                        renderItem={item => (
-                            <List.Item>
-                            <Typography.Text mark>{item}</Typography.Text>
-                            <Button type="primary" danger>
-                            Delete
-                            </Button>
-                            </List.Item>
-                            )}
-                        /> */}
 
-                        <Listbox style={{ overflow: 'auto', height: '420px' }}>
-                            {schedule.map(slot => {
-                                // const isValid = validator ? validator(slot) : true;
-                                return (
-                                    <ListItem
-                                        key={slot.slottime}
-                                        // isValid={isValid}
-                                        onClick={() => alert(slot.slottime)}
-                                    >
-                                        {slot.slottime}
-                                    </ListItem>
-                                );
-                            })}
-                        </Listbox>
+                            <DatePicker
+                                disabledDate={(current) => {
+                                    return moment().add(-1, 'days') >= current
+                                }}
+                                format="DD-MM-YYYY"
+                                allowClear={false}
+                                // value={date}
+                                onChange={onChange}
 
-                    </>
-                </Content>
+                            />
 
-                {/* </Layout> */}
-            </Card>
+                            <Modal_shed Date={date.format("DD-MM-YYYY")} /></Header>
+                        <Content>
+                            <>
+                                <Listbox style={{ overflow: 'auto', height: '420px' }}>
+                                    {schedule.map(slot => {
+                                        // const isValid = validator ? validator(slot) : true;
+                                        return (
+                                            <ListItem
+                                                key={slot.slottime}
+                                                // isValid={isValid}
+                                                onClick={() => alert(slot.slottime)}
+                                            >
+                                                {slot.slottime}
+                                            </ListItem>
+                                        );
+                                    })}
+                                </Listbox>
+
+                            </>
+                        </Content>
+                    </Card>
 
 
 
-                    
+
                 </Col>
             </Row>
         </div>

@@ -11,8 +11,8 @@ router.post("/processing", async (req, res) => {
         var data = req.body;
         // Date = moment(Date);
         console.log(data.date);
-        const filter = { doctorId: data.doctorId, date: data.date, slottime: data.timeslot, Status: "free" };
-        const update = { Status: "processing" };
+        const filter = { doctorId: data.doctorId, date: data.date, slottime: data.timeslot, status: "free" };
+        const update = { status: "processing" };
         let doc = await slotmodeltemplate.findOneAndUpdate(filter, update).exec((err, data) => {
             if (err) {
                 res.send("No Data found");
@@ -39,15 +39,14 @@ router.post("/startBackendTimer", async (req, res) => {
 
     res.send("time applied")
 
-    // However, the cue is not announced until at least 5000ms have
-    // passed through the use of setTimeout
+    // After 10 min, if slot is processing, it is freed.
     setTimeout(async function () {
         try {
             var data = req.body;
             // Date = moment(Date);
             console.log(data.date);
-            const filter = { doctorId: data.doctorId, date: data.date, slottime: data.timeslot, Status: "processing" };
-            const update = { Status: "free" };
+            const filter = { doctorId: data.doctorId, date: data.date, slottime: data.timeslot, status: "processing" };
+            const update = { status: "free" };
             let doc = await slotmodeltemplate.findOneAndUpdate(filter, update).exec((err, data) => {
                 if (err) {
                     // res.send("No Data found");

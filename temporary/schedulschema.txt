@@ -6,5 +6,5 @@ intment
     url:
     userid:
     paymentid:string
-    dayperoiod: evening/afternoon.
-    Status - Free, Booked, or In process
+    dayperiod: evening/afternoon.
+    status - Free, Booked, or In process

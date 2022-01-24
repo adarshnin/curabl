@@ -6,6 +6,6 @@
         "url": "http//",
         "userid" : "usr123",
         "paymentid": "pyt1235",
-        "dayperoiod": "evening",
-        "Status" : "free"
+        "dayperiod": "evening",
+        "status" : "free"
 }

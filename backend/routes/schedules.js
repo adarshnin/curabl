@@ -21,8 +21,8 @@ router.post("/",(req,res)=>{
         url: req.body.url,
         userid : req.body.userid,
         paymentid: req.body.paymentid,
-        dayperoiod: req.body.dayperoiod,
-        Status : req.body.Status
+        dayperiod: req.body.dayperiod,
+        status : req.body.status
     });
     // res.send("temp"); 
     console.log("donecheck");

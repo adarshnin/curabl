@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Password = require("../services/password");
-const {ageCalculator} = require('../libs/utils');
+const { ageCalculator } = require('../utils');
 
 const { Schema } = mongoose;
 
@@ -25,18 +25,6 @@ const contactGroup = {
     address: addressSchema,
 };
 
-const clinicSchema = new Schema({
-    licenseNo: String,
-    license: Buffer,
-    role: String,
-    ...contactGroup,
-    email: {
-        type: String,
-        required: [true, "Clinic Mail Required"],
-        unique: true,
-    }
-});
-
 const nameSchema = {
     firstName: String,
     middleName: String,
@@ -48,23 +36,14 @@ const identityGroup = {
         type: String,
         enum: ['Dr.', 'Mr.', 'Mrs.', 'Miss', 'Er.', 'Prof.'],
     },
-    imrNumber: {
-        type: String,
-    },
     name: {
         type: nameSchema,
         required: [true, "Name Required"]
     },
-    description: String,
 };
-
-const chargesSchema = new Schema({
-    consultation: Number,
-});
 
 const infoGroup = {
     dob: Date,
-    age: String,
     gender: {
         type: String,
         enum: ['male', 'female', 'other'],
@@ -76,31 +55,23 @@ const infoGroup = {
     },
 };
 
-const profileSchema = new Schema({
+const patientSchema = new Schema({
     ...identityGroup,
     ...infoGroup,
     ...contactGroup,
+    password: {
+        type: String,
+        required: true
+    },
     isDoctor: {
         type: Boolean,
         required: [true, "Need to be either doctor or patient"]
     },
-    password: {
-        type: String,
-        required: [true, "Needs password for authentication"],
-    },
-    clinic: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'clinicSchema',
-        // required: true,
-    },
-    fees: {
-        type: chargesSchema,
-    }
 },
     {
         toJSON: {
             transform(doc, ret) {
-                if(ret.dob) {
+                if (ret.dob) {
                     ret.age = ageCalculator(ret.dob);
                 } else {
                     delete ret.age;
@@ -114,14 +85,14 @@ const profileSchema = new Schema({
     },
 );
 
-profileSchema.pre("save", async function (next) {
+patientSchema.pre("save", async function (next) {
     if (this.isModified('password')) {
         const hashed = await Password.toHash(this.get('password'));
         this.set('password', hashed);
     }
     next();
-})
+});
 
-const Profile = mongoose.model("Profile", profileSchema);
+const Patient = mongoose.model("Patient", patientSchema);
 
-module.exports = Profile;
+module.exports = { Patient };

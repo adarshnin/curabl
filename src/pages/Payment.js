@@ -11,7 +11,7 @@ import {
 } from "antd";
 import { Divider } from 'antd';
 import { useLocation } from 'react-router-dom'
-
+import axios from 'axios';
 import React, { useState } from 'react'
 import logo from '../assets/images/logo.svg'
 import pay_logo from '../assets/images/payment_logos.png'
@@ -204,11 +204,29 @@ function Payment() {
 			name: 'Consultation fee',
 			description: 'curabl',
 			image: 'http://localhost:9000/payment/logo.png',
-			handler: function (response) {
+			handler: async function (response) {
 				alert(response.razorpay_payment_id)
 				alert(response.razorpay_order_id)
 				alert(response.razorpay_signature)
 				changePaymentStatus("success");
+
+				// Send payment details to backend
+				var res = "";
+				try {
+					res = await axios.post(`http://localhost:9000/bookSlot`, {
+						date: data_slot.date,
+						doctorId: data_slot.doctorID,
+						timeslot: data_slot.timeslot,
+						paymentID: response.razorpay_payment_id,
+						orderID: response.razorpay_order_id,
+						signature: response.razorpay_signature,
+					});
+				} catch (err) {
+					console.error(err);
+				}
+				if (res?.data) {
+					console.log(res.data);
+				}
 			},
 			prefill: {
 				name: "Dev Patel",
