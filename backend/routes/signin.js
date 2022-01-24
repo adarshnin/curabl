@@ -8,28 +8,19 @@ router.post("/", async (req, res) => {
     try {
         const emailid = req.body.email;
         const pass = req.body.password;
-        const user = await Users.findOne({
-            email: emailid
-        });
-        if (user && user.password === pass) {
-
-            // //generate token using jwt 
-            // const token = await user.generateAuthToken();
-            // //set the cookie in browser
-            // res.cookie("jwt", token, {
-            //     expires: new Date(Date.now() + 1500000),
-            //     httpOnly: true
-            // });
-            console.log("user verified")
-
-            
-        }
-        else {
-            // res.send("Password Wrong!!!!");
-            var data = { error: "Unauthorized Access!", data: "You have entered invalid credentials." }
-            console.log("Unauthorized Access!")
-            // res.render("login", data);
-        }
+        signuptemplate.find({ email:emailid }).exec((err, data) => {
+            if(err){
+                res.status(400).send("Error at server side");
+                
+                var data = { error: "Unauthorized Access!", data: "You have entered invalid credentials." }
+                console.log("Unauthorized Access!")
+                
+            }
+            else{
+                console.log(data,data.length);
+            }
+        })
+        
 
     } catch (error) {
         // res.status(400).send(error);

@@ -108,12 +108,22 @@ const signin = [
 ];
 export default class SignIn extends Component {
   render() {
-    const onFinish = (values) => {
-      console.log("Success:", values);
-      <Link to="/dashboard">
-                    {template}
-                    <span> Dashboard</span>
-      </Link>
+    const onFinish = async(values) => {
+      
+      // console.log("Success:", values.Name);
+      var res = "";
+      try{
+          res = await axios.post(`http://localhost:9000/signin`, {
+              
+              email:values.email,
+              password:values.password
+      });
+      } catch (err) {
+          console.error(err);
+      }
+      if(res?.data){
+        console.log("resdata",res.data);
+      }
 
     };
 
@@ -125,7 +135,7 @@ export default class SignIn extends Component {
         <Layout className="layout-default layout-signin">
           <Header>
             <div className="header-col header-brand">
-              <h5>Muse Dashboard</h5>
+              <h5>curabl</h5>
             </div>
             <div className="header-col header-nav">
               <Menu mode="horizontal" defaultSelectedKeys={["1"]}>
