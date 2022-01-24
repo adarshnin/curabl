@@ -59,6 +59,10 @@ function Payment() {
 			title: "Mode of Payment",
 			value: "RazorPay",
 		},
+		{
+			title: "Payment ID",
+			value: pay_status,
+		},
 	];
 	const data = [
 		{
@@ -205,10 +209,10 @@ function Payment() {
 			description: 'curabl',
 			image: 'http://localhost:9000/payment/logo.png',
 			handler: async function (response) {
-				alert(response.razorpay_payment_id)
-				alert(response.razorpay_order_id)
-				alert(response.razorpay_signature)
-				changePaymentStatus("success");
+				// alert(response.razorpay_payment_id)
+				// alert(response.razorpay_order_id)
+				// alert(response.razorpay_signature)
+				changePaymentStatus(response.razorpay_payment_id);
 
 				// Send payment details to backend
 				var res = "";

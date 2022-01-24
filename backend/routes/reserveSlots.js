@@ -15,7 +15,7 @@ router.post("/processing", async (req, res) => {
         const update = { status: "processing" };
         let doc = await slotmodeltemplate.findOneAndUpdate(filter, update).exec((err, data) => {
             if (err) {
-                res.send("No Data found");
+                res.send(null);
                 console.log(err);
             }
             else {

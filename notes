@@ -15,7 +15,7 @@ Ghanshyam
         When clicked on slot, show addtional details - patient details
 
 Adarsh
-
+    When confirm schedule on patient side is clicked, show error if slot is in processing
 
 Chaitanya
 
