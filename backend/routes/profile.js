@@ -97,7 +97,7 @@ router.post('/',
       assignPropsVal(doctorInfoProps, data, user);
 
       // Charges Schema
-      assignPropsVal(feesProps, data.fees, user)
+      assignPropsVal(feesProps, data.fees, user.fees);
 
       // Experience Schema
       assignPropsVal(experienceProps, data, user);
