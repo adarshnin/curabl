@@ -8,7 +8,7 @@ const experienceGroup = {
     services: { type: [String], default: undefined },
     specializations: { type: [String], default: undefined },
     memberships: { type: [String], default: undefined },
-    experience: {type: Number},
+    experience: { type: Number },
     education: { type: [String], default: undefined },
     registrations: { type: [String], default: undefined },
     awardsAndRecognition: { type: [String], default: undefined },

@@ -68,6 +68,7 @@ router.post('/',
     let doctorObjectProps = ['clinic', 'fees',];
     let uploadProps = ['profileImage'];
     let booleanProps = ['isDoctor'];
+    let clinicObjProps = ['address'];
 
     if (user) {
       assignEmptyObj(objectProps, user);
@@ -103,6 +104,7 @@ router.post('/',
 
       // Clinic Schema
       if (data.clinic) {
+        assignEmptyObj(clinicObjProps, user.clinic);
         assignPropsVal(clinicProps, data.clinic, user.clinic);
         if (data.clinic.address) {
           assignPropsVal(addressProps, data.clinic.address, user.clinic.address);
