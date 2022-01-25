@@ -112,8 +112,11 @@ function Scheduling() {
                                             />
                                         }
                                     />
-                                    <div className="amount" style={{ marginRight: '15%', marginLeft: "10%"}}>Date: {date.format("DD-MM-YYYY")}</div>
+                                    <div className="amount" style={{ marginRight: '15%', marginLeft: "10%" }}>Date: {date.format("DD-MM-YYYY")}</div>
                                     <div className="amount" style={{ marginRight: '10%' }}> <Modal_shed Date={date.format("DD-MM-YYYY")} /></div>
+                                    <div className="amount" style={{ marginRight: '10%' }}> <Button type="default" onClick={() => {
+                                        onChange(date);
+                                    }}>Refresh</Button></div>
 
                                 </List.Item>
 

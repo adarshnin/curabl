@@ -95,8 +95,8 @@ function Appointments() {
                 <>
                     <Link
                         to={{
-                            pathname: app_data[i]['meetingurl'],
-                            // state: { fromDashboard: true }
+                            pathname: '/call',
+                            state: { from: 'myAppointments', meetingurl: app_data[i]['meetingurl'] }
                         }}
                     >
                         <Button type="primary" className="tag-primary">
@@ -141,21 +141,23 @@ function Appointments() {
                             bordered={false}
                             className="criclebox tablespace mb-24"
                             title="My Appointments"
-                        // extra={
-                        //     <>
-                        //         <Radio.Group onChange={onChange} defaultValue="a">
-                        //             <Radio.Button value="a">All</Radio.Button>
-                        //             <Radio.Button value="b">ONLINE</Radio.Button>
-                        //         </Radio.Group>
-                        //     </>
-                        // }
+                            extra={
+                                <>
+                                    <p className="card-header-date">
+                                        <span>Total: {data.length}</span>
+                                    </p>
+                                </>
+                            }
                         >
                             <div className="table-responsive">
                                 <Table
                                     columns={columns}
                                     dataSource={data}
-                                    pagination={true}
+                                    pagination={{
+                                        pageSize: 5
+                                    }}
                                     className="ant-border-space"
+
                                 />
                             </div>
                         </Card>

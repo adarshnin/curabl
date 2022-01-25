@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 
-import { Modal, Button, Card, TimePicker, InputNumber } from 'antd';
+import { Modal, Button, Card, TimePicker, InputNumber, message } from 'antd';
 // import { useState } from 'react';
 
 // .site-card-border-less-wrapper {
@@ -69,9 +69,12 @@ class Modal_shed extends React.Component {
     } catch (err) {
       console.error(err);
     }
-    setTimeout(() => {
+    if (res.data) {
+      message.success('Slots Created. Click Refresh button to display your slots.', 10);
       this.setState({ loading: false, visible: false });
-    }, 3000);
+
+    }
+
   };
 
   handleCancel = () => {
