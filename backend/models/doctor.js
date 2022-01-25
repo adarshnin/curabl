@@ -8,10 +8,11 @@ const experienceGroup = {
     services: { type: [String], default: undefined },
     specializations: { type: [String], default: undefined },
     memberships: { type: [String], default: undefined },
-    experience: { type: [String], default: undefined },
+    experience: {type: Number},
     education: { type: [String], default: undefined },
     registrations: { type: [String], default: undefined },
     awardsAndRecognition: { type: [String], default: undefined },
+    disease: { type: [String], default: undefined },
 };
 
 const addressSchema = new Schema({
