@@ -1,6 +1,11 @@
 
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link,useHistory,withRouter } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
+import auth from "../auth";
+import {currentUserSubject,authenticationService} from "../services/authservice"
+
+
 import {
   Layout,
   Menu,
@@ -21,9 +26,7 @@ import {
   InstagramOutlined,
   GithubOutlined,
 } from "@ant-design/icons";
-function onChange(checked) {
-  console.log(`switch to ${checked}`);
-}
+
 const { Title } = Typography;
 const { Header, Footer, Content } = Layout;
 const template = [
@@ -107,28 +110,62 @@ const signin = [
   </svg>,
 ];
 export default class SignIn extends Component {
+  constructor(props) {
+    super(props);
+
+    // redirect to home if already logged in
+    if (authenticationService.currentUserValue) { 
+        this.props.history.push('/');
+    }
+  }
+  state = {
+    loading: false,
+    isDoctor:false
+  }
+  
   render() {
+
+
+    
     const onFinish = async(values) => {
       
       // console.log("Success:", values.Name);
+      // console.log("token",localStorage.getItem("xtoken"));
+      
       var res = "";
       try{
           res = await axios.post(`http://localhost:9000/signin`, {
               
               email:values.email,
-              password:values.password
+              password:values.password,
+              isDoctor: this.state.isDoctor
       });
       } catch (err) {
           console.error(err);
       }
       if(res?.data){
-        console.log("resdata",res.data);
+        if (res.data?.result){
+          console.log("resdata",res.data.result,res.data.token);
+          localStorage.setItem("token", res.data.token)
+          localStorage.setItem('currentUser', JSON.stringify(res.data.result));
+          currentUserSubject.next(res.data.result);
+          // const { from } = this.props.location.state || { from: { pathname: "/dashboard" } };
+          // this.props.history.push(from);
+          // auth.login();
+          // console.log("is authentated",auth.isAuthenticated());
+          // await userAuthentication();
+          this.props.history.push("/dashboard");
+        }
       }
 
     };
 
     const onFinishFailed = (errorInfo) => {
       console.log("Failed:", errorInfo);
+    };
+    const onChange = (checked) => {
+      console.log(`switch to ${checked}`);
+      this.state.isDoctor = checked;
     };
     return (
       <>
@@ -208,13 +245,14 @@ export default class SignIn extends Component {
                   </Form.Item>
 
                   <Form.Item
-                    name="remember"
-                    className="aligin-center"
-                    valuePropName="checked"
-                  >
-                    <Switch defaultChecked onChange={onChange} />
-                    Remember me
-                  </Form.Item>
+                  name="isDoctor"
+                  className="aligin-center"
+                  valuePropName="checked"
+                  // initialValue={this.state.isDoctor}
+                >
+                  <span style={{ marginLeft: "30%" }}>Are you a doctor?</span>
+                  <Switch style={{ marginLeft: "3%" }} onChange={onChange} />
+                </Form.Item>
 
                   <Form.Item>
                     <Button

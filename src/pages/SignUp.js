@@ -9,6 +9,7 @@ import {
   Form,
   Input,
   Checkbox,
+  Switch,
 } from "antd";
 import logo1 from "../assets/images/logos-facebook.svg";
 import logo2 from "../assets/images/logo-apple.svg";
@@ -16,7 +17,7 @@ import logo3 from "../assets/images/Google__G__Logo.svg.png";
 import axios from 'axios';
 
 
-import { Link } from "react-router-dom";
+import { Link ,useHistory} from "react-router-dom";
 import {
   DribbbleOutlined,
   TwitterOutlined,
@@ -107,28 +108,36 @@ const signin = [
   </svg>,
 ];
 export default class SignUp extends Component {
-  state= {
-      loading : false
+  state = {
+    loading: false,
+    isDoctor:false
   }
   render() {
     // const [loading,setloading]= useState(false)
     const onFinish = async (values) => {
-      // console.log("Success:", values.Name);
+      console.log("Success:", values,this.state.isDoctor);
       var res = "";
-      try{
-          res = await axios.post(`http://localhost:9000/signup`, {
-              name:values.Name,
-              email:values.email,
-              password:values.password
-      });
+      try {
+        res = await axios.post(`http://localhost:9000/signup`, {
+          firstName: values.firstName,
+          middleName: values.middleName,
+          lastName: values.lastName,
+          isDoctor: this.state.isDoctor,
+          email: values.email,
+          password: values.password
+        });
       } catch (err) {
-          console.error(err);
+        console.error("error in catch", err);
       }
-      if(res?.data){
-        console.log("resdata",res.data);
+      if (res?.data) {
+        console.log("resdata", res.data);
       }
 
     };
+    const onChange = (checked) => {
+      console.log(`switch to ${checked}`);
+      this.state.isDoctor = checked;
+    }
 
     const onFinishFailed = (errorInfo) => {
       console.log("Failed:", errorInfo);
@@ -141,7 +150,7 @@ export default class SignUp extends Component {
               <h5>CURABL</h5>
             </div>
             <div className="header-col header-nav">
-              <Menu mode="horizontal" defaultSelectedKeys={["1"]}>                
+              <Menu mode="horizontal" defaultSelectedKeys={["1"]}>
                 <Menu.Item key="4">
                   <Link to="/sign-in">
                     {signin}
@@ -150,14 +159,14 @@ export default class SignUp extends Component {
                 </Menu.Item>
               </Menu>
             </div>
-            
+
           </Header>
 
           <Content className="p-0">
             <div className="sign-up-header">
               <div className="content">
                 <Title>Sign Up</Title>
-                
+
               </div>
             </div>
 
@@ -187,19 +196,37 @@ export default class SignUp extends Component {
                 className="row-col"
               >
                 <Form.Item
-                  name="Name"
+                  name="firstName"
                   rules={[
                     { required: true, message: "Please input your username!" },
                   ]}
                   hasFeedback
                 >
-                  <Input placeholder="Name" />
+                  <Input placeholder="First Name" />
+                </Form.Item>
+                <Form.Item
+                  name="middleName"
+                  rules={[
+                    { required: true, message: "Please input your username!" },
+                  ]}
+                  hasFeedback
+                >
+                  <Input placeholder="Middle Name" />
+                </Form.Item>
+                <Form.Item
+                  name="lastName"
+                  rules={[
+                    { required: true, message: "Please input your username!" },
+                  ]}
+                  hasFeedback
+                >
+                  <Input placeholder="Last Name" />
                 </Form.Item>
                 <Form.Item
                   name="email"
                   rules={[
                     { required: true, message: "Please input your email!" },
-                    {type:"email"},
+                    { type: "email" },
                   ]}
                   hasFeedback
                 >
@@ -209,8 +236,8 @@ export default class SignUp extends Component {
                   name="password"
                   rules={[
                     { required: true, message: "Please input your password!" },
-                    {min:6,message:"length should be minimum 6"},
-                    
+                    { min: 6, message: "Length should be atleast 6 characters" },
+
                     // {
                     //   validator:(_,value)=>{
                     //     value&& value.includes("A")
@@ -228,18 +255,27 @@ export default class SignUp extends Component {
                   dependencies={["password"]}
                   rules={[
                     { required: true, message: "Please input your password!" },
-                    ({getFieldValue})=>({
-                      validator(_,value){
-                        if(!value || getFieldValue("password")=== value){
+                    ({ getFieldValue }) => ({
+                      validator(_, value) {
+                        if (!value || getFieldValue("password") === value) {
                           return Promise.resolve();
                         }
-                        return Promise.reject("Password Does not match with confirm Password")
+                        return Promise.reject("Passwords do not match")
                       }
                     })
                   ]}
                   hasFeedback
                 >
                   <Input.Password placeholder="Confirm Password" />
+                </Form.Item>
+                <Form.Item
+                  name="isDoctor"
+                  className="aligin-center"
+                  valuePropName="checked"
+                  // initialValue={this.state.isDoctor}
+                >
+                  <span style={{ marginLeft: "30%" }}>Are you a doctor?</span>
+                  <Switch style={{ marginLeft: "3%" }} onChange={onChange} />
                 </Form.Item>
 
                 <Form.Item name="remember" valuePropName="checked">

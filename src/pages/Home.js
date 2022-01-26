@@ -36,6 +36,8 @@ import team3 from "../assets/images/team-3.jpg";
 import team4 from "../assets/images/team-4.jpg";
 import card from "../assets/images/info-card-1.jpg";
 
+
+
 function Home() {
   const { Title, Text } = Typography;
 
@@ -329,8 +331,8 @@ function Home() {
       }
     },
   };
-
   return (
+    
     <>
       <div className="layout-content">
         <Row className="rowgap-vbox" gutter={[24, 0]}>

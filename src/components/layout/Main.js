@@ -22,7 +22,7 @@ function Main({ children }) {
   const handleFixedNavbar = (type) => setFixed(type);
 
   let { pathname } = useLocation();
-  pathname = pathname.replace("/", "");
+  pathname = pathname?.replace("/", "");
 
   useEffect(() => {
     if (pathname === "rtl") {
