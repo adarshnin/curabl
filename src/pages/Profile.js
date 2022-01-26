@@ -49,7 +49,8 @@ function Profile() {
       try {
         console.log(serverURL);
         res = await axios.post(`${serverURL}/profile/getUser`, {
-          email: "jaysean@example.com",
+          email: "mmm@example.com",
+          isDoctor: true,
         });
       } catch (err) {
         console.error(err);
@@ -219,7 +220,7 @@ function Profile() {
         }
       ></Card>
 
-      <Row gutter={[24, 0]}>
+      {/* <Row gutter={[24, 0]}>
         <Col span={24} md={8} className="mb-24">
           <Card
             bordered={false}
@@ -305,8 +306,9 @@ function Profile() {
             />
           </Card>
         </Col>
-      </Row>
-      <Card
+      </Row> */}
+      <Details data={user}/>
+      {/* <Card
         bordered={false}
         className="header-solid mb-24"
         title={
@@ -361,7 +363,7 @@ function Profile() {
             </Upload>
           </Col>
         </Row>
-      </Card>
+      </Card> */}
     </>
   );
 }

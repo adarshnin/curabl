@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Image, Row, Col } from 'antd';
 import { addressTranslator, nameTranslator } from '../../libs/utils';
 import Section from './Section';
-import SectionForArray from '../SectionForArray';
+import SectionForArray from './SectionForArray';
 
 const { Meta } = Card;
 const serverURL = process.env.REACT_APP_SERVER_URL;
