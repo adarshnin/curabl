@@ -1,119 +1,153 @@
-import React, { useState } from "react";
-import moment from "moment";
-import { Button, message, DatePicker, Layout, Calendar, Select, Input, Radio, Col, Row, Typography, Empty, Card, List, Divider, Space } from 'antd';
-const { Header, Footer, Content } = Layout;
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { EnvironmentOutlined } from '@ant-design/icons';
+import { Button, Input, Skeleton, Avatar, Empty, List, Popover } from 'antd';
+import { addressTranslator, nameTranslator, arrayTranslator, urlTranslator } from "../../libs/utils";
+
 const { Search } = Input;
 
-const data = [
-  {
-    name: "Dr Prakash Patil",
-    diseases: "fever , cough",
-    experience: 5
-  },
-  {
-    name: "Dr Avinash Rathod",
-    diseases: "dengue , cough",
-    experience: 11
-  },
-  {
-    name: "Dr Ravi Patel",
-    diseases: "fever , covid",
-    experience: 9
-  },
-  {
-    name: "Dr Kavita Diwedi",
-    diseases: "Headache , dental",
-    experience: 7
-  },
-  {
-    name: "Dr Riya Rao",
-    diseases: "Surgery , ENT",
-    experience: 23
-  },
-  {
-    name: "Dr Bhakti Dhamangaonkar",
-    diseases: "Cold , Asthama",
-    experience: 8
-  },
-]
 function SearchComponent() {
+  const serverURL = process.env.REACT_APP_SERVER_URL;
+  const filterFields = [
+    "name",
+    "disease",
+    "experience",
+  ];
   const [filter, setFilter] = useState('');
+  const [dataSource, setDataSource] = useState([]);
 
-
-  function searchText(inputText) {
+  function onGettingSearchWord(inputText) {
     console.log("@@Input = ", inputText);
     setFilter(inputText);
   }
 
-  let dataSearch = data.filter(item => {
-    return Object.keys(item).some(key => item[key].toString().toLowerCase().includes(filter.toString().toLowerCase()))
-  })
+  const refineData = (data) => {
+    data.name = nameTranslator(data);
+    data.completeAddress = addressTranslator(data?.address)
+    return data;
+  };
+
+  const getDoctors = async () => {
+    let res;
+    try {
+      res = await axios.post(`${serverURL}/profile/find`, {
+        isDoctor: true,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+    setDataSource(
+      res.data.filter(item => {
+        item = refineData(item);
+        return filterFields.some(key => item[key] && item[key].toString().toLowerCase().includes(filter.toString().toLowerCase()))
+      })
+    )
+  };
+
+  useEffect(() => {
+    getDoctors();
+  }, [filter]);
+
   return (
     <div className="Search">
-      <Search style={{ margin: "5%", width: "50%", marginLeft: "23%" }}
-
+      <Search style={{ margin: "5px" }}
         placeholder="Search for any doctors, diseases"
         size="large"
-        onSearch={searchText}
-
+        onSearch={onGettingSearchWord}
       />
-
-      {/* <Input style={{ margin: "5%", width: "50%", marginLeft: "23%" }}
-        bordered={false}
-        size="large"
-        // value={filter}
-
-        onChange={searchText}
-        placeholder="Search for any keyword" /> */}
-
-      <Row gutter={[24, 0]}>
-
-        {dataSearch.map(item => {
-
+      {
+        dataSource.length ?
+          <List
+            header={
+              filter.length ?
+                <h1>
+                  <b>Search Results: </b>
+                  {dataSource.length} doctor{dataSource.length === 1 ? '' : 's'} found
+                </h1> :
+                <h1>
+                  All doctors
+                </h1>}
+            className="demo-loadmore-list"
+            itemLayout="horizontal"
+            size="large"
+            dataSource={dataSource}
+            renderItem={(item, index) => (
+              <List.Item
+                key={index}
+                actions={[
+                  <Popover
+                    trigger="click"
+                    placement="topRight"
+                    title="Address"
+                    content={item?.address ?
+                      <address>
+                        {item?.address?.houseNo}<br />
+                        {item?.address?.street}<br />
+                        {item?.address?.landmark}<br />
+                        {item?.address?.area}<br />
+                        {item?.address?.district}<br />
+                        {item?.address?.state}<br />
+                        {item?.address?.country}-{item?.address?.postalCode}<br />
+                      </address> : "Not provided"
+                    }>
+                    <Button
+                      block shape="circle"
+                      size="large"
+                      icon={
+                        <EnvironmentOutlined
+                          style={{ "margin-left": "5px" }}
+                        />
+                      } />
+                  </Popover>
+                ]}
+              >
+                <Skeleton avatar title={false} loading={false} active>
+                  <List.Item.Meta
+                    avatar={<Avatar src={urlTranslator(item?.profileImage)} />}
+                    title={<Link to="/profile"><h1><b>{item?.name}</b></h1></Link>}
+                    description={arrayTranslator(item?.disease)}
+                  />
+                  {item?.experience && <p>{item.experience} years of<br />Experience</p>}
+                </Skeleton>
+              </List.Item>
+            )}
+          />
+          : <Empty />
+      }
+      {/* <Row gutter={[24, 0]}>
+        {dataSource.map((item, index) => {
           return (
-            <Col span={24} md={8} className="mb-24">
+            <Col key={index} span={24} md={8} className="mb-24">
               <Card bordered={false}
+                title={item.name}
                 className="header-solid h-full ant-invoice-card"
                 style={{ overflow: 'auto' }}
-              >
-                <Header style={{ fontWeight: 900, fontSize: "12px" }} orientation="left">Doctor</Header>
-
-                <List
-                  itemLayout="horizontal"
-                  className="invoice-list"
-
-                >
-                  <List.Item>
-                    <List.Item.Meta style={{ marginLeft: '17%' }}
-                      title={"Name:"}
-                    />
-                    <div className="amount" style={{ marginRight: '22%', paddingLeft: "30%" }}>{item.name}</div>
-                  </List.Item>
-                  <List.Item>
-                    <List.Item.Meta style={{ marginLeft: '17%', }}
-                      title={"Diseases:"}
-                    />
-                    <div className="amount" style={{ marginRight: '22%', paddingLeft: "30%" }}>{item.diseases}</div>
-                  </List.Item>
-                  <List.Item>
-                    <List.Item.Meta style={{ marginLeft: '17%', }}
-                      title={"Experience:"}
-                    />
-                    <div className="amount" style={{ marginRight: '22%', paddingLeft: "30%" }}>{item.experience} years</div>
-                  </List.Item>
-
-                </List>
-
-
-
+                extra={
+                  <Popover title="Address" content={item?.address ?
+                    <address>
+                      {item?.address?.houseNo}<br />
+                      {item?.address?.street}<br />
+                      {item?.address?.landmark}<br />
+                      {item?.address?.area}<br />
+                      {item?.address?.district}<br />
+                      {item?.address?.state}<br />
+                      {item?.address?.country}-{item?.address?.postalCode}<br />
+                    </address> : "Not provided"
+                  }>
+                    <EnvironmentOutlined />
+                  </Popover>}>
+                <Meta
+                  style={{ marginLeft: '17%' }}
+                  description={arrayTranslator(item.disease)}
+                />
+                {item.experience}
               </Card>
             </Col>
-
           )
         }
         )}
-
-      </Row>
+      </Row> */}
     </div>
   );
 }

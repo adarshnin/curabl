@@ -1,3 +1,5 @@
+const capitalize = (s) => (typeof s == "string") ? `${s.slice(0, 1).toUpperCase()}${s.slice(1)}` : s;
+
 const addressTranslator = (a) => {
   let address = '';
   if (a?.houseNo) { address += `${a.houseNo}, ` }
@@ -12,10 +14,41 @@ const addressTranslator = (a) => {
 }
 
 const nameTranslator = (n) => {
-  let name = `${n?.designation} ${n?.name?.firstName} ${n?.name?.middleName} ${n?.name?.lastName}`;
+  let name = '';
+  if (n?.designation) {
+    name += `${capitalize(n.designation)} `;
+  }
+  if (n?.name) {
+    if (n?.name?.firstName) {
+      name += `${capitalize(n.name.firstName)} `;
+    }
+    if (n?.name?.middleName) {
+      name += `${capitalize(n.name.middleName)} `;
+    }
+    if (n?.name?.lastName) {
+      name += `${capitalize(n.name.lastName)}`;
+    }
+  }
   return name;
 }
 
-const capitalize = (s) => (typeof s == "string") ? `${s.slice(0, 1).toUpperCase()}${s.slice(1)}` : s;
+const arrayTranslator = (a) => {
+  if (a) {
+    let s = '';
+    for (let i of a.slice(0, a.length - 1)) {
+      s += `${i}, `
+    }
+    s += a[a.length - 1]
+    return s;
+  }
+  return a;
+}
 
-module.exports = { capitalize, addressTranslator, nameTranslator };
+const urlTranslator = (imageUrl) => {
+  const serverURL = process.env.REACT_APP_SERVER_URL;
+  const url = `${serverURL}${imageUrl?.replace(/public/g, "")}`;
+  console.log("url", url);
+  return url;
+}
+
+module.exports = { urlTranslator, arrayTranslator, capitalize, addressTranslator, nameTranslator };
