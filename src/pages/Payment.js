@@ -11,7 +11,7 @@ import {
 } from "antd";
 import { Divider } from 'antd';
 import { useLocation } from 'react-router-dom'
-
+import axios from 'axios';
 import React, { useState } from 'react'
 import logo from '../assets/images/logo.svg'
 import pay_logo from '../assets/images/payment_logos.png'
@@ -58,6 +58,10 @@ function Payment() {
 		{
 			title: "Mode of Payment",
 			value: "RazorPay",
+		},
+		{
+			title: "Payment ID",
+			value: pay_status,
 		},
 	];
 	const data = [
@@ -204,11 +208,43 @@ function Payment() {
 			name: 'Consultation fee',
 			description: 'curabl',
 			image: 'http://localhost:9000/payment/logo.png',
-			handler: function (response) {
-				alert(response.razorpay_payment_id)
-				alert(response.razorpay_order_id)
-				alert(response.razorpay_signature)
-				changePaymentStatus("success");
+			handler: async function (response) {
+				// alert(response.razorpay_payment_id)
+				// alert(response.razorpay_order_id)
+				// alert(response.razorpay_signature)
+				changePaymentStatus(response.razorpay_payment_id);
+
+				// Send payment details to backend
+				var res = "", res1 = "";
+				try {
+					res = await axios.post(`http://localhost:9000/bookSlot`, {
+						date: data_slot.date,
+						doctorId: data_slot.doctorID,
+						patientId: data_slot.patientID,
+						timeslot: data_slot.timeslot,
+						paymentID: response.razorpay_payment_id,
+						orderID: response.razorpay_order_id,
+						signature: response.razorpay_signature,
+					});
+				} catch (err) {
+					console.error(err);
+				}
+				if (res?.data) {
+					console.log(res.data);
+					try {
+						res1 = await axios.post(`http://localhost:9000/myappointments/newAppointment`, {
+							date: data_slot.date,
+							slottime: data_slot.timeslot,
+							doctorId: data_slot.doctorID,
+							patientId: data_slot.patientID,
+						});
+					} catch (err) {
+						console.error(err);
+					}
+					if (res1?.data) {
+						console.log(res1.data);
+					}
+				}
 			},
 			prefill: {
 				name: "Dev Patel",

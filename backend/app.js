@@ -22,6 +22,8 @@ var getslotRouter = require('./routes/getslot');
 var profileRouter = require('./routes/profile');
 var reserveslotRouter = require('./routes/reserveSlots.js');
 var rocketChatRouter = require('./routes/rocketchat.js');
+var BookSlotRouter =  require('./routes/booked');
+var appointmentsRounter = require('./routes/appointments')
 
 const app = express();
 
@@ -47,6 +49,8 @@ app.use('/getSlot', getslotRouter);
 app.use('/reserveSlot', reserveslotRouter);
 app.use('/payment', paymentRouter);
 app.use('/rocketchat', rocketChatRouter);
+app.use('/bookSlot', BookSlotRouter);
+app.use('/myappointments', appointmentsRounter);
 
 
 

@@ -1,9 +1,13 @@
 import React from "react";
+import { useLocation } from 'react-router-dom'
+
 // import Toolbar from "../components/layout/Toolbar";
 // import TabToolbar from "../components/layout/Tabs";
-const VideoConference = () => {
+function VideoConference() {
     const jitsiContainerId = "jitsi-container-id";
     const [jitsi, setJitsi] = React.useState({});
+    const location = useLocation()
+    const { from, meetingurl } = location.state;
 
     const loadJitsiScript = () => {
         let resolveLoadJitsiScriptPromise = null;
@@ -26,7 +30,8 @@ const VideoConference = () => {
             await loadJitsiScript();
         }
 
-        const _jitsi = new window.JitsiMeetExternalAPI("video.curabl.me/curabl-room#config.prejoinPageEnabled=true", {
+        let link =  meetingurl + "#config.prejoinPageEnabled=true";
+        const _jitsi = new window.JitsiMeetExternalAPI(link, {
             parentNode: document.getElementById(jitsiContainerId)
         });
 

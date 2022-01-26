@@ -5,14 +5,15 @@ const router = express.Router();
 
 
 router.post("/", async (req, res) => {
-    console.log("in reserve slot")
+    console.log("in book slot")
 
     try {
         var data = req.body;
         // Date = moment(Date);
         console.log(data.date);
-        const filter = { doctorId: data.doctorId, date: data.date, slottime: data.timeslot, Status: "free" };
-        const update = { Status: "processing" };
+        // , userid: data.patientId Add this @@@@@@@@
+        const filter = { doctorId: data.doctorId, date: data.date, slottime: data.timeslot, status: "processing" };
+        const update = { status: "booked", paymentid: data.paymentID, signature: data.signature, orderid: data.orderID };
         let doc = await slotmodeltemplate.findOneAndUpdate(filter, update).exec((err, data) => {
             if (err) {
                 res.send("No Data found");
@@ -32,3 +33,5 @@ router.post("/", async (req, res) => {
     }
 
 });
+
+module.exports = router;

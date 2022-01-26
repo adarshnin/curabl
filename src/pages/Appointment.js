@@ -4,10 +4,10 @@ import React, { useState, useEffect } from 'react';
 import Modal_shed from "./shedul_modal";
 import moment from 'moment'
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
-import { Button, DatePicker, Layout, Calendar, Select, Radio, Col, Row, Typography, Empty, Card, List, Divider, Space } from 'antd';
 import DisplayDetails from '../components/OtherDoctorProfile/DisplayDetails';
+import { Button, message, DatePicker, Layout, Calendar, Select, Radio, Col, Row, Typography, Empty, Card, List, Divider, Space } from 'antd';
 
 const Listbox = styled.ul`
   display: grid;
@@ -24,20 +24,29 @@ const Listbox = styled.ul`
 const ListItem = styled.li`
   padding: 0.75em 0.5em;
   border: 1px solid;
-  background-color: lightblue;
+  background-color: #a2d8eb;
   margin: 0;
   cursor: pointer;
   text-align: center;
-//   min-width: 99px;
+opacity: ${props => (props.isValid ? 1 : 0.3)};
+:hover {
+  cursor: ${props => (props.isValid ? 'pointer' : 'inherit')};
+  color: ${props => (props.isValid ? props.theme.primary : 'inherit')};
+}
 
 `;
 const { Header, Footer, Content } = Layout;
 
+function isBooked(slot) {
+    console.log(slot);
+    if (slot.status == "free")
+        return 1;
+}
 function Appointment() {
     const serverURL = process.env.REACT_APP_SERVER_URL;
     var morning_schedule = [9, 9.15, 9.30, 9.45, 10, 10.15, 10.30, 10.45, 11, 11.15, 11.30, 11.45, 12, 12.15, 34, 3434, 98, 65, 23432, 536, 4, 3436, 76, 123, 87, 3444, 171, 43, 4550];
     var evening_schedule = [6, 6.34, 7.45, 8, 8.34, 8.7545, 9, 10, 11];
-    const [date, changeDate] = useState("");
+    const [date, changeDate] = useState(moment().format("DD-MM-YYYY"));
     const [timeslot, submitted] = useState("");
     const [schedule, setschedule] = useState([]);
     const [user, setUser] = useState({});
@@ -65,29 +74,70 @@ function Appointment() {
             };
         };
         getUser();
+    });
+    const [loading, setLoading] = useState(false);
+    const [slotStatus, setStatus] = useState(false);
+    const doctorID = "123", patientID = "test123";
+    let redirection;
+
+    if (slotStatus) {
+        console.log("@@@redirection if")
+        redirection = (<Redirect
+            to={{
+                pathname: "/payment",
+                state: {
+                    from: 'appointment', data_slot: { date: date, timeslot: timeslot, doctorID: doctorID, patientID: patientID }
+                }
+            }
+            } />);
+    } else {
+        console.log("@@@redirection else")
+
+        redirection = (<div></div>)
+    }
+
+
+    useEffect(() => {
+        // Your code here
+        onChange(date);
     }, []);
     const timeSlotsContent = (<div>
         <Header style={{ fontWeight: 900, fontSize: "22px" }} orientation="left">Select Slot</Header>
-        <Header style={{ padding: '10px', alignContent: "left" }}>
-            <DatePicker
-                disabledDate={(current) => {
-                    return moment().add(-1, 'days') >= current
-                }}
-                format="DD-MM-YYYY"
-                allowClear={false}
-                onChange={onChange} />
 
+        <Header style={{ padding: '10px' }}>
+            <List
+                itemLayout="horizontal"
+                className="invoice-list"
+
+            >
+                <List.Item>
+                    <List.Item.Meta style={{ marginLeft: '5%' }}
+                        title={
+                            <DatePicker
+                                disabledDate={(current) => {
+                                    return moment().add(-1, 'days') >= current
+                                }}
+                                format="DD-MM-YYYY"
+                                // defaultValue={moment()}
+                                onChange={onChange} />
+                        }
+                    />
+                    <div className="amount" style={{ marginRight: '10%' }}>Date: {date}</div>
+                </List.Item>
+
+
+            </List>
         </Header>
         <Content>
             <>
                 <Listbox style={{ overflow: 'auto', height: '420px' }}>
                     {schedule.map(slot => {
-                        // const isValid = validator ? validator(slot) : true;
+                        const isValid = isBooked(slot);
                         return (
                             <ListItem
                                 key={slot.slottime}
-                                // isValid={isValid}
-                                onClick={() => onSelectSlot(slot.slottime)}
+                                isValid={isValid}
+                                onClick={() => isValid && onSelectSlot(slot.slottime)}
                             >
                                 {slot.slottime}
                             </ListItem>
@@ -108,7 +158,12 @@ function Appointment() {
             >
                 <List.Item style={{ marginLeft: '37%' }}>
                     <List.Item.Meta
-                        title={<Button onClick={() => onSelectSlot("")}>Go Back</Button>
+                        title={<Button onClick={() => {
+                            // Back button is pressed, fetch updated slots
+                            onChange(date);
+                            onSelectSlot("")
+                        }
+                        }>Go Back</Button>
                         }
                     />
                 </List.Item>
@@ -127,25 +182,30 @@ function Appointment() {
                 <List.Item style={{ marginLeft: '33%' }}>
                     <List.Item.Meta
                         title={
-                            <Link
-                                to={{
-                                    pathname: "/payment",
-                                    state: {
-                                        from: 'appointment', data_slot: { date: date, timeslot: timeslot, doctorID: doctorID }
-                                    }
-                                }
-                                } >
-                                <Button type='primary'
-                                    onClick={() =>
 
-                                        reserveSlot(date, timeslot, doctorID)
+                            <Button type='primary' loading={loading}
+                                onClick={async () => {
+
+                                    // Reserve the slot by setting it to processing
+                                    const slot_status = await reserveSlot(date, timeslot, doctorID)
+                                    console.log(slot_status, "slot stastus");
+                                    if (slot_status) {
+                                        message.success('Slot Reserved. Complete payment within 5 min to confirm slot.', 10);
+                                        setStatus(true);
                                     }
-                                >Confirm Schedule</Button>
-                            </Link>
-                        }
+                                    else
+                                        message.error('This slot is not free. Please try again later or book another slot.', 5);
+                                    setLoading(false)
+                                }
+
+                                }>
+                                Confirm Schedule</Button>}
                     />
+
                 </List.Item>
 
+
+                {redirection}
             </List>
 
         </div >);
@@ -159,6 +219,8 @@ function Appointment() {
         console.log("newww contennntt");
     }
     async function reserveSlot(date, timeslot, doctorId) {
+        setLoading(true)
+
         var res = "", res1 = ""
         try {
             res = await axios.post(`http://localhost:9000/reserveSlot/processing`, {
@@ -181,8 +243,15 @@ function Appointment() {
             } catch (err) {
                 console.error(err);
             }
-            if (res1?.data)
+            if (res1?.data) {
                 console.log(res1.data);
+                return 1;
+            }
+        } else {
+            console.log("null response")
+            // Slot is already under processing or booked
+            // Slot is not free
+            return 0;
         }
 
 
@@ -192,12 +261,21 @@ function Appointment() {
         // changeDate(evening_schedule);
         console.log("in onChange functioonnn@");
         console.log("begore changeDate", date);
-        changeDate(date.format("DD-MM-YYYY"))
-        console.log("date check", moment(date, 'DD/MM/YYYY', true).format(), date.format("YYYY-MM-DD"), moment(date.format("YYYY-MM-DD")));
+        try {
+            // When date - Fri Jan 28 2022 16:22:46 GMT+0530 
+            date = date.format("DD-MM-YYYY")
+
+        }
+        catch {
+            // When date - 28-01-2022
+        }
+        console.log("after try catch date = ", date);
+        changeDate(date)
+        // console.log("date check", moment(date, 'DD/MM/YYYY', true).format(), date.format("YYYY-MM-DD"), moment(date.format("YYYY-MM-DD")));
         var res = "";
         try {
             res = await axios.post(`http://localhost:9000/getSlot`, {
-                Date: date.format("DD-MM-YYYY")
+                Date: date
             });
         } catch (err) {
             console.error(err);
