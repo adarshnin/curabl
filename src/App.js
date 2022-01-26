@@ -10,6 +10,7 @@ import Scheduling from "./pages/Scheduling";
 import Profile from "./pages/Profile";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
+import RocketChat from "./pages/RocketChat";
 // import VideoCall from "./pages/VideoCall
 import Main from "./components/layout/Main";
 import TabToolbar from "./pages/Tabs";
@@ -32,6 +33,7 @@ function App() {
           <Route exact path="/scheduling" component={Scheduling} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/editprofile" component={EditProfile} />
+          <Route exact path="/chat" component={RocketChat} />
           {/* <Toolbar> */}
           <Route exact path="/call" component={TabToolbar} />
           {/* </Toolbar> */}

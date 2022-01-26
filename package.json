@@ -2,9 +2,11 @@
   "name": "muse-ant-design-dashboard",
   "version": "1.0.0",
   "private": true,
-  "proxy": "http://localhost:5000",
+  "proxy": "http://localhost:9000",
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
+    "@elastic/react-search-ui": "^1.9.0",
+    "@elastic/search-ui-app-search-connector": "^1.9.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",

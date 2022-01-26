@@ -3,7 +3,7 @@ const addressTranslator = (a) => {
   if (a?.houseNo) { address += `${a.houseNo}, ` }
   if (a?.street) { address += `${a.street}, ` }
   if (a?.landmark) { address += `${a.landmark}, ` }
-  if (a?.area) { address += `${a.area}, ` }
+  if (a?.area) { address += `${a.area}, >` }
   if (a?.district) { address += `${a.district}, ` }
   if (a?.state) { address += `${a.state}, ` }
   if (a?.country) { address += `${a.country} - ` }
@@ -12,7 +12,7 @@ const addressTranslator = (a) => {
 }
 
 const nameTranslator = (n) => {
-  let name = `${n.firstName} ${n.middleName} ${n.lastName}`;
+  let name = `${n?.designation} ${n?.name?.firstName} ${n?.name?.middleName} ${n?.name?.lastName}`;
   return name;
 }
 

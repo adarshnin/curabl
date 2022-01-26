@@ -1,4 +1,4 @@
-const { upload } = require('./avatarUpload');
+const { upload } = require('../avatarUpload');
 const { isNull } = require('./is');
 const { convertJsonToDot,  } = require('./conversions');
 const { ageCalculator, } = require('./calculations');

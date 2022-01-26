@@ -18,7 +18,7 @@ const assignEmptyObj = (propsArr, userData) => {
 
 const assignPropsUpload = (propsArr, file, userData) => {
   propsArr.forEach(prop => {
-    if (file && file[path]) userData[prop] = file[path] || userData[prop];
+    if (file && file["path"]) userData[prop] = file["path"] || userData[prop];
   });
 }
 
