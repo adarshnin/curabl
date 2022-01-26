@@ -65,6 +65,7 @@ class App extends Component {
                 <ProtectedRoute exact path="/payment" component={Payment} />
                 <ProtectedRoute exact path="/appointment" component={Appointment} />
                 <ProtectedRoute exact path="/scheduling" component={Scheduling} />
+                <ProtectedRoute exact path="/myappointments" component={myAppointments} />
                 <ProtectedRoute exact path="/profile" component={Profile} />
                 <ProtectedRoute exact path="/editprofile" component={EditProfile} />
                 <ProtectedRoute exact path="/log-out" component={logout} />
