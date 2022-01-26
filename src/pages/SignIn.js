@@ -1,6 +1,11 @@
 
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link,useHistory,withRouter } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
+import auth from "../auth";
+import {currentUserSubject,authenticationService} from "../services/authservice"
+
+
 import {
   Layout,
   Menu,
@@ -13,15 +18,15 @@ import {
   Switch,
 } from "antd";
 import signinbg from "../assets/images/img-signin.jpg";
+import axios from 'axios';
+
 import {
   DribbbleOutlined,
   TwitterOutlined,
   InstagramOutlined,
   GithubOutlined,
 } from "@ant-design/icons";
-function onChange(checked) {
-  console.log(`switch to ${checked}`);
-}
+
 const { Title } = Typography;
 const { Header, Footer, Content } = Layout;
 const template = [
@@ -105,20 +110,69 @@ const signin = [
   </svg>,
 ];
 export default class SignIn extends Component {
+  constructor(props) {
+    super(props);
+
+    // redirect to home if already logged in
+    if (authenticationService.currentUserValue) { 
+        this.props.history.push('/');
+    }
+  }
+  state = {
+    loading: false,
+    isDoctor:false
+  }
+  
   render() {
-    const onFinish = (values) => {
-      console.log("Success:", values);
+
+
+    
+    const onFinish = async(values) => {
+      
+      // console.log("Success:", values.Name);
+      // console.log("token",localStorage.getItem("xtoken"));
+      
+      var res = "";
+      try{
+          res = await axios.post(`http://localhost:9000/signin`, {
+              
+              email:values.email,
+              password:values.password,
+              isDoctor: this.state.isDoctor
+      });
+      } catch (err) {
+          console.error(err);
+      }
+      if(res?.data){
+        if (res.data?.result){
+          console.log("resdata",res.data.result,res.data.token);
+          localStorage.setItem("token", res.data.token)
+          localStorage.setItem('currentUser', JSON.stringify(res.data.result));
+          currentUserSubject.next(res.data.result);
+          // const { from } = this.props.location.state || { from: { pathname: "/dashboard" } };
+          // this.props.history.push(from);
+          // auth.login();
+          // console.log("is authentated",auth.isAuthenticated());
+          // await userAuthentication();
+          this.props.history.push("/dashboard");
+        }
+      }
+
     };
 
     const onFinishFailed = (errorInfo) => {
       console.log("Failed:", errorInfo);
+    };
+    const onChange = (checked) => {
+      console.log(`switch to ${checked}`);
+      this.state.isDoctor = checked;
     };
     return (
       <>
         <Layout className="layout-default layout-signin">
           <Header>
             <div className="header-col header-brand">
-              <h5>Muse Dashboard</h5>
+              <h5>curabl</h5>
             </div>
             <div className="header-col header-nav">
               <Menu mode="horizontal" defaultSelectedKeys={["1"]}>
@@ -128,12 +182,7 @@ export default class SignIn extends Component {
                     <span> Dashboard</span>
                   </Link>
                 </Menu.Item>
-                <Menu.Item key="2">
-                  <Link to="/profile">
-                    {profile}
-                    <span>Profile</span>
-                  </Link>
-                </Menu.Item>
+                
                 <Menu.Item key="3">
                   <Link to="/sign-up">
                     {signup}
@@ -148,9 +197,7 @@ export default class SignIn extends Component {
                 </Menu.Item>
               </Menu>
             </div>
-            <div className="header-col header-btn">
-              <Button type="primary">FREE DOWNLOAD</Button>
-            </div>
+            
           </Header>
           <Content className="signin">
             <Row gutter={[24, 0]} justify="space-around">
@@ -160,9 +207,7 @@ export default class SignIn extends Component {
                 md={{ span: 12 }}
               >
                 <Title className="mb-15">Sign In</Title>
-                <Title className="font-regular text-muted" level={5}>
-                  Enter your email and password to sign in
-                </Title>
+                
                 <Form
                   onFinish={onFinish}
                   onFinishFailed={onFinishFailed}
@@ -198,13 +243,14 @@ export default class SignIn extends Component {
                   </Form.Item>
 
                   <Form.Item
-                    name="remember"
-                    className="aligin-center"
-                    valuePropName="checked"
-                  >
-                    <Switch defaultChecked onChange={onChange} />
-                    Remember me
-                  </Form.Item>
+                  name="isDoctor"
+                  className="aligin-center"
+                  valuePropName="checked"
+                  // initialValue={this.state.isDoctor}
+                >
+                  <span style={{ marginLeft: "30%" }}>Are you a doctor?</span>
+                  <Switch style={{ marginLeft: "3%" }} onChange={onChange} />
+                </Form.Item>
 
                   <Form.Item>
                     <Button

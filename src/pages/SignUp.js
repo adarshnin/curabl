@@ -1,5 +1,5 @@
 
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import {
   Layout,
   Menu,
@@ -9,12 +9,15 @@ import {
   Form,
   Input,
   Checkbox,
+  Switch,
 } from "antd";
 import logo1 from "../assets/images/logos-facebook.svg";
 import logo2 from "../assets/images/logo-apple.svg";
 import logo3 from "../assets/images/Google__G__Logo.svg.png";
+import axios from 'axios';
 
-import { Link } from "react-router-dom";
+
+import { Link ,useHistory} from "react-router-dom";
 import {
   DribbbleOutlined,
   TwitterOutlined,
@@ -105,10 +108,36 @@ const signin = [
   </svg>,
 ];
 export default class SignUp extends Component {
+  state = {
+    loading: false,
+    isDoctor:false
+  }
   render() {
-    const onFinish = (values) => {
-      console.log("Success:", values);
+    // const [loading,setloading]= useState(false)
+    const onFinish = async (values) => {
+      console.log("Success:", values,this.state.isDoctor);
+      var res = "";
+      try {
+        res = await axios.post(`http://localhost:9000/signup`, {
+          firstName: values.firstName,
+          middleName: values.middleName,
+          lastName: values.lastName,
+          isDoctor: this.state.isDoctor,
+          email: values.email,
+          password: values.password
+        });
+      } catch (err) {
+        console.error("error in catch", err);
+      }
+      if (res?.data) {
+        console.log("resdata", res.data);
+      }
+
     };
+    const onChange = (checked) => {
+      console.log(`switch to ${checked}`);
+      this.state.isDoctor = checked;
+    }
 
     const onFinishFailed = (errorInfo) => {
       console.log("Failed:", errorInfo);
@@ -118,28 +147,10 @@ export default class SignUp extends Component {
         <div className="layout-default ant-layout layout-sign-up">
           <Header>
             <div className="header-col header-brand">
-              <h5>Muse Dashboard</h5>
+              <h5>CURABL</h5>
             </div>
             <div className="header-col header-nav">
               <Menu mode="horizontal" defaultSelectedKeys={["1"]}>
-                <Menu.Item key="1">
-                  <Link to="/dashboard">
-                    {template}
-                    <span> Dashboard</span>
-                  </Link>
-                </Menu.Item>
-                <Menu.Item key="2">
-                  <Link to="/profile">
-                    {profile}
-                    <span>Profile</span>
-                  </Link>
-                </Menu.Item>
-                <Menu.Item key="3">
-                  <Link to="/sign-up">
-                    {signup}
-                    <span> Sign Up</span>
-                  </Link>
-                </Menu.Item>
                 <Menu.Item key="4">
                   <Link to="/sign-in">
                     {signin}
@@ -148,19 +159,14 @@ export default class SignUp extends Component {
                 </Menu.Item>
               </Menu>
             </div>
-            <div className="header-col header-btn">
-              <Button type="false">FREE DOWNLOAD</Button>
-            </div>
+
           </Header>
 
           <Content className="p-0">
             <div className="sign-up-header">
               <div className="content">
                 <Title>Sign Up</Title>
-                <p className="text-lg">
-                  Use these awesome forms to login or create new account in your
-                  project for free.
-                </p>
+
               </div>
             </div>
 
@@ -180,6 +186,7 @@ export default class SignUp extends Component {
                   <img src={logo3} alt="logo 3" />
                 </Button>
               </div>
+
               <p className="text-center my-25 font-semibold text-muted">Or</p>
               <Form
                 name="basic"
@@ -189,18 +196,39 @@ export default class SignUp extends Component {
                 className="row-col"
               >
                 <Form.Item
-                  name="Name"
+                  name="firstName"
                   rules={[
                     { required: true, message: "Please input your username!" },
                   ]}
+                  hasFeedback
                 >
-                  <Input placeholder="Name" />
+                  <Input placeholder="First Name" />
+                </Form.Item>
+                <Form.Item
+                  name="middleName"
+                  rules={[
+                    { required: true, message: "Please input your username!" },
+                  ]}
+                  hasFeedback
+                >
+                  <Input placeholder="Middle Name" />
+                </Form.Item>
+                <Form.Item
+                  name="lastName"
+                  rules={[
+                    { required: true, message: "Please input your username!" },
+                  ]}
+                  hasFeedback
+                >
+                  <Input placeholder="Last Name" />
                 </Form.Item>
                 <Form.Item
                   name="email"
                   rules={[
                     { required: true, message: "Please input your email!" },
+                    { type: "email" },
                   ]}
+                  hasFeedback
                 >
                   <Input placeholder="email" />
                 </Form.Item>
@@ -208,9 +236,46 @@ export default class SignUp extends Component {
                   name="password"
                   rules={[
                     { required: true, message: "Please input your password!" },
+                    { min: 6, message: "Length should be atleast 6 characters" },
+
+                    // {
+                    //   validator:(_,value)=>{
+                    //     value&& value.includes("A")
+                    //     ? Promise.resolve()
+                    //     : Promise.reject("Password should contain capital letter,number and symbol")
+                    //   }
+                    // }
                   ]}
+                  hasFeedback
                 >
-                  <Input placeholder="Passwoed" />
+                  <Input.Password placeholder="Password" />
+                </Form.Item>
+                <Form.Item
+                  name="cpassword"
+                  dependencies={["password"]}
+                  rules={[
+                    { required: true, message: "Please input your password!" },
+                    ({ getFieldValue }) => ({
+                      validator(_, value) {
+                        if (!value || getFieldValue("password") === value) {
+                          return Promise.resolve();
+                        }
+                        return Promise.reject("Passwords do not match")
+                      }
+                    })
+                  ]}
+                  hasFeedback
+                >
+                  <Input.Password placeholder="Confirm Password" />
+                </Form.Item>
+                <Form.Item
+                  name="isDoctor"
+                  className="aligin-center"
+                  valuePropName="checked"
+                  // initialValue={this.state.isDoctor}
+                >
+                  <span style={{ marginLeft: "30%" }}>Are you a doctor?</span>
+                  <Switch style={{ marginLeft: "3%" }} onChange={onChange} />
                 </Form.Item>
 
                 <Form.Item name="remember" valuePropName="checked">
@@ -227,6 +292,7 @@ export default class SignUp extends Component {
                     style={{ width: "100%" }}
                     type="primary"
                     htmlType="submit"
+                    disabled={this.state.loading}
                   >
                     SIGN UP
                   </Button>

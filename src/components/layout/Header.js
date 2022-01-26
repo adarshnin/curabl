@@ -1,6 +1,8 @@
 
 
 import { useState, useEffect } from "react";
+import { authenticationService } from '../../services/authservice';
+
 
 import {
   Row,
@@ -397,9 +399,13 @@ function Header({
               </div>
             </div>
           </Drawer>
-          <Link to="/sign-in" className="btn-sign-in">
+          {/* <Button danger type="primary"
+            onClick={()=>{authenticationService.logout()}}
+          >Sign out</Button> */}
+          
+          <Link to="/log-out" className="btn-sign-in">
             {profile}
-            <span>Sign in</span>
+            <span>Sign out</span>
           </Link>
           {/* <Input
             className="header-search"

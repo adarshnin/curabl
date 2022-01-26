@@ -1,8 +1,10 @@
 import Search from "../components/layout/Search";
 
-function Home() {
 
+
+function Home() {
   return (
+    
     <>
         <Search></Search>
     </>

@@ -1,5 +1,6 @@
 const express = require("express");
 const { checkSchema } = require('express-validator');
+const jwt = require("jsonwebtoken");
 
 const { Doctor, Patient } = require("../models");
 const { signInSchema, validateRequest } = require("../validators");
@@ -21,20 +22,23 @@ router.post("/", [
             email: emailid
         });
         if (user && await Password.compare(user.password, pass)) {
-            // //generate token using jwt 
-            // const token = await user.generateAuthToken();
-            // //set the cookie in browser
-            // res.cookie("jwt", token, {
-            //     expires: new Date(Date.now() + 1500000),
-            //     httpOnly: true
-            // });
-            console.log("user verified");
-            res.status(200).json(user);
+            
+            console.log("user verified",user._id);
+            const token = jwt.sign({id: user._id.toString(),email:user.email},process.env.SECRET,{expiresIn:"1h"});
+            console.log(token);
+            res.status(200).json({result:{
+                id: user.id,
+                username: user.name.firstName,
+                middleName: user.name.middleName,
+                lastName: user.name.lastName,
+                isDoctor:isDoctor,
+                token: token
+            },token :token});
         } else {
             // res.send("Password Wrong!!!!");
-            var data = { error: "Unauthorized Access!", data: "You have entered invalid credentials." }
+            var data = { error: "Unauthorized Access!", message: "You have entered invalid credentials." }
             console.log("Unauthorized Access!")
-            res.status(403).json(data);
+            res.status(201).json(data);
             // res.render("login", data);
         }
     } catch (error) {

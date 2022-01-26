@@ -61,6 +61,7 @@ const columns = [
 
 
 function Appointments() {
+    console.log("in mu appointments")
     const [app_data, getAppointments] = useState("");
     const data = [];
     for (let i = 0; i < app_data.length; i++) {

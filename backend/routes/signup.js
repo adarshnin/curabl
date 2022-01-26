@@ -3,6 +3,7 @@ const { checkSchema } = require('express-validator');
 
 const { signUpSchema, validateRequest } = require("../validators");
 const { Doctor, Patient } = require("../models");
+const { request } = require("express");
 
 const router = express.Router();
 
@@ -10,6 +11,7 @@ router.post("/", [
     checkSchema(signUpSchema),
     validateRequest,
 ], (req, res) => {
+    console.log("in post",req.body);
     if (req.body && !("isDoctor" in req.body)) {
         res.status(400).json({ error: "isDoctor field not provided" });
     }
@@ -44,9 +46,7 @@ router.post("/", [
     console.log("done");
 });
 
-router.get('/', function (req, res, next) {
-    res.render('index', { title: 'Express' });
-});
+
 
 
 module.exports = router;

@@ -39,14 +39,14 @@ const contactGroup = {
 const clinicSchema = new Schema({
     licenseNo: {
         type: String,
-        unique: true,
+        required:false,
+        // @@@@@@@@@@ unique: true,
     },
     license: String, // URL
     role: String,
     ...contactGroup,
     email: {
         type: String,
-        required: [true, "Clinic Mail Required"],
     }
 });
 

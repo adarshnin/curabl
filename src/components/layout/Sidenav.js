@@ -4,6 +4,8 @@
 import { Menu, Button } from "antd";
 import { MessageOutlined } from '@ant-design/icons';
 import { NavLink, useLocation } from "react-router-dom";
+import { authenticationService } from '../../services/authservice';
+
 import logo from "../../assets/images/curabl-lblue-logo.png"
 
 function Sidenav({ color }) {
@@ -198,7 +200,7 @@ function Sidenav({ color }) {
     </svg>,
   ];
 
-  const signin = [
+  const logout = [
     <svg
       width="20"
       height="20"
@@ -257,45 +259,9 @@ function Sidenav({ color }) {
             <span className="label">Dashboard</span>
           </NavLink>
         </Menu.Item>
-        <Menu.Item key="2">
-          <NavLink to="/tables">
-            <span
-              className="icon"
-              style={{
-                background: page === "tables" ? color : "",
-              }}
-            >
-              {tables}
-            </span>
-            <span className="label">Tables</span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="3">
-          <NavLink to="/billing">
-            <span
-              className="icon"
-              style={{
-                background: page === "billing" ? color : "",
-              }}
-            >
-              {billing}
-            </span>
-            <span className="label">Billing</span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="11">
-          <NavLink to="/payment">
-            <span
-              className="icon"
-              style={{
-                background: page === "payment" ? color : "",
-              }}
-            >
-              {payment}
-            </span>
-            <span className="label">Payment</span>
-          </NavLink>
-        </Menu.Item>
+        
+        
+        
         <Menu.Item key="12">
           <NavLink to="/appointment">
             <span
@@ -378,7 +344,7 @@ function Sidenav({ color }) {
             <span className="label">Chat</span>
           </NavLink>
         </Menu.Item>
-        <Menu.Item key="10">
+        {/* <Menu.Item key="10">
           <NavLink to="/call">
             <span
               className="icon"
@@ -390,19 +356,20 @@ function Sidenav({ color }) {
             </span>
             <span className="label">Video Call</span>
           </NavLink>
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item key="8">
-          <NavLink to="/sign-in">
-            <span className="icon">{signin}</span>
-            <span className="label">Sign In</span>
+          <NavLink to="/log-out">
+            <span className="icon">{logout}</span>
+            <span className="label">Log out</span>
+            {/* <Button onClick={()=>{authenticationService.logout()}}>log out</Button> */}
           </NavLink>
         </Menu.Item>
-        <Menu.Item key="9">
+        {/* <Menu.Item key="9">
           <NavLink to="/sign-up">
             <span className="icon">{signup}</span>
             <span className="label">Sign Up</span>
           </NavLink>
-        </Menu.Item>
+        </Menu.Item> */}
       </Menu>
       {/* <div className="aside-footer">
         <div
