@@ -34,7 +34,7 @@ import convesionImg5 from "../assets/images/face-2.jpg";
 import project1 from "../assets/images/home-decor-1.jpeg";
 import project2 from "../assets/images/home-decor-2.jpeg";
 import project3 from "../assets/images/home-decor-3.jpeg";
-import Appointment from "./Appointment"
+import DoctorProfile from '../components/Profiles/DoctorProfile/DoctorProfile'
 
 function Profile() {
   const serverURL = process.env.REACT_APP_SERVER_URL;
@@ -307,7 +307,7 @@ function Profile() {
           </Card>
         </Col>
       </Row> */}
-      <Details data={user}/>
+      <DoctorProfile data={user}/>
       {/* <Card
         bordered={false}
         className="header-solid mb-24"

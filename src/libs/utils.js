@@ -16,4 +16,6 @@ const nameTranslator = (n) => {
   return name;
 }
 
-module.exports = { addressTranslator, nameTranslator };
+const capitalize = (s) => (typeof s == "string") ? `${s.slice(0, 1).toUpperCase()}${s.slice(1)}` : s;
+
+module.exports = { capitalize, addressTranslator, nameTranslator };

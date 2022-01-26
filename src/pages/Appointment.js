@@ -6,7 +6,7 @@ import moment from 'moment'
 import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
-import DisplayDetails from '../components/OtherDoctorProfile/DisplayDetails';
+import DisplayDetails from '../components/Profiles/OtherDoctorProfile/DisplayDetails';
 import { Button, message, DatePicker, Layout, Calendar, Select, Radio, Col, Row, Typography, Empty, Card, List, Divider, Space } from 'antd';
 
 const Listbox = styled.ul`
@@ -50,7 +50,6 @@ function Appointment() {
     const [timeslot, submitted] = useState("");
     const [schedule, setschedule] = useState([]);
     const [user, setUser] = useState({});
-    const doctorID = "123";
     useEffect(() => {
         const getUser = async () => {
             let res, data;
