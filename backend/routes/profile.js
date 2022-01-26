@@ -61,7 +61,7 @@ router.post('/',
     let infoProps = ['dob', 'bloodGroup', 'gender', 'contactNo', 'designation',];
     let addressProps = ['houseNo', 'street', 'landmark', 'area', 'district', 'state', 'country', 'postalCode',]
     let doctorInfoProps = ['imrNumber', 'description',];
-    let experienceProps = ['services', 'specializations', 'memberships', 'experience', 'education', 'registrations', 'awardsAndRecognition',];
+    let experienceProps = ["disease", 'services', 'specializations', 'memberships', 'experience', 'education', 'registrations', 'awardsAndRecognition',];
     let clinicProps = ['licenseNo', 'license', 'role', 'email', 'contactNo',];
     let feesProps = ['consultation'];
     let objectProps = ['name', 'address',];

@@ -453,6 +453,20 @@ const userValidationSchema = {
     },
     isArray: true,
   },
+  disease: {
+    in: 'body',
+    optional: { options: { nullable: true } },
+    customSanitizer: {
+      options: (value) => {
+        console.log(value);
+        if (typeof value === 'string') {
+          return JSON.parse(value);
+        }
+        return value;
+      }
+    },
+    isArray: true,
+  },
   specializations: {
     in: 'body',
     optional: { options: { nullable: true } },
