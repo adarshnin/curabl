@@ -11,6 +11,7 @@ router.post("/", async (req, res) => {
         var data = req.body;
         // Date = moment(Date);
         console.log(data.date);
+        // , userid: data.patientId Add this @@@@@@@@
         const filter = { doctorId: data.doctorId, date: data.date, slottime: data.timeslot, status: "processing" };
         const update = { status: "booked", paymentid: data.paymentID, signature: data.signature, orderid: data.orderID };
         let doc = await slotmodeltemplate.findOneAndUpdate(filter, update).exec((err, data) => {

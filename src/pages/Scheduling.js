@@ -21,14 +21,23 @@ border-top: 1px solid ${props => props.theme.secondary};
 const ListItem = styled.li`
 padding: 0.75em 0.5em;
 border: 1px solid;
-background-color: lightblue;
+background-color: ${props => (props.isValid ? '#a2d8eb' : '#ebb0b0')};
 margin: 0;
 cursor: pointer;
 text-align: center;
-min-width: 99px;
+// min-width: 99px;
+// opacity: ${props => (props.isValid ? 1 : 0.3)};
+:hover {
+  cursor: ${props => (props.isValid ? 'pointer' : 'inherit')};
+  color: ${props => (props.isValid ? props.theme.primary : 'inherit')};
 `;
 const { Header, Footer, Content } = Layout;
 
+function isBooked(slot) {
+    console.log(slot);
+    if (slot.status == "free")
+        return 1;
+}
 
 function Scheduling() {
 
@@ -36,6 +45,14 @@ function Scheduling() {
     var evening_schedule = [6, 6.34, 7.45, 8, 8.34, 8.7545, 9, 10, 11];
     const [schedule, setschedule] = useState([]);
 
+    const [date, changeDate] = useState(moment())
+    const [display_date, changeDisplayDate] = useState(moment().format("DD-MM-YYYY"));
+    console.log(display_date);
+
+    useEffect(() => {
+        // Your code here
+        onChange(date);
+    }, []);
     async function onChange(date, dateString) {
         // changeDate(evening_schedule);
         changeDate(date)
@@ -62,9 +79,6 @@ function Scheduling() {
         }
 
     }
-
-    const [date, changeDate] = useState(moment())
-    console.log(date);
     // useEffect(()=>{},[date]);
 
 
@@ -76,30 +90,50 @@ function Scheduling() {
                         className="header-solid h-full ant-invoice-card"
                     >
                         <Header style={{ fontWeight: 900, fontSize: "22px" }} orientation="left">Upcoming Slots</Header>
-                        <Header style={{ padding: '10px', display: 'flex', justifyContent: 'space-around' }}>
+                        <Header style={{ padding: '10px' }}>
+
+                            <List
+                                itemLayout="horizontal"
+                                className="invoice-list"
+
+                            >
+                                <List.Item>
+                                    <List.Item.Meta style={{ marginLeft: '10%' }}
+                                        title={
+                                            <DatePicker
+                                                disabledDate={(current) => {
+                                                    return moment().add(-1, 'days') >= current
+                                                }}
+                                                format="DD-MM-YYYY"
+                                                allowClear={false}
+                                                // value={date}
+                                                onChange={onChange}
+
+                                            />
+                                        }
+                                    />
+                                    <div className="amount" style={{ marginRight: '15%', marginLeft: "10%" }}>Date: {date.format("DD-MM-YYYY")}</div>
+                                    <div className="amount" style={{ marginRight: '10%' }}> <Modal_shed Date={date.format("DD-MM-YYYY")} /></div>
+                                    <div className="amount" style={{ marginRight: '10%' }}> <Button type="default" onClick={() => {
+                                        onChange(date);
+                                    }}>Refresh</Button></div>
+
+                                </List.Item>
 
 
-                            <DatePicker
-                                disabledDate={(current) => {
-                                    return moment().add(-1, 'days') >= current
-                                }}
-                                format="DD-MM-YYYY"
-                                allowClear={false}
-                                // value={date}
-                                onChange={onChange}
 
-                            />
-
-                            <Modal_shed Date={date.format("DD-MM-YYYY")} /></Header>
+                            </List>
+                        </Header>
                         <Content>
                             <>
                                 <Listbox style={{ overflow: 'auto', height: '420px' }}>
                                     {schedule.map(slot => {
                                         // const isValid = validator ? validator(slot) : true;
+                                        const isValid = isBooked(slot);
                                         return (
                                             <ListItem
                                                 key={slot.slottime}
-                                                // isValid={isValid}
+                                                isValid={isValid}
                                                 onClick={() => alert(slot.slottime)}
                                             >
                                                 {slot.slottime}

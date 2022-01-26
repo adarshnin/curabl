@@ -1,7 +1,10 @@
 Issues:
     Scheduling: When new date is selected, and slot times are submitted, the slots are still empty. useState wont work as modal file is used
+    GET doctor name from ID
     /payment should be inaccessible from URL
-    
+    morning/evening should be only on frontend. doctor should be able to select any number of slots
+    renew certificates
+
 Things left:
     Chat
     Video calls
@@ -15,8 +18,9 @@ Ghanshyam
         When clicked on slot, show addtional details - patient details
 
 Adarsh
-
-
+    When confirm schedule on patient side is clicked, show error if slot is in processing
+    Cancel appointment - refund
+    in processing slots add 
 Chaitanya
 
     Experience
