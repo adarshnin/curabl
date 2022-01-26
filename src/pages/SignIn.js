@@ -207,9 +207,7 @@ export default class SignIn extends Component {
                 md={{ span: 12 }}
               >
                 <Title className="mb-15">Sign In</Title>
-                <Title className="font-regular text-muted" level={5}>
-                  Enter your email and password to sign in
-                </Title>
+                
                 <Form
                   onFinish={onFinish}
                   onFinishFailed={onFinishFailed}
