@@ -21,7 +21,7 @@ import TabToolbar from "./pages/Tabs";
 import "antd/dist/antd.css";
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
-import {ProtectedDoctorRoute,ProtectedRoute} from "./services/protectedRoutes";
+import {ProtectedDoctorRoute,ProtectedRoute,ProtectedPatientRoute} from "./services/protectedRoutes";
 import axios from 'axios';
 import userAuthentication from "./middleware/isauth"
 import { history } from './helper/history';
@@ -67,7 +67,7 @@ class App extends Component {
                 <ProtectedRoute exact path="/payment" component={Payment} />
                 <ProtectedRoute exact path="/payments" component={Payments} />
                 <ProtectedRoute exact path="/appointment" component={Appointment} />
-                <ProtectedRoute exact path="/scheduling" component={Scheduling} />
+                <ProtectedDoctorRoute exact path="/scheduling" component={Scheduling} />
                 <ProtectedRoute exact path="/myappointments" component={myAppointments} />
                 <ProtectedRoute exact path="/profile" component={Profile} />
                 <ProtectedRoute exact path="/editprofile" component={EditProfile} />
