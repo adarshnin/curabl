@@ -297,8 +297,8 @@ const userValidationSchema = {
       bail: true,
     },
     isLength: {
-      errorMessage: 'description should be max 60 characters',
-      options: { max: 60 },
+      errorMessage: 'description should be max 100 characters',
+      options: { max: 100 },
       bail: true,
     }
   },
@@ -442,36 +442,104 @@ const userValidationSchema = {
   services: {
     in: 'body',
     optional: { options: { nullable: true } },
+    customSanitizer: {
+      options: (value) => {
+        console.log(value);
+        if (typeof value === 'string') {
+          return JSON.parse(value);
+        }
+        return value;
+      }
+    },
+    isArray: true,
+  },
+  disease: {
+    in: 'body',
+    optional: { options: { nullable: true } },
+    customSanitizer: {
+      options: (value) => {
+        console.log(value);
+        if (typeof value === 'string') {
+          return JSON.parse(value);
+        }
+        return value;
+      }
+    },
     isArray: true,
   },
   specializations: {
     in: 'body',
     optional: { options: { nullable: true } },
+    customSanitizer: {
+      options: (value) => {
+        console.log(value);
+        if (typeof value === 'string') {
+          return JSON.parse(value);
+        }
+        return value;
+      }
+    },
     isArray: true,
   },
   memberships: {
     in: 'body',
     optional: { options: { nullable: true } },
+    customSanitizer: {
+      options: (value) => {
+        console.log(value);
+        if (typeof value === 'string') {
+          return JSON.parse(value);
+        }
+        return value;
+      }
+    },
     isArray: true,
   },
   experience: {
     in: 'body',
     optional: { options: { nullable: true } },
-    isArray: true,
+    isNumeric: true,
   },
   education: {
     in: 'body',
     optional: { options: { nullable: true } },
+    customSanitizer: {
+      options: (value) => {
+        console.log(value);
+        if (typeof value === 'string') {
+          return JSON.parse(value);
+        }
+        return value;
+      }
+    },
     isArray: true,
   },
   registrations: {
     in: 'body',
     optional: { options: { nullable: true } },
+    customSanitizer: {
+      options: (value) => {
+        console.log(value);
+        if (typeof value === 'string') {
+          return JSON.parse(value);
+        }
+        return value;
+      }
+    },
     isArray: true,
   },
   awardsAndRecognition: {
     in: 'body',
     optional: { options: { nullable: true } },
+    customSanitizer: {
+      options: (value) => {
+        console.log(value);
+        if (typeof value === 'string') {
+          return JSON.parse(value);
+        }
+        return value;
+      }
+    },
     isArray: true,
   },
   'services.*': {

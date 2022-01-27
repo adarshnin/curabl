@@ -61,13 +61,14 @@ router.post('/',
     let infoProps = ['dob', 'bloodGroup', 'gender', 'contactNo', 'designation',];
     let addressProps = ['houseNo', 'street', 'landmark', 'area', 'district', 'state', 'country', 'postalCode',]
     let doctorInfoProps = ['imrNumber', 'description',];
-    let experienceProps = ['services', 'specializations', 'memberships', 'experience', 'education', 'registrations', 'awardsAndRecognition',];
+    let experienceProps = ["disease", 'services', 'specializations', 'memberships', 'experience', 'education', 'registrations', 'awardsAndRecognition',];
     let clinicProps = ['licenseNo', 'license', 'role', 'email', 'contactNo',];
     let feesProps = ['consultation'];
     let objectProps = ['name', 'address',];
     let doctorObjectProps = ['clinic', 'fees',];
     let uploadProps = ['profileImage'];
     let booleanProps = ['isDoctor'];
+    let clinicObjProps = ['address'];
 
     if (user) {
       assignEmptyObj(objectProps, user);
@@ -96,13 +97,14 @@ router.post('/',
       assignPropsVal(doctorInfoProps, data, user);
 
       // Charges Schema
-      assignPropsVal(feesProps, data.fees, user)
+      assignPropsVal(feesProps, data.fees, user.fees);
 
       // Experience Schema
       assignPropsVal(experienceProps, data, user);
 
       // Clinic Schema
       if (data.clinic) {
+        assignEmptyObj(clinicObjProps, user.clinic);
         assignPropsVal(clinicProps, data.clinic, user.clinic);
         if (data.clinic.address) {
           assignPropsVal(addressProps, data.clinic.address, user.clinic.address);

@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import {
   Row,
@@ -17,13 +18,10 @@ import {
 import axios from "axios";
 
 import {
-  FacebookOutlined,
-  TwitterOutlined,
-  InstagramOutlined,
+  EditOutlined,
   VerticalAlignTopOutlined,
 } from "@ant-design/icons";
 
-import { addressTranslator } from '../libs/utils'
 import BgProfile from "../assets/images/bg-profile.jpg";
 import profilavatar from "../assets/images/face-1.jpg";
 import convesionImg from "../assets/images/face-3.jpg";
@@ -34,7 +32,8 @@ import convesionImg5 from "../assets/images/face-2.jpg";
 import project1 from "../assets/images/home-decor-1.jpeg";
 import project2 from "../assets/images/home-decor-2.jpeg";
 import project3 from "../assets/images/home-decor-3.jpeg";
-import Appointment from "./Appointment"
+import DoctorProfile from '../components/Profiles/DoctorProfile/DoctorProfile'
+import { urlTranslator } from "../libs/utils";
 
 function Profile() {
   const serverURL = process.env.REACT_APP_SERVER_URL;
@@ -49,12 +48,13 @@ function Profile() {
       try {
         console.log(serverURL);
         res = await axios.post(`${serverURL}/profile/getUser`, {
-          email: "jaysean@example.com",
+          email: "mmm@example.com",
+          isDoctor: true,
         });
       } catch (err) {
         console.error(err);
       }
-      if(res?.data) {
+      if (res?.data) {
         data = res.data;
         console.log(data);
         setUserId(data.id);
@@ -101,8 +101,8 @@ function Profile() {
 
   const pencil = [
     <svg
-      width="20"
-      height="20"
+      width="50"
+      height="50"
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -192,8 +192,7 @@ function Profile() {
           <Row justify="space-between" align="middle" gutter={[24, 0]}>
             <Col span={24} md={12} className="col-info">
               <Avatar.Group>
-                <Avatar size={74} shape="square" src={profilavatar} />
-
+                <Avatar size={74} shape="square" src={urlTranslator(user?.profileImage)} />
                 <div className="avatar-info">
                   <h4 className="font-semibold m-0">{`${user?.name?.firstName} ${user?.name?.lastName}`}</h4>
                   <p>{user?.isDoctor ? "Doctor" : "Patient"}</p>
@@ -209,17 +208,15 @@ function Profile() {
                 justifyContent: "flex-end",
               }}
             >
-              <Radio.Group defaultValue="a">
-                <Radio.Button value="a">OVERVIEW</Radio.Button>
-                <Radio.Button value="b">TEAMS</Radio.Button>
-                <Radio.Button value="c">PROJECTS</Radio.Button>
-              </Radio.Group>
+              <Link to="/editprofile">
+                {pencil}
+              </Link>
             </Col>
           </Row>
         }
       ></Card>
 
-      <Row gutter={[24, 0]}>
+      {/* <Row gutter={[24, 0]}>
         <Col span={24} md={8} className="mb-24">
           <Card
             bordered={false}
@@ -305,8 +302,9 @@ function Profile() {
             />
           </Card>
         </Col>
-      </Row>
-      <Card
+      </Row> */}
+      <DoctorProfile data={user} />
+      {/* <Card
         bordered={false}
         className="header-solid mb-24"
         title={
@@ -361,7 +359,7 @@ function Profile() {
             </Upload>
           </Col>
         </Row>
-      </Card>
+      </Card> */}
     </>
   );
 }

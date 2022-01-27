@@ -6,6 +6,7 @@ import moment from 'moment'
 import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
+import DisplayDetails from '../components/Profiles/OtherDoctorProfile/DisplayDetails';
 import { Button, message, DatePicker, Layout, Calendar, Select, Radio, Col, Row, Typography, Empty, Card, List, Divider, Space } from 'antd';
 
 const Listbox = styled.ul`
@@ -42,11 +43,37 @@ function isBooked(slot) {
         return 1;
 }
 function Appointment() {
+    const serverURL = process.env.REACT_APP_SERVER_URL;
     var morning_schedule = [9, 9.15, 9.30, 9.45, 10, 10.15, 10.30, 10.45, 11, 11.15, 11.30, 11.45, 12, 12.15, 34, 3434, 98, 65, 23432, 536, 4, 3436, 76, 123, 87, 3444, 171, 43, 4550];
     var evening_schedule = [6, 6.34, 7.45, 8, 8.34, 8.7545, 9, 10, 11];
     const [date, changeDate] = useState(moment().format("DD-MM-YYYY"));
     const [timeslot, submitted] = useState("");
     const [schedule, setschedule] = useState([]);
+    const [user, setUser] = useState({});
+    useEffect(() => {
+        const getUser = async () => {
+            let res, data;
+            try {
+                console.log(serverURL);
+                res = await axios.post(`${serverURL}/profile/getUser`, {
+                    email: "mmm@example.com",
+                    isDoctor: true,
+                });
+            } catch (err) {
+                console.error(err);
+            }
+            if (res?.data) {
+                data = res.data;
+                console.log(data);
+                delete data.id;
+                setUser(data);
+            }
+            return () => {
+
+            };
+        };
+        getUser();
+    });
     const [loading, setLoading] = useState(false);
     const [slotStatus, setStatus] = useState(false);
     const doctorID = "123", patientID = "test123";
@@ -288,6 +315,9 @@ function Appointment() {
                     >
                         {content}
                     </Card>
+                </Col>
+                <Col span={24} md={16} className="mb-24">
+                    <DisplayDetails user={user} />
                 </Col>
             </Row>
         </div>

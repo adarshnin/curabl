@@ -21,6 +21,7 @@ var paymentRouter = require('./routes/payment');
 var getslotRouter = require('./routes/getslot');
 var profileRouter = require('./routes/profile');
 var reserveslotRouter = require('./routes/reserveSlots.js');
+var rocketChatRouter = require('./routes/rocketchat.js');
 var BookSlotRouter =  require('./routes/booked');
 var isAuthRouter =  require('./routes/isAuth');
 
@@ -37,7 +38,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/', express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/profile', profileRouter); // Profile
@@ -49,6 +50,7 @@ app.use('/generateSlot', generateSlot);
 app.use('/getSlot', getslotRouter);
 app.use('/reserveSlot', reserveslotRouter);
 app.use('/payment', paymentRouter);
+app.use('/rocketchat', rocketChatRouter);
 app.use('/bookSlot', BookSlotRouter);
 app.use('/isAuth', isAuthRouter);
 
