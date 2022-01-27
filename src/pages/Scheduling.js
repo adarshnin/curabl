@@ -5,6 +5,7 @@ import moment from 'moment'
 import styled from 'styled-components';
 import axios from 'axios';
 import { Button, DatePicker, Layout, Calendar, Select, Radio, Col, Row, Typography, Empty, Card, List, Divider, Space } from 'antd';
+import {authenticationService} from "../services/authservice"
 
 const Listbox = styled.ul`
 display: grid;
@@ -61,7 +62,11 @@ function Scheduling() {
         try {
             res = await axios.post(`http://localhost:9000/getSlot`, {
                 Date: date.format("DD-MM-YYYY"),
+<<<<<<< HEAD
                 doctorId: doctorId
+=======
+                doctorId: authenticationService.currentUserValue.id
+>>>>>>> a071f7b2455fb51de47eee143d77e26ab21c322e
             });
         } catch (err) {
             console.error(err);

@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import DisplayDetails from '../components/Profiles/OtherDoctorProfile/DisplayDetails';
+import { authenticationService } from '../services/authservice';
 import { Button, message, DatePicker, Layout, Calendar, Select, Radio, Col, Row, Typography, Empty, Card, List, Divider, Space } from 'antd';
 
 const Listbox = styled.ul`
@@ -76,7 +77,7 @@ function Appointment() {
     });
     const [loading, setLoading] = useState(false);
     const [slotStatus, setStatus] = useState(false);
-    const doctorID = "123", patientID = "test123";
+    const doctorID = "61eece80ac8c37feaaa12a25", patientID = authenticationService.currentUserValue.id;
     let redirection;
 
     if (slotStatus) {
@@ -274,7 +275,8 @@ function Appointment() {
         var res = "";
         try {
             res = await axios.post(`http://localhost:9000/getSlot`, {
-                Date: date
+                Date: date,
+                doctorId :doctorID
             });
         } catch (err) {
             console.error(err);

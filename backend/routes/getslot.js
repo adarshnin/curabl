@@ -7,9 +7,10 @@ const router = express.Router();
 router.post("/", async (req, res) => {
     try {
         var Date = req.body.Date;
+        var doctor_id = req.body.doctorId
         // Date = moment(Date);
         console.log(Date);
-        slotmodeltemplate.find({ date: Date }).sort({ slottime: 1 }).exec((err, data) => {
+        slotmodeltemplate.find({ date: Date,doctorId:doctor_id }).sort({ slottime: 1 }).exec((err, data) => {
             if (err) {
                 res.send("No Data found");
                 console.log(err);
