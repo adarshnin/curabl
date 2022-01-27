@@ -6,6 +6,7 @@ import { MessageOutlined } from '@ant-design/icons';
 import { NavLink, useLocation } from "react-router-dom";
 import { authenticationService } from '../../services/authservice';
 
+
 import logo from "../../assets/images/curabl-lblue-logo.png"
 
 function Sidenav({ color }) {
@@ -238,10 +239,35 @@ function Sidenav({ color }) {
     </svg>,
   ];
 
+
+  var schedulingContent;
+  
+
+  if (authenticationService.currentUserValue?.isDoctor) {
+    console.log("in if", authenticationService.currentUserValue?.isDoctor)
+    schedulingContent = (<Menu.Item key="4">
+
+      <NavLink to="/scheduling">
+        <span
+          className="icon"
+          style={{
+            background: page === "scheduling" ? color : "",
+          }}
+        >
+          {scheduling}
+        </span>
+        <span className="label">Scheduling</span>
+      </NavLink>
+    </Menu.Item>)
+  }
+  else {
+    console.log("in else sidenav", authenticationService.currentUser.isDoctor)
+
+    schedulingContent = (<div></div>)
+  }
   return (
     <>
       <div className="brand">
-
         <span><img src={logo} alt="" /></span>
       </div>
       <hr />
@@ -275,19 +301,13 @@ function Sidenav({ color }) {
             <span className="label">Appointment</span>
           </NavLink>
         </Menu.Item>
-        <Menu.Item key="4">
-          <NavLink to="/scheduling">
-            <span
-              className="icon"
-              style={{
-                background: page === "scheduling" ? color : "",
-              }}
-            >
-              {scheduling}
-            </span>
-            <span className="label">Scheduling</span>
-          </NavLink>
-        </Menu.Item>
+
+
+
+
+
+        {schedulingContent}
+
         <Menu.Item key="13">
           <NavLink to="/myappointments">
             <span

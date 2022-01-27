@@ -97,8 +97,13 @@ router.post("/savePayment", async (req, res) => {
 
 router.post("/getPayments", async (req, res) => {
 	try {
-		// @@@@@@@ or can be doctorid
-		paymentmodeltemplate.find({ patientId: req.body.patientId }).exec((err, data) => {
+		if (req.body.isDoctor) {
+			filter = { doctorId: req.body.doctorId }
+		}
+		else {
+			filter = { patientId: req.body.patientId }
+		}
+		paymentmodeltemplate.find(filter).exec((err, data) => {
 			if (err) {
 				res.send("Errors");
 				console.log(err);

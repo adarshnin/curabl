@@ -4,6 +4,8 @@ import Modal_shed from "./shedul_modal";
 import moment from 'moment'
 import styled from 'styled-components';
 import axios from 'axios';
+import { authenticationService } from "../services/authservice"
+
 import {
     DatePicker, Layout, Row,
     Col,
@@ -29,10 +31,19 @@ const { Title } = Typography;
 const { Header, Footer, Content } = Layout;
 
 
-// Get from login state
-const patientID = "test123";
+const isDoctor = authenticationService.currentUserValue?.isDoctor
 
+const userID = authenticationService.currentUserValue?.id;
 
+var query;
+if (isDoctor) {
+    query = "patientId";
+}
+else {
+    query = "doctorId";
+}
+
+console.log("isDoctor == ", isDoctor);
 const columns = [
     {
         title: "PERSON",
@@ -73,6 +84,7 @@ function Payments() {
     console.log("in mu payments")
     const [payment_data, getPayments] = useState("");
     const data = [];
+    console.log("######", userID);
     for (let i = 0; i < payment_data.length; i++) {
         console.log(i, "$$$");
         data.push({
@@ -87,7 +99,7 @@ function Payments() {
                             src={face2}
                         ></Avatar>
                         <div className="avatar-info">
-                            <Title level={5}>{payment_data[i]['doctorId']}</Title>
+                            <Title level={5}>{payment_data[i][query]}</Title>
                             <p>michael@gmail.com</p>
                         </div>
                     </Avatar.Group>{" "}
@@ -133,20 +145,41 @@ function Payments() {
 
     useEffect(async () => {
         // Your code here
-        var res = "";
-        try {
-            res = await axios.post(`http://localhost:9000/payment/getPayments`, {
-                // @@@@@@@ or can be doctorid
+        if (isDoctor) {
+            var res = "";
+            try {
+                res = await axios.post(`http://localhost:9000/payment/getPayments`, {
+                    // @@@@@@@ or can be doctorid
 
-                patientId: patientID
-            });
-        } catch (err) {
-            console.error(err);
+                    doctorId: userID,
+                    isDoctor: isDoctor
+                });
+            } catch (err) {
+                console.error(err);
+            }
+            if (res?.data) {
+                getPayments(res.data);
+                console.log("@@@@", res.data);
+            }
         }
-        if (res?.data) {
-            getPayments(res.data);
-            console.log("@@@@", res.data);
+        else {
+
+            var res = "";
+            try {
+                res = await axios.post(`http://localhost:9000/payment/getPayments`, {
+                    patientId: userID,
+                    isDoctor: isDoctor
+
+                });
+            } catch (err) {
+                console.error(err);
+            }
+            if (res?.data) {
+                getPayments(res.data);
+                console.log("@@@@", res.data);
+            }
         }
+
 
     }, []);
     return (

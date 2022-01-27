@@ -29,7 +29,7 @@ text-align: center;
 // min-width: 99px;
 // opacity: ${props => (props.isValid ? 1 : 0.3)};
 :hover {
-  cursor: ${props => (props.isValid ? 'pointer' : 'inherit')};
+//   cursor: ${props => (props.isValid ? 'pointer' : 'inherit')};
   color: ${props => (props.isValid ? props.theme.primary : 'inherit')};
 `;
 const { Header, Footer, Content } = Layout;
@@ -62,11 +62,7 @@ function Scheduling() {
         try {
             res = await axios.post(`http://localhost:9000/getSlot`, {
                 Date: date.format("DD-MM-YYYY"),
-<<<<<<< HEAD
-                doctorId: doctorId
-=======
                 doctorId: authenticationService.currentUserValue.id
->>>>>>> a071f7b2455fb51de47eee143d77e26ab21c322e
             });
         } catch (err) {
             console.error(err);
