@@ -60,7 +60,8 @@ function Scheduling() {
         var res = "";
         try {
             res = await axios.post(`http://localhost:9000/getSlot`, {
-                Date: date.format("DD-MM-YYYY")
+                Date: date.format("DD-MM-YYYY"),
+                doctorId: doctorId
             });
         } catch (err) {
             console.error(err);
