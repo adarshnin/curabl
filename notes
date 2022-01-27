@@ -3,23 +3,27 @@ Issues:
     /payment should be inaccessible from URL
     morning/evening should be only on frontend. doctor should be able to select any number of slots
     renew certificates
+    redirection to dashboard disable
 
 Things left:
+    How will doctors receive payment
     Chat
-    Video calls
-    Profile - Searching doctors/disease - fever, dengue /services
-    Sign in / Up
     Google sign up ? integration?
+    Google maps location
     
 change svgs of other pages
 
 Ghanshyam
         When clicked on slot, show addtional details - patient details
+        Nodemailer - send mail
+        signout popover 
 
 Adarsh
-    When confirm schedule on patient side is clicked, show error if slot is in processing
     Cancel appointment - refund
-    in processing slots add 
+    in processing slots add
+    payment table add 
+    Get useriD of logged in person and do queries
+    
 Chaitanya
 
     Experience

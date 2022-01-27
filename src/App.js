@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Tables from "./pages/Tables";
 import Billing from "./pages/Billing";
 import Payment from "./pages/Payment";
+import Payments from "./pages/Payments";
 import Appointment from "./pages/Appointment";
 import Scheduling from "./pages/Scheduling";
 import myAppointments from "./pages/myAppointments"
@@ -64,6 +65,7 @@ class App extends Component {
                 {/* <ProtectedRoute exact path="/tables" component={Tables} /> */}
                 {/* <ProtectedRoute exact path="/billing" component={Billing} /> */}
                 <ProtectedRoute exact path="/payment" component={Payment} />
+                <ProtectedRoute exact path="/payments" component={Payments} />
                 <ProtectedRoute exact path="/appointment" component={Appointment} />
                 <ProtectedRoute exact path="/scheduling" component={Scheduling} />
                 <ProtectedRoute exact path="/myappointments" component={myAppointments} />
