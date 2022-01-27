@@ -1,5 +1,6 @@
 const express = require("express");
 const shortid = require('shortid')
+const paymentmodeltemplate = require("../models/payment");
 
 const path = require('path')
 
@@ -63,5 +64,63 @@ router.post('/razorpay', async (req, res) => {
 		console.log(error)
 	}
 })
+
+router.post("/savePayment", async (req, res) => {
+	console.log("in savePayment slot")
+
+
+	const slot = new paymentmodeltemplate({
+		doctorId: req.body.doctorId,
+		date: req.body.date,
+		patientId: req.body.patientId,
+		paymentID: req.body.paymentID,
+		orderID: req.body.orderID,
+		signature: req.body.signature,
+		amount: req.body.amount,
+		status: "paid"
+	});
+	// res.send("temp"); 
+	console.log("donecheck");
+	slot.save()
+		.then(data => {
+			res.json(data);
+			console.log(data);
+		})
+		.catch(error => {
+			res.json(error);
+			console.log(error);
+		})
+	// res.sendStatus( 201);
+	console.log("done");
+});
+
+
+router.post("/getPayments", async (req, res) => {
+	try {
+		// @@@@@@@ or can be doctorid
+		paymentmodeltemplate.find({ patientId: req.body.patientId }).exec((err, data) => {
+			if (err) {
+				res.send("Errors");
+				console.log(err);
+			}
+			else {
+				console.log(data);
+				res.send(data);
+			}
+
+
+		});
+		// res.send("Date response got");
+
+		// slotmodeltemplate("date")
+
+
+	} catch (error) {
+		// res.status(400).send(error);
+
+		res.send(error);
+	}
+
+});
 
 module.exports = router;

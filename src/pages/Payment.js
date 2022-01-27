@@ -42,6 +42,10 @@ function Payment() {
 	const location = useLocation()
 	const { from, data_slot } = location.state;
 	console.log("@@@@@@@@", from, data_slot);
+
+	// @@@@@@@@@@@@ fetch amount from db
+	const amount = 99;
+
 	const payment_data = [
 		{
 			title: "Amount",
@@ -245,6 +249,24 @@ function Payment() {
 						console.log(res1.data);
 					}
 				}
+
+				// Save payments
+				var res2 = ""
+				try {
+					res2 = await axios.post(`http://localhost:9000/payment/savePayment`, {
+						date: data_slot.date,
+						doctorId: data_slot.doctorID,
+						patientId: data_slot.patientID,
+						paymentID: response.razorpay_payment_id,
+						orderID: response.razorpay_order_id,
+						signature: response.razorpay_signature,
+						amount: amount
+					});
+				} catch (err) {
+					console.error(err);
+				}
+				if (res2?.data)
+					console.log(res2.data);
 			},
 			prefill: {
 				name: "Dev Patel",

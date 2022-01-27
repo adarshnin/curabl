@@ -259,9 +259,9 @@ function Sidenav({ color }) {
             <span className="label">Dashboard</span>
           </NavLink>
         </Menu.Item>
-        
-        
-        
+
+
+
         <Menu.Item key="12">
           <NavLink to="/appointment">
             <span
@@ -299,6 +299,19 @@ function Sidenav({ color }) {
               {myappointments}
             </span>
             <span className="label">My Appointments</span>
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item key="15">
+          <NavLink to="/payments">
+            <span
+              className="icon"
+              style={{
+                background: page === "payments" ? color : "",
+              }}
+            >
+              {billing}
+            </span>
+            <span className="label">Payments</span>
           </NavLink>
         </Menu.Item>
 

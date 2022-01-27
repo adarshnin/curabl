@@ -36,20 +36,29 @@ const patientID = "test123";
 const columns = [
     {
         title: "PERSON",
-        dataIndex: "dname",
-        key: "dname",
-        width: "32%",
+        dataIndex: "person",
+        key: "person",
+        width: "25%",
     },
     {
-        title: "SLOT",
-        dataIndex: "slot",
-        key: "slot",
+        title: "DATE",
+        dataIndex: "date",
+        key: "date",
     },
-
     {
-        title: "MEETING",
-        key: "meeting",
-        dataIndex: "meeting",
+        title: "AMOUNT",
+        key: "amount",
+        dataIndex: "amount",
+    },
+    {
+        title: "PAYMENT ID",
+        key: "paymentid",
+        dataIndex: "paymentid",
+    },
+    {
+        title: "ORDER ID",
+        key: "orderid",
+        dataIndex: "orderid",
     },
     {
         title: "STATUS",
@@ -60,15 +69,15 @@ const columns = [
 
 
 
-function Appointments() {
-    console.log("in mu appointments")
-    const [app_data, getAppointments] = useState("");
+function Payments() {
+    console.log("in mu payments")
+    const [payment_data, getPayments] = useState("");
     const data = [];
-    for (let i = 0; i < app_data.length; i++) {
+    for (let i = 0; i < payment_data.length; i++) {
         console.log(i, "$$$");
         data.push({
             key: i,
-            dname: (
+            person: (
                 <>
                     <Avatar.Group>
                         <Avatar
@@ -78,39 +87,44 @@ function Appointments() {
                             src={face2}
                         ></Avatar>
                         <div className="avatar-info">
-                            <Title level={5}>{app_data[i]['doctorId']}</Title>
+                            <Title level={5}>{payment_data[i]['doctorId']}</Title>
                             <p>michael@gmail.com</p>
                         </div>
                     </Avatar.Group>{" "}
                 </>
             ),
-            slot: (
+            date: (
                 <>
                     <div className="author-info">
-                        <Title level={5}>{app_data[i]['date']}</Title>
-                        <p>{app_data[i]['slottime']}</p>
+                        <Title level={5}>{payment_data[i]['date']}</Title>
                     </div>
                 </>
             ),
-            meeting: (
+            amount: (
                 <>
-                    <Link
-                        to={{
-                            pathname: '/call',
-                            state: { from: 'myAppointments', meetingurl: app_data[i]['meetingurl'] }
-                        }}
-                    >
-                        <Button type="primary" className="tag-primary">
-                            JOIN MEETING
-                        </Button>
-                    </Link>
+                    <div className="author-info">
+                        <Title level={5}>₹ {payment_data[i]['amount']}</Title>
+                    </div>
+                </>
+            ),
+            paymentid: (
+                <>
+                    <div className="ant-employed">
+                        <span>{payment_data[i]['paymentID']}</span>
+                    </div>
+                </>
+            ),
+            orderid: (
+                <>
+                    <div className="ant-employed">
+                        <span>{payment_data[i]['orderID']}</span>
+                    </div>
                 </>
             ),
             status: (
                 <>
                     <div className="ant-employed">
-                        <span>{app_data[i]['status']}</span>
-                        <Button type="primary" danger >Cancel</Button>
+                        <span>{payment_data[i]['status']}</span>
                     </div>
                 </>
             ),
@@ -121,27 +135,29 @@ function Appointments() {
         // Your code here
         var res = "";
         try {
-            res = await axios.post(`http://localhost:9000/myappointments/getAppointments`, {
+            res = await axios.post(`http://localhost:9000/payment/getPayments`, {
+                // @@@@@@@ or can be doctorid
+
                 patientId: patientID
             });
         } catch (err) {
             console.error(err);
         }
         if (res?.data) {
-            getAppointments(res.data);
+            getPayments(res.data);
             console.log("@@@@", res.data);
         }
 
     }, []);
     return (
-        <div className="myAppointments" >
+        <div className="myPayments" >
             <div className="tabled">
                 <Row gutter={[24, 0]}>
                     <Col xs="24" xl={24}>
                         <Card
                             bordered={false}
                             className="criclebox tablespace mb-24"
-                            title="My Appointments"
+                            title="My Payments"
                             extra={
                                 <>
                                     <p className="card-header-date">
@@ -169,4 +185,4 @@ function Appointments() {
     )
 };
 
-export default Appointments;
+export default Payments;
