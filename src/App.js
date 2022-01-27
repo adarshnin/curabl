@@ -20,7 +20,7 @@ import TabToolbar from "./pages/Tabs";
 import "antd/dist/antd.css";
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
-import {ProtectedRoute} from "./services/protectedRoutes";
+import {ProtectedDoctorRoute,ProtectedRoute} from "./services/protectedRoutes";
 import axios from 'axios';
 import userAuthentication from "./middleware/isauth"
 import { history } from './helper/history';
@@ -61,8 +61,8 @@ class App extends Component {
               {/* <Route path="/" exact component={SignIn} /> */}
               <Main>
                 <ProtectedRoute exact path="/dashboard" component={Home} />
-                <ProtectedRoute exact path="/tables" component={Tables} />
-                <ProtectedRoute exact path="/billing" component={Billing} />
+                {/* <ProtectedRoute exact path="/tables" component={Tables} /> */}
+                {/* <ProtectedRoute exact path="/billing" component={Billing} /> */}
                 <ProtectedRoute exact path="/payment" component={Payment} />
                 <ProtectedRoute exact path="/appointment" component={Appointment} />
                 <ProtectedRoute exact path="/scheduling" component={Scheduling} />
@@ -73,7 +73,7 @@ class App extends Component {
 
                 
                 {/* <Toolbar> */}
-                <ProtectedRoute exact path="/call" component={TabToolbar} />
+                {/* <ProtectedRoute exact path="/call" component={TabToolbar} /> */}
                 {/* </Toolbar> */}
                 <Redirect from="*" to="/dashboard" />
                 {/* <Redirect path="*" component={() => "404 NOT FOUND"} /> */}
