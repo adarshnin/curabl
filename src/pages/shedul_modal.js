@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios';
+import {authenticationService} from "../services/authservice"
 
 import { Modal, Button, Card, TimePicker, InputNumber, message } from 'antd';
 // import { useState } from 'react';
@@ -52,9 +53,10 @@ class Modal_shed extends React.Component {
     let res, data;
     try {
       console.log("this is date", this.props.Date, this.props);
+      console.log("id : ",authenticationService.currentUserValue.id)
       res = await axios.post(` http://localhost:9000/generateSlot`, {
 
-        "doctorId": "123",
+        "doctorId": authenticationService.currentUserValue.id,
         "Date": this.props.Date,
         "waitingPeriod": this.state.user.waitingPeriod,
         "slotperiod": this.state.user.slotPeriod,
