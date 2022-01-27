@@ -48,7 +48,7 @@ function Scheduling() {
     const [date, changeDate] = useState(moment())
     const [display_date, changeDisplayDate] = useState(moment().format("DD-MM-YYYY"));
     console.log(display_date);
-
+    const doctorId = "123";
     useEffect(() => {
         // Your code here
         onChange(date);
@@ -61,7 +61,7 @@ function Scheduling() {
         try {
             res = await axios.post(`http://localhost:9000/getSlot`, {
                 Date: date.format("DD-MM-YYYY"),
-                // doctorId: doctorId
+                doctorId: doctorId
             });
         } catch (err) {
             console.error(err);
