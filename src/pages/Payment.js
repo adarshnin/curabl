@@ -42,6 +42,7 @@ function Payment() {
 	const location = useLocation()
 	const { from, data_slot } = location.state;
 	console.log("@@@@@@@@", from, data_slot);
+	const uesrid = authenticationService.currentUserValue?.id;
 
 	// @@@@@@@@@@@@ fetch amount from db
 	const amount = 99;
@@ -230,6 +231,7 @@ function Payment() {
 						date: data_slot.date,
 						doctorId: data_slot.doctorID,
 						patientId: data_slot.patientID,
+						userid: userid,
 						timeslot: data_slot.timeslot,
 						paymentID: response.razorpay_payment_id,
 						orderID: response.razorpay_order_id,
