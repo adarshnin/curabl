@@ -43,9 +43,9 @@ router.post("/", [
         }
     } catch (error) {
         // res.status(400).send(error);
-        // var data = { error: "Unauthorized Access!", data: "You have entered invalid credentials." }
+        var data = { error: "Unauthorized Access!", message: "server Error." }
         console.log("in catch", error);
-        res.status(500).json({ error });
+        res.status(200).json(data);
     }
 });
 

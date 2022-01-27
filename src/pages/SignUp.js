@@ -10,7 +10,10 @@ import {
   Input,
   Checkbox,
   Switch,
+  message
 } from "antd";
+import validator from 'validator'
+
 import logo1 from "../assets/images/logos-facebook.svg";
 import logo2 from "../assets/images/logo-apple.svg";
 import logo3 from "../assets/images/Google__G__Logo.svg.png";
@@ -128,9 +131,16 @@ export default class SignUp extends Component {
         });
       } catch (err) {
         console.error("error in catch", err);
+        message.error("Check your Internet Connection.");
       }
+
       if (res?.data) {
-        console.log("resdata", res.data);
+        if (res.data?.error) {
+          message.error(res.data?.message, 10);
+        }else{
+          console.log("resdata", res.data);
+          message.success("Sign Up Successfull");
+        }
       }
 
     };
@@ -142,6 +152,21 @@ export default class SignUp extends Component {
     const onFinishFailed = (errorInfo) => {
       console.log("Failed:", errorInfo);
     };
+    const validatePassword = (rule, value, callback) => {
+      
+      if (value && validator.isStrongPassword(value, {
+          minLength: 8, minLowercase: 1,
+          minUppercase: 1, minNumbers: 1, minSymbols: 1
+        })){
+          callback();
+          
+        }else{             
+          callback("Password should contain an UpperCase, a Lowercase, a Number and a Symbol and be atleast 8 characters");             
+          
+        }
+    }
+      
+    
     return (
       <>
         <div className="layout-default ant-layout layout-sign-up">
@@ -236,15 +261,12 @@ export default class SignUp extends Component {
                   name="password"
                   rules={[
                     { required: true, message: "Please input your password!" },
-                    { min: 6, message: "Length should be atleast 6 characters" },
+                    // { min: 8, message: "Length should be atleast 8 characters" },
 
-                    // {
-                    //   validator:(_,value)=>{
-                    //     value&& value.includes("A")
-                    //     ? Promise.resolve()
-                    //     : Promise.reject("Password should contain capital letter,number and symbol")
-                    //   }
-                    // }
+                    {
+                      validator: validatePassword
+                    }
+                   
                   ]}
                   hasFeedback
                 >

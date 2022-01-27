@@ -13,12 +13,15 @@ router.post("/", [
 ], (req, res) => {
     console.log("in post",req.body);
     if (req.body && !("isDoctor" in req.body)) {
-        res.status(400).json({ error: "isDoctor field not provided" });
+        var data = { error: "Unauthorized Access!", message: "Something went wrong" }
+        // console.log("Unauthorized Access!")
+        res.status(201).json(data);
+        // res.status(400).json({ error: "isDoctor field not provided" });
     }
-    console.log("is Doctor: ", req.body.isDoctor);
-    console.log("First Name: ", req.body.firstName)
-    console.log("Middle Name: ", req.body.middleName)
-    console.log("Last Name: ", req.body.lastName)
+    // console.log("is Doctor: ", req.body.isDoctor);
+    // console.log("First Name: ", req.body.firstName)
+    // console.log("Middle Name: ", req.body.middleName)
+    // console.log("Last Name: ", req.body.lastName)
     const isDoctor = req.body.isDoctor;
     const Profile = isDoctor ? Doctor : Patient;
     const name = {
@@ -33,15 +36,18 @@ router.post("/", [
         isDoctor: req.body.isDoctor,
     });
     // res.send("temp"); 
-    console.log("donecheck");
+    // console.log("donecheck");
     signedUpUser.save()
         .then(data => {
-            res.status(201).json(data);
+            res.status(201).json({message:"Successfully Signup"});
             console.log(data);
         })
         .catch(error => {
-            console.log(error);
-            res.status(500).json({ error });
+            var data = { error: "Unauthorized Access!", message: "Retry!! Unable to sign up" }
+            console.log("Unauthorized Access!")
+            res.status(201).json(data);
+            // console.log(error);
+            // res.status(500).json({ error });
         });
     console.log("done");
 });

@@ -4,8 +4,10 @@ import Modal_shed from "./shedul_modal";
 import moment from 'moment'
 import styled from 'styled-components';
 import axios from 'axios';
-import { Button, DatePicker, Layout, Calendar, Select, Radio, Col, Row, Typography, Empty, Card, List, Divider, Space } from 'antd';
-import {authenticationService} from "../services/authservice"
+import { Button, DatePicker, Layout, Calendar, Select, Radio, Col, Row, Typography, Empty, Card, List, Divider, Space, Modal } from 'antd';
+import { authenticationService } from "../services/authservice"
+import { PatientDetail } from "./SlotItemmodal"
+
 
 const Listbox = styled.ul`
 display: grid;
@@ -41,14 +43,24 @@ function isBooked(slot) {
 }
 
 function Scheduling() {
+    const [isModalVisible, setIsModalVisible] = useState(false);
 
-    var morning_schedule = [9, 9.15, 9.30, 9.45, 10, 10.15, 10.30, 10.45, 11, 11.15, 11.30, 11.45, 12, 12.15, 34, 3434, 98, 65, 23432, 536, 4, 3436, 76, 123, 87, 3444, 171, 43, 4550];
-    var evening_schedule = [6, 6.34, 7.45, 8, 8.34, 8.7545, 9, 10, 11];
+    const showModal = () => {
+        setIsModalVisible(true);
+    };
+
+    const handleOk = () => {
+        setIsModalVisible(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    };
+
     const [schedule, setschedule] = useState([]);
 
     const [date, changeDate] = useState(moment())
-    const [display_date, changeDisplayDate] = useState(moment().format("DD-MM-YYYY"));
-    console.log(display_date);
+
     const doctorId = "123";
     useEffect(() => {
         // Your code here
@@ -136,7 +148,7 @@ function Scheduling() {
                                             <ListItem
                                                 key={slot.slottime}
                                                 isValid={isValid}
-                                                onClick={() => alert(slot.slottime)}
+                                                onClick={() => showModal()}
                                             >
                                                 {slot.slottime}
                                             </ListItem>
@@ -153,6 +165,11 @@ function Scheduling() {
 
                 </Col>
             </Row>
+            <Modal title="Slot" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+            </Modal>
         </div>
     )
 };

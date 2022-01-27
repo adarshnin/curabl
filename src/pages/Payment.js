@@ -7,6 +7,7 @@ import {
 	List,
 	Descriptions,
 	Avatar,
+	Result,
 	Layout,
 } from "antd";
 import { Divider } from 'antd';
@@ -15,7 +16,6 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import logo from '../assets/images/logo.svg'
 import pay_logo from '../assets/images/payment_logos.png'
-import pay_success from '../assets/images/payment_success.png'
 
 const { Countdown } = Statistic;
 const { Header, Footer, Content } = Layout;
@@ -185,8 +185,13 @@ function Payment() {
 				</List.Item>
 			)}
 		/>
-		<img style={{ marginLeft: "34%" }} width="30%" src={pay_success} alt="Logo" />
-		<p style={{ textAlign: "center", fontWeight: 600 }}>Payment Successful</p>
+		<Result
+			status="success"
+			title="Payment Successful"
+			// subTitle=""
+			// extra={[
+			// ]}
+		/>
 
 	</Card>
 	);

@@ -71,6 +71,7 @@ class App extends Component {
                 <ProtectedRoute exact path="/myappointments" component={myAppointments} />
                 <ProtectedRoute exact path="/profile" component={Profile} />
                 <ProtectedRoute exact path="/editprofile" component={EditProfile} />
+                <ProtectedRoute exact path="/chat" component={RocketChat} />
                 <ProtectedRoute exact path="/log-out" component={logout} />
 
                 
