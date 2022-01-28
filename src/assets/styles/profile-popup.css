@@ -24,7 +24,7 @@
 }
 
 button.primary {
-	background-color: #b92a1d;
+	background-color: hsl(5, 73%, 42%);
 	border: 2px solid #000000;
 	border-radius: 7px;
 	color: #dcd9e7;

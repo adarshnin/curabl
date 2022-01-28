@@ -16,6 +16,7 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import logo from '../assets/images/logo.svg'
 import pay_logo from '../assets/images/payment_logos.png'
+import { authenticationService } from "../services/authservice"
 
 const { Countdown } = Statistic;
 const { Header, Footer, Content } = Layout;
@@ -42,7 +43,7 @@ function Payment() {
 	const location = useLocation()
 	const { from, data_slot } = location.state;
 	console.log("@@@@@@@@", from, data_slot);
-	const uesrid = authenticationService.currentUserValue?.id;
+	const userid = authenticationService.currentUserValue?.id;
 
 	// @@@@@@@@@@@@ fetch amount from db
 	const amount = 99;
