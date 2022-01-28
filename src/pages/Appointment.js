@@ -42,7 +42,7 @@ function isBooked(slot) {
     if (slot.status == "free")
         return 1;
 }
-function Appointment({ doctorID }) {
+function Appointment({ doctorID, doctorName }) {
     const patientID = authenticationService.currentUserValue.id;
     const isDoctor = authenticationService.currentUserValue.isDoctor;
     // const doctorID = "61eece80ac8c37feaaa12a25";
@@ -285,16 +285,17 @@ function Appointment({ doctorID }) {
     return (
         <div className="Appointment">
             <Row gutter={[24, 0]}>
-                <Col span={24} md={16} className="mb-24">
-                    <OtherDoctorProfile userId={doctorID} isDoctor={isDoctor} />
+                <Col span={24} md={!isDoctor ? 16 : 24} className="mb-24">
+                    <OtherDoctorProfile userId={doctorID} isDoctor={true} />
                 </Col>
-                <Col span={24} md={8} className="mb-24">
+
+                {!isDoctor && <Col span={24} md={8} className="mb-24">
                     <Card bordered={false}
                         className="header-solid h-full ant-invoice-card"
                     >
                         {content}
                     </Card>
-                </Col>
+                </Col>}
             </Row>
         </div>
     )
