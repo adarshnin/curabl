@@ -52,7 +52,7 @@ function Appointment() {
 
     function onChange(date, dateString) {
         changeDate(evening_schedule);
-        console.log(dateString);
+        // console.log(dateString);
     }
 
     return (

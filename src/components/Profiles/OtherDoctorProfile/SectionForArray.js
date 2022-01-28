@@ -12,7 +12,9 @@ function SectionForArray({ title, labels, values, }) {
         </h1>
       </Divider>
       {labels.map((label, i) => {
+        console.log(values, (values?.length > 0))
         return (
+          values?.every(item => item) && values?.length > 0 &&
           <Collapse>
             <Panel showArrow={false}
               key={i}

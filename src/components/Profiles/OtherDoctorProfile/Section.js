@@ -25,7 +25,8 @@ function Section({ label, dataSource, }) {
       scroll={{ x: 800 }} 
       showHeader={false} 
       dataSource={dataSource} 
-      columns={columns} 
+      columns={columns}
+      
     />
   );
 }

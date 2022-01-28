@@ -22,8 +22,8 @@ var getslotRouter = require('./routes/getslot');
 var profileRouter = require('./routes/profile');
 var reserveslotRouter = require('./routes/reserveSlots.js');
 var rocketChatRouter = require('./routes/rocketchat.js');
-var BookSlotRouter =  require('./routes/booked');
-var isAuthRouter =  require('./routes/isAuth');
+var BookSlotRouter = require('./routes/booked');
+var isAuthRouter = require('./routes/isAuth');
 
 var appointmentsRounter = require('./routes/appointments')
 
@@ -34,6 +34,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(cors());
+app.use((req, res, next) => {
+  res.set("Access-Control-Allow-Origin", '*');
+  res.set('Access-Control-Allow-Credentials', 'true');
+  next();
+})
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -73,5 +78,4 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
 module.exports = app;

@@ -14,7 +14,7 @@ const router = express.Router();
 router.delete('/', async (req, res) => {
   const data = req.body;
   const isDoctor = req.body.isDoctor;
-  console.log(data);
+  // console.log(data);
   let user;
   const Profile = isDoctor ? Doctor : Patient;
   if (data.id || data._id) {
@@ -38,8 +38,8 @@ router.post('/',
     validateRequest,
   ], async (req, res) => {
     const data = req.body;
-    console.log("data", data);
-    console.log("req.file", req.file);
+    // console.log("data", data);
+    // console.log("req.file", req.file);
     const isDoctor = req.body.isDoctor;
     const Profile = isDoctor ? Doctor : Patient;
 
@@ -53,7 +53,7 @@ router.post('/',
     } else {
       res.status(400).json({ "message": "No unique parameters provided." });
     }
-    console.log("Old information of user", user);
+    // console.log("Old information of user", user);
 
     // Field Props
     let requiredProps = ['email', 'password',];
@@ -115,7 +115,7 @@ router.post('/',
     // Blob
     assignPropsUpload(uploadProps, req.file, user);
 
-    console.log("New information Filled", user);
+    // console.log("New information Filled", user);
 
     // Save or update
     await user.save((err, profile) => {
@@ -123,7 +123,7 @@ router.post('/',
         console.error(err);
         res.status(400).json({ error: err });
       } else {
-        console.log(profile);
+        // console.log(profile);
         res.status(201).json({ profile });
       }
     });
@@ -142,7 +142,7 @@ router.post('/find', (req, res) => {
       if (data.length === 1) {
         data = data[0];
       }
-      console.log(data);
+      // console.log(data);
       res.status(200).json(data);
     }
   });
@@ -150,17 +150,18 @@ router.post('/find', (req, res) => {
 
 // Fetch Profile(s)
 router.post('/getUser', (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const data = {};
   if (req.body.email) { data.email = req.body.email }
-  if (req.body.id) { data.id = req.body.id }
+  if (req.body.id) { data._id = req.body.id }
   const Profile = req.body.isDoctor ? Doctor : Patient;
+  // console.log("Query", data);
   Profile.findOne(data).exec((err, data) => {
     if (err) {
       console.error(err);
       res.status(400).json({ error: err })
     } else {
-      console.log(data);
+      // console.log(data);
       res.status(200).json(data);
     }
   });
