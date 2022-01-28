@@ -128,9 +128,9 @@ function SearchComponent() {
                       <Link to={{
                         pathname: `/searchresult`,
                         state: {
-                          id: item.userId,
-                          isDoctor: item.isDoctor,
-                          
+                          id: item?.userId,
+                          isDoctor: item?.isDoctor,
+                          name: item?.name
                         }
                       }}>
                         <h1><b>{item?.name}</b></h1>
