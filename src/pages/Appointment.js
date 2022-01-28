@@ -1,14 +1,13 @@
 // Doctor
 
 import React, { useState, useEffect } from 'react';
-import Modal_shed from "./shedul_modal";
 import moment from 'moment'
 import styled from 'styled-components';
-import { Link, Redirect } from 'react-router-dom';
-import axios from 'axios';
-import DisplayDetails from '../components/Profiles/OtherDoctorProfile/DisplayDetails';
+import { Redirect, } from 'react-router-dom';
+import server from '../libs/axios';
 import { authenticationService } from '../services/authservice';
-import { Button, message, DatePicker, Layout, Calendar, Select, Radio, Col, Row, Typography, Empty, Card, List, Divider, Space } from 'antd';
+import { Button, message, DatePicker, Layout, Col, Row, Card, List, } from 'antd';
+import OtherDoctorProfile from './OtherDoctorProfile';
 
 const Listbox = styled.ul`
   display: grid;
@@ -43,41 +42,17 @@ function isBooked(slot) {
     if (slot.status == "free")
         return 1;
 }
-function Appointment() {
-    const serverURL = process.env.REACT_APP_SERVER_URL;
+function Appointment({ doctorID }) {
+    const patientID = authenticationService.currentUserValue.id;
+    const isDoctor = authenticationService.currentUserValue.isDoctor;
+    // const doctorID = "61eece80ac8c37feaaa12a25";
     var morning_schedule = [9, 9.15, 9.30, 9.45, 10, 10.15, 10.30, 10.45, 11, 11.15, 11.30, 11.45, 12, 12.15, 34, 3434, 98, 65, 23432, 536, 4, 3436, 76, 123, 87, 3444, 171, 43, 4550];
     var evening_schedule = [6, 6.34, 7.45, 8, 8.34, 8.7545, 9, 10, 11];
     const [date, changeDate] = useState(moment().format("DD-MM-YYYY"));
     const [timeslot, submitted] = useState("");
     const [schedule, setschedule] = useState([]);
-    const [user, setUser] = useState({});
-    useEffect(() => {
-        const getUser = async () => {
-            let res, data;
-            try {
-                console.log(serverURL);
-                res = await axios.post(`${serverURL}/profile/getUser`, {
-                    email: "mmm@example.com",
-                    isDoctor: true,
-                });
-            } catch (err) {
-                console.error(err);
-            }
-            if (res?.data) {
-                data = res.data;
-                console.log(data);
-                delete data.id;
-                setUser(data);
-            }
-            return () => {
-
-            };
-        };
-        getUser();
-    });
     const [loading, setLoading] = useState(false);
     const [slotStatus, setStatus] = useState(false);
-    const doctorID = "61eece80ac8c37feaaa12a25", patientID = authenticationService.currentUserValue.id;
     let redirection;
 
     if (slotStatus) {
@@ -223,7 +198,7 @@ function Appointment() {
 
         var res = "", res1 = ""
         try {
-            res = await axios.post(`http://localhost:9000/reserveSlot/processing`, {
+            res = await server.post(`/reserveSlot/processing`, {
                 date: date,
                 timeslot: timeslot,
                 doctorId: doctorId
@@ -235,7 +210,7 @@ function Appointment() {
             console.log(res.data);
 
             try {
-                res1 = await axios.post(`http://localhost:9000/reserveSlot/startBackendTimer`, {
+                res1 = await server.post(`/reserveSlot/startBackendTimer`, {
                     date: date,
                     timeslot: timeslot,
                     doctorId: doctorId
@@ -274,9 +249,9 @@ function Appointment() {
         // console.log("date check", moment(date, 'DD/MM/YYYY', true).format(), date.format("YYYY-MM-DD"), moment(date.format("YYYY-MM-DD")));
         var res = "";
         try {
-            res = await axios.post(`http://localhost:9000/getSlot`, {
+            res = await server.post(`/getSlot`, {
                 Date: date,
-                doctorId :doctorID
+                doctorId: doctorID
             });
         } catch (err) {
             console.error(err);
@@ -311,15 +286,15 @@ function Appointment() {
     return (
         <div className="Appointment">
             <Row gutter={[24, 0]}>
+                <Col span={24} md={16} className="mb-24">
+                    <OtherDoctorProfile userId={doctorID} isDoctor={isDoctor} />
+                </Col>
                 <Col span={24} md={8} className="mb-24">
                     <Card bordered={false}
                         className="header-solid h-full ant-invoice-card"
                     >
                         {content}
                     </Card>
-                </Col>
-                <Col span={24} md={16} className="mb-24">
-                    <DisplayDetails user={user} />
                 </Col>
             </Row>
         </div>

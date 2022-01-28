@@ -44,11 +44,20 @@ const arrayTranslator = (a) => {
   return a;
 }
 
-const urlTranslator = (imageUrl) => {
+const imageUrlTranslator = (imageUrl) => {
   const serverURL = process.env.REACT_APP_SERVER_URL;
   const url = `${serverURL}${imageUrl?.replace(/public/g, "")}`;
-  console.log("url", url);
   return url;
 }
 
-module.exports = { urlTranslator, arrayTranslator, capitalize, addressTranslator, nameTranslator };
+const urlTranslator = (...urls) => {
+  let currentURL, finalURL = '';
+  for(let url of urls) {
+    currentURL = (url[0] === '/') ? url.slice(1,): url;
+    currentURL = (currentURL[currentURL.length - 1] !== '/') ? `${currentURL}/`: currentURL;
+    finalURL += currentURL;
+  }
+  return finalURL;
+}
+
+module.exports = { imageUrlTranslator, urlTranslator, arrayTranslator, capitalize, addressTranslator, nameTranslator };

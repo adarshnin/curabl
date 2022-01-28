@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Descriptions, Card, Tabs, Collapse, List } from 'antd';
+import { Divider, Descriptions, Card, Tabs, Collapse,  } from 'antd';
 import { capitalize } from '../../../libs/utils'
 
 const { TabPane } = Tabs;
@@ -79,33 +79,6 @@ function DoctorProfile({ data }) {
             {(data && data?.contactNo) ? data.contactNo : "Not Specified"}
           </Descriptions.Item>
         </Descriptions>
-      </TabPane>
-      <TabPane tab="Professional" key="3">
-        <Descriptions title={<h2><b>Experience: </b>{(data && data?.experience) ? data.experience : "Not Specified"} years</h2>}>
-        </Descriptions>
-        <Collapse>
-          <Panel showArrow={false} header={"Disease"}>
-            <List dataSource={data?.disease} renderItem={item => <List.Item>{item}</List.Item>} />
-          </Panel>
-          <Panel showArrow={false} header={"Services"}>
-            <List dataSource={data?.services} renderItem={item => <List.Item>{item}</List.Item>} />
-          </Panel>
-          <Panel showArrow={false} header={"Specializations"}>
-            <List dataSource={data?.specializations} renderItem={item => <List.Item>{item}</List.Item>} />
-          </Panel>
-          <Panel showArrow={false} header={"Memberships"}>
-            <List dataSource={data?.memberships} renderItem={item => <List.Item>{item}</List.Item>} />
-          </Panel>
-          <Panel showArrow={false} header={"Education"}>
-            <List dataSource={data?.education} renderItem={item => <List.Item>{item}</List.Item>} />
-          </Panel>
-          <Panel showArrow={false} header={"Registrations"}>
-            <List dataSource={data?.registrations} renderItem={item => <List.Item>{item}</List.Item>} />
-          </Panel>
-          <Panel showArrow={false} header={"Awards and Recognitions"}>
-            <List dataSource={data?.awardsAndRecognition} renderItem={item => <List.Item>{item}</List.Item>} />
-          </Panel>
-        </Collapse>
       </TabPane>
     </Tabs>
   </Card>;

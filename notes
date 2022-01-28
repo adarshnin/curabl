@@ -4,6 +4,8 @@ Issues:
     morning/evening should be only on frontend. doctor should be able to select any number of slots
     renew certificates
     redirection to dashboard disable
+    profile photo
+    create route to get name from ID
 
 Things left:
     How will doctors receive payment
@@ -16,16 +18,15 @@ change svgs of other pages
 Ghanshyam
         When clicked on slot, show addtional details - patient details
         Nodemailer - send mail
-        signout popover 
 
 Adarsh
     Cancel appointment - refund
     in processing slots add
-    payment table add 
     Get useriD of logged in person and do queries
     
 Chaitanya
 
+    add form for awards in edit profile
     Experience
     Degree, years
 

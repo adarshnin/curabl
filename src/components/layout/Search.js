@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import server from "../../libs/axios";
 import { Link } from "react-router-dom";
-import { EnvironmentOutlined } from '@ant-design/icons';
+import { EnvironmentOutlined, MessageOutlined, UpSquareFilled, } from '@ant-design/icons';
 import { Button, Input, Skeleton, Avatar, Empty, List, Popover } from 'antd';
-import { addressTranslator, nameTranslator, arrayTranslator, urlTranslator } from "../../libs/utils";
+import { addressTranslator, nameTranslator, arrayTranslator, imageUrlTranslator, urlTranslator } from "../../libs/utils";
+import RocketChat from '../../pages/RocketChat';
+import { authenticationService } from "../../services/authservice";
 
 const { Search } = Input;
 
@@ -31,14 +33,15 @@ function SearchComponent() {
   const getDoctors = async () => {
     let res;
     try {
-      res = await axios.post(`${serverURL}/profile/find`, {
+      res = await server.post(`/profile/find`, {
         isDoctor: true,
       });
     } catch (err) {
       console.error(err);
     }
     setDataSource(
-      res.data.filter(item => {
+      res?.data?.filter(item => {
+        if(item["userId"] === authenticationService.currentUserValue.id) {return false}
         item = refineData(item);
         return filterFields.some(key => item[key] && item[key].toString().toLowerCase().includes(filter.toString().toLowerCase()))
       })
@@ -57,13 +60,13 @@ function SearchComponent() {
         onSearch={onGettingSearchWord}
       />
       {
-        dataSource.length ?
+        dataSource?.length ?
           <List
             header={
-              filter.length ?
+              filter?.length ?
                 <h1>
                   <b>Search Results: </b>
-                  {dataSource.length} doctor{dataSource.length === 1 ? '' : 's'} found
+                  {dataSource?.length} doctor{dataSource?.length === 1 ? '' : 's'} found
                 </h1> :
                 <h1>
                   All doctors
@@ -80,38 +83,66 @@ function SearchComponent() {
                     trigger="click"
                     placement="topRight"
                     title="Address"
-                    content={item?.address ?
-                      <address>
-                        {item?.address?.houseNo}<br />
-                        {item?.address?.street}<br />
-                        {item?.address?.landmark}<br />
-                        {item?.address?.area}<br />
-                        {item?.address?.district}<br />
-                        {item?.address?.state}<br />
-                        {item?.address?.country}-{item?.address?.postalCode}<br />
-                      </address> : "Not provided"
+                    content={
+                      item?.address ?
+                        <address>
+                          {item?.address?.houseNo}<br />
+                          {item?.address?.street}<br />
+                          {item?.address?.landmark}<br />
+                          {item?.address?.area}<br />
+                          {item?.address?.district}<br />
+                          {item?.address?.state}<br />
+                          {item?.address?.country}-{item?.address?.postalCode}<br />
+                        </address> : "Not provided"
                     }>
                     <Button
                       block shape="circle"
                       size="large"
                       icon={
                         <EnvironmentOutlined
-                          style={{ "margin-left": "5px" }}
+                          style={{ marginLeft: "5px" }}
                         />
                       } />
-                  </Popover>
+                  </Popover>,
+                  <Popover
+                    trigger="click"
+                    placement="topRight"
+                    title="Address"
+                    content={<RocketChat />}>
+                    <Button
+                      block shape="circle"
+                      size="large"
+                      icon={
+                        <MessageOutlined
+                          style={{ marginLeft: "5px" }}
+                        />
+                      } />
+                  </Popover>,
                 ]}
               >
                 <Skeleton avatar title={false} loading={false} active>
                   <List.Item.Meta
-                    avatar={<Avatar src={urlTranslator(item?.profileImage)} />}
-                    title={<Link to="/profile"><h1><b>{item?.name}</b></h1></Link>}
+                    avatar={<Avatar src={imageUrlTranslator(item?.profileImage)} />}
+                    // title={<Link to="/profile"><h1><b>{item?.name}</b></h1></Link>}
+                    title={
+                      <Link to={{
+                        pathname: `/searchresult`,
+                        state: {
+                          id: item.userId,
+                          isDoctor: item.isDoctor,
+                          
+                        }
+                      }}>
+                        <h1><b>{item?.name}</b></h1>
+                      </Link>
+                    }
                     description={arrayTranslator(item?.disease)}
                   />
                   {item?.experience && <p>{item.experience} years of<br />Experience</p>}
                 </Skeleton>
               </List.Item>
-            )}
+            )
+            }
           />
           : <Empty />
       }
@@ -148,7 +179,7 @@ function SearchComponent() {
         }
         )}
       </Row> */}
-    </div>
+    </div >
   );
 }
 

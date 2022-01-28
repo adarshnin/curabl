@@ -2,7 +2,7 @@
 
 // import { useState } from "react";
 import { Menu, Button } from "antd";
-import { MessageOutlined } from '@ant-design/icons';
+import { MessageFilled } from '@ant-design/icons';
 import { NavLink, useLocation } from "react-router-dom";
 import { authenticationService } from '../../services/authservice';
 
@@ -372,7 +372,7 @@ function Sidenav({ color }) {
                 background: page === "chat" ? color : "",
               }}
             >
-              {<MessageOutlined />}
+              {<MessageFilled />}
             </span>
             <span className="label">Chat</span>
           </NavLink>

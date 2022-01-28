@@ -232,7 +232,7 @@ export default class SignUp extends Component {
                 <Form.Item
                   name="middleName"
                   rules={[
-                    { required: true, message: "Please input your username!" },
+                    { required: false, message: "Please input your username!" },
                   ]}
                   hasFeedback
                 >

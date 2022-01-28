@@ -77,10 +77,10 @@ const signUpSchema = {
   },
   'middleName': {
     in: 'body',
-    exists: {
-      errorMessage: 'middleName should be provided',
-      bail: true,
-    },
+    // exists: {
+    //   errorMessage: 'middleName should be provided',
+    //   bail: true,
+    // },
     trim: true,
     isString: {
       errorMessage: 'invalid middleName',
@@ -88,7 +88,7 @@ const signUpSchema = {
     },
     isLength: {
       errorMessage: 'middleName should be 8 to 30 characters',
-      options: { min: 2, max: 30 },
+      options: { min: 0, max: 30 },
       bail: true,
     }
   },

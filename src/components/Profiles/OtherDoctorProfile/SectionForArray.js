@@ -6,13 +6,16 @@ const { Panel } = Collapse;
 function SectionForArray({ title, labels, values, }) {
   return (
     <>
+    {!(values?.every(item => item === undefined)) &&
       <Divider plain>
         <h1>
           {title}
         </h1>
-      </Divider>
+      </Divider>}
       {labels.map((label, i) => {
+        console.log(values[i], !(values[i]?.every(item => item === undefined)), values[i]?.length > 0)
         return (
+          values[i] && !(values[i]?.every(item => item === undefined)) && values[i]?.length > 0 &&
           <Collapse>
             <Panel showArrow={false}
               key={i}

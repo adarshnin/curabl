@@ -1,6 +1,6 @@
 
 import React, { Component } from "react";
-import { Switch, Route, Redirect,Router } from "react-router-dom";
+import { Switch, Route, Redirect, Router } from "react-router-dom";
 import EditProfile from "./pages/EditProfile";
 import Home from "./pages/Home";
 import Tables from "./pages/Tables";
@@ -26,29 +26,30 @@ import axios from 'axios';
 import userAuthentication from "./middleware/isauth"
 import { history } from './helper/history';
 import { authenticationService } from './services/authservice';
+import SearchedProfile from "./pages/SearchedProfile";
 
 
 
 
 class App extends Component {
   constructor(props) {
-      super(props);
+    super(props);
 
-      this.state = {
-          currentUser: null
-      };
+    this.state = {
+      currentUser: null
+    };
   }
 
   componentDidMount() {
-      authenticationService.currentUser.subscribe(x => this.setState({ currentUser: x }));
+    authenticationService.currentUser.subscribe(x => this.setState({ currentUser: x }));
   }
   // componentWillUnmount(){
   //   authenticationService.currentUser.
   // }
 
   logout() {
-      authenticationService.logout();
-      history.push('/login');
+    authenticationService.logout();
+    history.push('/login');
   }
 
   render() {
@@ -73,6 +74,7 @@ class App extends Component {
                 <ProtectedRoute exact path="/editprofile" component={EditProfile} />
                 <ProtectedRoute exact path="/chat" component={RocketChat} />
                 <ProtectedRoute exact path="/log-out" component={logout} />
+                <ProtectedRoute exact path="/searchresult" component={SearchedProfile} />
 
                 
                 {/* <Toolbar> */}
@@ -84,7 +86,7 @@ class App extends Component {
             </Switch>
           {/* </Router> */}
       </div>
-      );
+    );
   }
 }
 
