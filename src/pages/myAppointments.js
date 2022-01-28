@@ -38,9 +38,24 @@ const isDoctor = authenticationService.currentUserValue?.isDoctor
 
 const userID = authenticationService.currentUserValue?.id;
 
+var query;
+
+if (isDoctor) {
+    query = "patientName";
+}
+else {
+    query = "doctorName";
+}
+var title;
+if (isDoctor) {
+    title = "PATIENT";
+}
+else {
+    title = "DOCTOR";
+}
 const columns = [
     {
-        title: "PERSON",
+        title: title,
         dataIndex: "dname",
         key: "dname",
         width: "32%",
@@ -83,7 +98,7 @@ function Appointments() {
                             src={face2}
                         ></Avatar>
                         <div className="avatar-info">
-                            <Title level={5}>{app_data[i]['doctorId']}</Title>
+                            <Title level={5}>{app_data[i][query]}</Title>
                             <p>michael@gmail.com</p>
                         </div>
                     </Avatar.Group>{" "}

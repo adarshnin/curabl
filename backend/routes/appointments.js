@@ -17,6 +17,7 @@ router.post("/newAppointment", async (req, res) => {
         slotperiod: req.body.slotperiod,
         meetingurl: meetingurl,
         patientId: req.body.patientId,
+        patientName: req.body.patientName,
         status: "confirmed"
     });
     // res.send("temp"); 
@@ -39,11 +40,11 @@ router.post('/getAppointments', async (req, res, next) => {
     try {
 
         if (req.body.isDoctor) {
-			filter = { doctorId: req.body.doctorId }
-		}
-		else {
-			filter = { patientId: req.body.patientId }
-		}
+            filter = { doctorId: req.body.doctorId }
+        }
+        else {
+            filter = { patientId: req.body.patientId }
+        }
 
         // Date = moment(Date);
         appointmentmodeltemplate.find(filter).sort({ slottime: 1 }).exec((err, data) => {

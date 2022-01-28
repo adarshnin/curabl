@@ -23,6 +23,7 @@ const { Countdown } = Statistic;
 const { Header, Footer, Content } = Layout;
 
 
+
 function loadScript(src) {
 	return new Promise((resolve) => {
 		const script = document.createElement('script')
@@ -191,9 +192,9 @@ function Payment() {
 		<Result
 			status="success"
 			title="Payment Successful"
-			// subTitle=""
-			// extra={[
-			// ]}
+		// subTitle=""
+		// extra={[
+		// ]}
 		/>
 
 	</Card>
@@ -233,6 +234,7 @@ function Payment() {
 						date: data_slot.date,
 						doctorId: data_slot.doctorID,
 						patientId: data_slot.patientID,
+						patientName: authenticationService.currentUserValue?.username + " " + authenticationService.currentUserValue?.middleName + " " + authenticationService.currentUserValue?.lastName,
 						userid: userid,
 						timeslot: data_slot.timeslot,
 						paymentID: response.razorpay_payment_id,
@@ -250,6 +252,8 @@ function Payment() {
 							slottime: data_slot.timeslot,
 							doctorId: data_slot.doctorID,
 							patientId: data_slot.patientID,
+							patientName: authenticationService.currentUserValue?.username + " " + authenticationService.currentUserValue?.middleName + " " + authenticationService.currentUserValue?.lastName,
+
 						});
 					} catch (err) {
 						console.error(err);
@@ -269,6 +273,7 @@ function Payment() {
 						paymentID: response.razorpay_payment_id,
 						orderID: response.razorpay_order_id,
 						signature: response.razorpay_signature,
+						patientName: authenticationService.currentUserValue?.username + " " + authenticationService.currentUserValue?.middleName + " " + authenticationService.currentUserValue?.lastName,
 						amount: amount
 					});
 				} catch (err) {
