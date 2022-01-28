@@ -4,7 +4,7 @@ import Modal_shed from "./shedul_modal";
 import moment from 'moment'
 import styled from 'styled-components';
 import axios from 'axios';
-import { Button, DatePicker, Layout, Calendar, Select, Radio, Col, Row, Typography, Empty, Card, List, Divider, Space, Modal } from 'antd';
+import { Button, DatePicker, Layout, Calendar, Select, Radio, Col, Row, Typography, Empty, Card, List, Divider, Space, Modal, message } from 'antd';
 import { authenticationService } from "../services/authservice"
 import { PatientDetail } from "./SlotItemmodal"
 
@@ -44,28 +44,38 @@ function isBooked(slot) {
 
 function Scheduling() {
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [PatientId,setPatientId] = useState("");
-
-    const showModal = (slot) => {
+    const [PatientId, setPatientId] = useState("");
+    const [modalContent, setmodalContent] = useState(<div>Free Slot</div>);
+    const [schedule, setschedule] = useState([]);
+    const [date, changeDate] = useState(moment());
+    // var modalContent = (<div>Free Slot</div>);
+    const showModal = async (slot) => {
         // if(slot?.)
-        alert(slot.dayperiod);
-        console.log("slot",slot.userid)
+        if (slot.userid) {
+            setPatientId(slot.userid);
+            setmodalContent(await getuserdetails(slot.userid, slot.date, slot.slottime));
+
+        }
+        console.log("slot", slot.userid)
         setIsModalVisible(true);
     };
 
     const handleOk = () => {
+        setPatientId("")
         setIsModalVisible(false);
+        setmodalContent(<div>Free Slot</div>)
     };
 
     const handleCancel = () => {
+        setPatientId("")
         setIsModalVisible(false);
+        setmodalContent(<div>Free Slot</div>)
     };
 
-    const [schedule, setschedule] = useState([]);
 
-    const [date, changeDate] = useState(moment())
 
-    const doctorId = "123";
+
+    // const doctorId = "123";
     useEffect(() => {
         // Your code here
         onChange(date);
@@ -97,7 +107,43 @@ function Scheduling() {
         }
 
     }
-    // useEffect(()=>{},[date]);
+    async function getuserdetails(userid, date, time) {
+        var res = ""
+        try {
+            res = await axios.post(`http://localhost:9000/getPatientDetails`, {
+                userid: userid,
+            });
+            console.log("res", res.data);
+        } catch (err) {
+            console.error(err);
+            message.error("Unable to fetch data");
+        }
+        if (res?.data) {
+            if (res.data.length < 1) {
+                console.log("empty");
+                message.error("Unable to fetch data");
+
+            }
+            else {
+                var data = res.data
+                console.log("ioin else", res.data);
+                var temp =
+
+                    (<div>
+                        <h3>Slot Booked By</h3>
+                        <p>{data.firstName + " " + data.middleName + " " + data.lastName}</p>
+                        <p>Date : {date}</p>
+                        <p>Slot Time :{time}</p>
+                    </div>);
+            }
+
+        }
+
+        return temp;
+
+    }
+
+
 
 
     return (
@@ -170,10 +216,15 @@ function Scheduling() {
                 </Col>
             </Row>
             <Modal title="Slot" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
+
+                {modalContent}
+
             </Modal>
+
+
+
+
+
         </div>
     )
 };

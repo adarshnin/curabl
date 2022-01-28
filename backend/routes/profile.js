@@ -166,6 +166,36 @@ router.post('/getUser', (req, res) => {
   });
 });
 
+router.post("/getName", async (req, res) => {
+  try {
+    data = req.body;
+    var filter = {}
+    if (data.isDoctor) {
+      filter = { doctor_Id: data.doctor_Id }
+    } else {
+      filter = { patientId: data.patientId }
+
+    }
+    // Date = moment(Date);
+    console.log(Date);
+    Patient.find(filter).exec((err, data) => {
+      if (err) {
+        res.send("Errors");
+        console.log(err);
+      }
+      else {
+        console.log(data);
+        res.send(data);
+      }
+
+
+    });
+  } catch (error) {
+
+    res.send(error);
+  }
+
+});
 
 router.get('/', (req, res) => {
   res.status(200).json({ message: "Hi", from: "PROFILE" });
