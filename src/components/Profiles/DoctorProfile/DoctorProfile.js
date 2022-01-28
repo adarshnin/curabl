@@ -12,7 +12,7 @@ function DoctorProfile({ data }) {
     title={<h1>Details</h1>}
   >
     <Meta description={data?.description} />
-    <Tabs style={{ "margin-top": "10px" }} defaultActiveKey="1" type="card">
+    <Tabs style={{ marginTop: "10px" }} defaultActiveKey="1" type="card">
       <TabPane tab="Personal" key="1">
         <Divider plain orientation="left"><h3>Name</h3></Divider>
         <Descriptions bordered={true} style={{ marginTop: "5px", }}>

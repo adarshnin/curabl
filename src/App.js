@@ -3,8 +3,7 @@ import React, { Component } from "react";
 import { Switch, Route, Redirect, Router } from "react-router-dom";
 import EditProfile from "./pages/EditProfile";
 import Home from "./pages/Home";
-import Tables from "./pages/Tables";
-import Billing from "./pages/Billing";
+
 import Payment from "./pages/Payment";
 import Payments from "./pages/Payments";
 import Appointment from "./pages/Appointment";

@@ -6,6 +6,7 @@ import { LeftCircleFilled } from '@ant-design/icons'
 
 function OtherDoctorProfile({ userId, isDoctor }) {
   const [user, setUser] = useState({});
+  console.log(userId, isDoctor);
   useEffect(() => {
     const getUser = async () => {
       let res;
@@ -25,7 +26,7 @@ function OtherDoctorProfile({ userId, isDoctor }) {
   }, [userId]);
   return <>
     {/* <Button type="link" icon={<LeftCircleFilled />} onClick={() => history.goBack()}>Go to Results</Button> */}
-    {isDoctor ? <DisplayDetails user={user} /> : <></>}
+    { <DisplayDetails user={user} /> }
   </>;
 }
 

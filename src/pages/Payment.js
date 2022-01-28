@@ -16,7 +16,8 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import logo from '../assets/images/logo.svg'
 import pay_logo from '../assets/images/payment_logos.png'
-import { authenticationService } from "../services/authservice"
+import { authenticationService } from '../services/authservice';
+
 
 const { Countdown } = Statistic;
 const { Header, Footer, Content } = Layout;

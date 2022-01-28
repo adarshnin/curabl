@@ -34,6 +34,8 @@ import styled from "styled-components";
 import avtar from "../../assets/images/team-2.jpg";
 import profilepic from "../../assets/images/face-4.jpg"
 import profilepopup from "../../assets/styles/profile-popup.css";
+import axios from 'axios';
+
 
 const ButtonContainer = styled.div`
   .ant-btn-primary {
@@ -260,10 +262,42 @@ function Header({
   const [visible, setVisible] = useState(false);
   const [sidenavType, setSidenavType] = useState("transparent");
 
-  useEffect(() => window.scrollTo(0, 0));
 
   const showDrawer = () => setVisible(true);
   const hideDrawer = () => setVisible(false);
+
+  const serverURL = process.env.REACT_APP_SERVER_URL;
+  const [user, setUser] = useState("");
+
+  const userid = authenticationService?.currentUserValue?.id;
+  const username = authenticationService?.currentUserValue
+  
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  //   const getUser = async () => {
+  //     let res, data;
+  //     try {
+  //       console.log(serverURL);
+  //       res = await axios.post(`${serverURL}/profile/getName`, {
+  //         userid: userid,
+  //         isDoctor: true,
+  //       });
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //     if (res?.data) {
+  //       data = res.data;
+  //       console.log(data);
+  //       setUser(data);
+  //     }
+  //     return () => {
+
+  //     };
+  //   };
+  //   getUser();
+  // });
+
+
 
   return (
     <>
@@ -295,13 +329,12 @@ function Header({
           <Popover
             placement="bottomLeft"
             content={(
-              <div class="card-container">
-                <img class="round" src={profilepic} width="144" alt="user" />
-                <h3 style={{ color: "#bcbad6" }}>Dr Riya Patil</h3>
-                <h6 style={{ color: "#bcbad6" }}>Doctor</h6>
-                <div class="buttons">
+              <div className="card-container">
+                <img className="round" src={profilepic} width="144" alt="user" />
+                <h3 style={{ color: "#bcbad6" }}>{username?.username + " " + username?.middleName+ " " + username?.lastName}</h3>
+                <div className="buttons">
                   <Link to="/log-out" className="btn-sign-in">
-                    <button class="primary">
+                    <button className="primary">
                       <span style={{ fontWeight: "bold" }}>Sign Out</span>
                     </button>
                   </Link>

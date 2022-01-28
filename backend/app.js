@@ -22,8 +22,9 @@ var getslotRouter = require('./routes/getslot');
 var profileRouter = require('./routes/profile');
 var reserveslotRouter = require('./routes/reserveSlots.js');
 var rocketChatRouter = require('./routes/rocketchat.js');
-var BookSlotRouter = require('./routes/booked');
-var isAuthRouter = require('./routes/isAuth');
+var BookSlotRouter =  require('./routes/booked');
+var isAuthRouter =  require('./routes/isAuth');
+var getPatientDetails = require("./routes/getPatientDetails");
 
 var appointmentsRounter = require('./routes/appointments')
 
@@ -58,6 +59,7 @@ app.use('/payment', paymentRouter);
 app.use('/rocketchat', rocketChatRouter);
 app.use('/bookSlot', BookSlotRouter);
 app.use('/isAuth', isAuthRouter);
+app.use("/getPatientDetails",getPatientDetails);
 
 app.use('/myappointments', appointmentsRounter);
 

@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import Modal_shed from "./shedul_modal";
 import moment from 'moment'
 import styled from 'styled-components';
+import { authenticationService } from "../services/authservice"
+
 import axios from 'axios';
 import {
     DatePicker, Layout, Row,
@@ -15,6 +17,7 @@ import {
     Progress,
     Button,
     Avatar,
+    Skeleton,
     Calendar, Select, Typography, Empty, List, Divider, Space
 } from 'antd';
 import face from "../assets/images/face-1.jpg";
@@ -31,7 +34,9 @@ const { Header, Footer, Content } = Layout;
 
 // Get from login state
 const patientID = "test123";
+const isDoctor = authenticationService.currentUserValue?.isDoctor
 
+const userID = authenticationService.currentUserValue?.id;
 
 const columns = [
     {
@@ -120,17 +125,43 @@ function Appointments() {
     useEffect(async () => {
         // Your code here
         var res = "";
-        try {
-            res = await axios.post(`http://localhost:9000/myappointments/getAppointments`, {
-                patientId: patientID
-            });
-        } catch (err) {
-            console.error(err);
+
+        if (isDoctor) {
+            var res = "";
+            try {
+                res = await axios.post(`http://localhost:9000/myappointments/getAppointments`, {
+                    // @@@@@@@ or can be doctorid
+
+                    doctorId: userID,
+                    isDoctor: isDoctor
+                });
+            } catch (err) {
+                console.error(err);
+            }
+            if (res?.data) {
+                getAppointments(res.data);
+                console.log("@@@@", res.data);
+            }
         }
-        if (res?.data) {
-            getAppointments(res.data);
-            console.log("@@@@", res.data);
+        else {
+
+            var res = "";
+            try {
+                res = await axios.post(`http://localhost:9000/myappointments/getAppointments`, {
+                    patientId: userID,
+                    isDoctor: isDoctor
+
+                });
+            } catch (err) {
+                console.error(err);
+            }
+            if (res?.data) {
+                getAppointments(res.data);
+                console.log("@@@@", res.data);
+            }
         }
+
+
 
     }, []);
     return (
@@ -150,7 +181,9 @@ function Appointments() {
                                 </>
                             }
                         >
+
                             <div className="table-responsive">
+
                                 <Table
                                     columns={columns}
                                     dataSource={data}

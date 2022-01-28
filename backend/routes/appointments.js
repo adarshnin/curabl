@@ -37,10 +37,16 @@ router.post("/newAppointment", async (req, res) => {
 router.post('/getAppointments', async (req, res, next) => {
     console.log("in getAppointments")
     try {
-        var patientId = req.body.patientId;
+
+        if (req.body.isDoctor) {
+			filter = { doctorId: req.body.doctorId }
+		}
+		else {
+			filter = { patientId: req.body.patientId }
+		}
+
         // Date = moment(Date);
-        console.log(Date);
-        appointmentmodeltemplate.find({ patientId: patientId }).sort({ slottime: 1 }).exec((err, data) => {
+        appointmentmodeltemplate.find(filter).sort({ slottime: 1 }).exec((err, data) => {
             if (err) {
                 console.log(err);
                 res.send(data);
