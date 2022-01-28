@@ -37,15 +37,19 @@ text-align: center;
 const { Header, Footer, Content } = Layout;
 
 function isBooked(slot) {
-    console.log(slot);
+    // console.log(slot);
     if (slot.status == "free")
         return 1;
 }
 
 function Scheduling() {
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [PatientId,setPatientId] = useState("");
 
-    const showModal = () => {
+    const showModal = (slot) => {
+        // if(slot?.)
+        alert(slot.dayperiod);
+        console.log("slot",slot.userid)
         setIsModalVisible(true);
     };
 
@@ -74,7 +78,7 @@ function Scheduling() {
         try {
             res = await axios.post(`http://localhost:9000/getSlot`, {
                 Date: date.format("DD-MM-YYYY"),
-                doctorId: authenticationService.currentUserValue.id
+                doctorId: authenticationService.currentUserValue?.id
             });
         } catch (err) {
             console.error(err);
@@ -86,7 +90,7 @@ function Scheduling() {
             }
             else {
                 // console.log(res.data);
-                console.log(res.data[0], res.data[0].slottime);
+                // console.log(res.data[0], res.data[0].slottime);
                 setschedule(res.data);
             }
             // setschedule(res.data);
@@ -148,7 +152,7 @@ function Scheduling() {
                                             <ListItem
                                                 key={slot.slottime}
                                                 isValid={isValid}
-                                                onClick={() => showModal()}
+                                                onClick={() => showModal(slot)}
                                             >
                                                 {slot.slottime}
                                             </ListItem>

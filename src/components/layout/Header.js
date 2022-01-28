@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { authenticationService } from '../../services/authservice';
+import Icon, { UserOutlined } from '@ant-design/icons';
 
 
 import {
@@ -17,6 +18,8 @@ import {
   Drawer,
   Typography,
   Switch,
+  Popover,
+  Space
 } from "antd";
 
 import {
@@ -29,6 +32,8 @@ import {
 import { NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
 import avtar from "../../assets/images/team-2.jpg";
+import profilepic from "../../assets/images/face-4.jpg"
+import profilepopup from "../../assets/styles/profile-popup.css";
 
 const ButtonContainer = styled.div`
   .ant-btn-primary {
@@ -266,6 +271,7 @@ function Header({
         {setting}
       </div>
       <Row gutter={[24, 0]}>
+
         <Col span={24} md={6}>
           <Breadcrumb>
             <Breadcrumb.Item>
@@ -285,7 +291,31 @@ function Header({
           </div>
         </Col>
         <Col span={24} md={18} className="header-control">
-          <Badge size="small" count={4}>
+
+          <Popover
+            placement="bottomLeft"
+            content={(
+              <div class="card-container">
+                <img class="round" src={profilepic} width="144" alt="user" />
+                <h3 style={{ color: "#bcbad6" }}>Dr Riya Patil</h3>
+                <h6 style={{ color: "#bcbad6" }}>Doctor</h6>
+                <div class="buttons">
+                  <Link to="/log-out" className="btn-sign-in">
+                    <button class="primary">
+                      <span style={{ fontWeight: "bold" }}>Sign Out</span>
+                    </button>
+                  </Link>
+                </div>
+
+              </div>
+
+
+            )}
+            trigger="click">
+            {<UserOutlined />}
+          </Popover>
+
+          {/* <Badge size="small" count={4}>
             <Dropdown overlay={menu} trigger={["click"]}>
               <a
                 href="#pablo"
@@ -295,7 +325,8 @@ function Header({
                 {bell}
               </a>
             </Dropdown>
-          </Badge>
+          </Badge> */}
+
           <Button type="link" onClick={showDrawer}>
             {logsetting}
           </Button>
@@ -306,6 +337,7 @@ function Header({
           >
             {toggler}
           </Button>
+
           <Drawer
             className="settings-drawer"
             mask={true}
@@ -402,11 +434,9 @@ function Header({
           {/* <Button danger type="primary"
             onClick={()=>{authenticationService.logout()}}
           >Sign out</Button> */}
-          
-          <Link to="/log-out" className="btn-sign-in">
-            {profile}
-            <span>Sign out</span>
-          </Link>
+
+
+
           {/* <Input
             className="header-search"
             placeholder="Type here..."
