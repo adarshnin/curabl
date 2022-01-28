@@ -287,7 +287,7 @@ function Appointment({ doctorID }) {
         <div className="Appointment">
             <Row gutter={[24, 0]}>
                 <Col span={24} md={16} className="mb-24">
-                    <OtherDoctorProfile userId={doctorID} isDoctor={isDoctor} />
+                    <OtherDoctorProfile userId={doctorID} isDoctor={true} />
                 </Col>
                 <Col span={24} md={8} className="mb-24">
                     <Card bordered={false}
