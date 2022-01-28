@@ -286,16 +286,17 @@ function Appointment({ doctorID }) {
     return (
         <div className="Appointment">
             <Row gutter={[24, 0]}>
-                <Col span={24} md={16} className="mb-24">
+                <Col span={24} md={!isDoctor ? 16: 24} className="mb-24">
                     <OtherDoctorProfile userId={doctorID} isDoctor={true} />
                 </Col>
-                <Col span={24} md={8} className="mb-24">
+
+                {!isDoctor && <Col span={24} md={8} className="mb-24">
                     <Card bordered={false}
                         className="header-solid h-full ant-invoice-card"
                     >
                         {content}
                     </Card>
-                </Col>
+                </Col>}
             </Row>
         </div>
     )
