@@ -54,12 +54,12 @@ function DisplayDetails({ user }) {
       label="Fees and Charges"
       dataSource={charges}
     />}
-    {/* <SectionForArray
+    <SectionForArray
       title={"Professional"}
       labels={["Services", "Specializations", "Memberships", "Education", "Registrations", "Awards and Recognition", "Disease",]}
       values={[user?.services, user?.specializations, user?.memberships, user?.education, user?.registrations, user?.awardsAndRecognition, user?.disease,]}
       isArray={true}
-    /> */}
+    />
     {user?.clinic ?
       <Section
         label="Clinic"
