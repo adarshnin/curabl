@@ -12,16 +12,21 @@ import {
     AutoComplete,
     DatePicker,
     Upload,
+    Space
 } from 'antd';
-import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
+// const { Option } = Select;
+
+import { UploadOutlined, InboxOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { authenticationService } from "../services/authservice";
 import {
     Card,
     Typography,
     Descriptions,
 } from "antd";
-import axios from 'axios';
+import server from '../libs/axios';
 import moment from 'moment';
-
+import axios from 'axios';
+import { Country, State, City } from 'country-state-city';
 import { nameTranslator } from '../libs/utils';
 
 const { Title } = Typography;
@@ -78,29 +83,36 @@ const tailFormItemLayout = {
 };
 
 const EditProfile = () => {
+    const { id, isDoctor } = authenticationService?.currentUserValue
     const serverURL = process.env.REACT_APP_SERVER_URL;
     const [form] = Form.useForm();
     const [user, setUser] = useState();
     const [userId, setUserId] = useState();
     const [filelist, setFilelist] = useState([]);
+    const Countries = Country.getAllCountries();
+    const States = State.getAllStates()
+    const Cities = City.getCitiesOfState("IN", "MH");
+
+
 
     useEffect(() => {
         const getUser = async () => {
             let res, data;
             try {
                 console.log(serverURL);
-                res = await axios.post(`${serverURL}/profile/getUser`, {
-                    email: "jaysean@example.com",
+                res = await server.post(`profile/getUser`, {
+                    id,
+                    isDoctor,
                 });
             } catch (err) {
                 console.error(err);
             }
             if (res?.data) {
                 data = res.data;
-                console.log(data);
-                setUserId(data.id);
+                // console.log(data);
+                // setUserId(data.id);
                 delete data.id;
-                setUser(data);
+                // setUser(data);
                 form.setFieldsValue({
                     firstname: data?.name?.firstName,
                     middlename: data?.name?.middleName,
@@ -177,7 +189,13 @@ const EditProfile = () => {
         filelist = filelist.slice(-1);
 
     };
+    function onChange(value) {
+        console.log(`selected ${value}`);
+    }
 
+    function onSearch(val) {
+        console.log('search:', val);
+    }
     return (
         <>
 
@@ -352,6 +370,62 @@ const EditProfile = () => {
                             <Input maxLength="20" />
                         </Form.Item>
                         <Form.Item
+                            label="Country"
+                            name="country"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your Country',
+                                }
+                            ]}
+                        >
+                            <Select
+                                showSearch
+                                placeholder="Select a Country"
+                                optionFilterProp="children"
+                                onChange={onChange}
+                                onSearch={onSearch}
+                                filterOption={(input, option) =>
+                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                }                      
+                                
+                            >
+                                {Object.keys(Countries).map((code) => (
+                                    <Option value={code}>{Countries[code].name}</Option>
+                                ))}
+                                
+                            </Select>
+                            {/* <Input maxLength="30" /> */}
+                        </Form.Item>
+                        <Form.Item
+                            label="State"
+                            name="state"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your State',
+                                }
+                            ]}
+                        >
+                            <Select
+                                showSearch
+                                placeholder="Select a State"
+                                optionFilterProp="children"
+                                onChange={onChange}
+                                onSearch={onSearch}
+                                filterOption={(input, option) =>
+                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                }                      
+                                
+                            >
+                                {Object.keys(States).map((code) => (
+                                    <Option value={code}>{States[code].name}</Option>
+                                ))}
+                                
+                            </Select>
+                            {/* <Input maxLength="30" /> */}
+                        </Form.Item>
+                        <Form.Item
                             label="Village/City/Town"
                             name="city"
                             rules={[
@@ -361,7 +435,23 @@ const EditProfile = () => {
                                 }
                             ]}
                         >
-                            <Input maxLength="30" />
+                            <Select
+                                showSearch
+                                placeholder="Select a City"
+                                optionFilterProp="children"
+                                onChange={onChange}
+                                onSearch={onSearch}
+                                filterOption={(input, option) =>
+                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                }                      
+                                
+                            >
+                                {Object.keys(Cities).map((code) => (
+                                    <Option value={code}>{Cities[code].name}</Option>
+                                ))}
+                                
+                            </Select>
+                            {/* <Input maxLength="30" /> */}
                         </Form.Item>
                         <Form.Item
                             label="District"
@@ -375,30 +465,8 @@ const EditProfile = () => {
                         >
                             <Input maxLength="30" />
                         </Form.Item>
-                        <Form.Item
-                            label="State"
-                            name="state"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your State',
-                                }
-                            ]}
-                        >
-                            <Input maxLength="30" />
-                        </Form.Item>
-                        <Form.Item
-                            label="Country"
-                            name="country"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your Country',
-                                }
-                            ]}
-                        >
-                            <Input maxLength="30" />
-                        </Form.Item>
+                        
+                        
                         <Form.Item
                             label="Pincode"
                             name="pincode"
@@ -414,6 +482,28 @@ const EditProfile = () => {
                         >
                             <Input maxLength="6" />
                         </Form.Item>
+                        <Title level={5} style={{ marginLeft: 20 }}>Professional Details</Title>
+                        <Form.List>
+                            {(fields, { add, remove }) => (
+                                <>
+                                    {fields.map(({ key, name }) => (
+                                        <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                                            <Form.Item
+                                                name='services'
+                                                rules={[{ required: true, message: 'Missing services' }]}
+                                            >
+                                                <Input placeholder="Enter Service name" />
+                                            </Form.Item>
+                                            <MinusCircleOutlined onClick={() => remove(name)} />
+                                        </Space>
+                                    ))}
+                                    <Form.Item>
+                                        <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                                            Add field
+                                        </Button>
+                                    </Form.Item>
+                                </>)}
+                        </Form.List>
                         <Form.Item
                             name="profilePicture"
                             label="Profile Picture"

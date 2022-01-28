@@ -329,13 +329,12 @@ function Header({
           <Popover
             placement="bottomLeft"
             content={(
-              <div class="card-container">
-                <img class="round" src={profilepic} width="144" alt="user" />
+              <div className="card-container">
+                <img className="round" src={profilepic} width="144" alt="user" />
                 <h3 style={{ color: "#bcbad6" }}>{username?.username + " " + username?.middleName+ " " + username?.lastName}</h3>
-                <h6 style={{ color: "#bcbad6" }}>Doctor</h6>
-                <div class="buttons">
+                <div className="buttons">
                   <Link to="/log-out" className="btn-sign-in">
-                    <button class="primary">
+                    <button className="primary">
                       <span style={{ fontWeight: "bold" }}>Sign Out</span>
                     </button>
                   </Link>

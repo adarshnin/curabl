@@ -109,7 +109,7 @@ router.post("/getPayments", async (req, res) => {
 				console.log(err);
 			}
 			else {
-				console.log(data);
+				console.log("payment data = ", data);
 				res.send(data);
 			}
 
