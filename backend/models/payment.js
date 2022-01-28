@@ -17,6 +17,14 @@ const paymentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    doctorName: {
+        type: String,
+        required: false
+    },
+    patientName: {
+        type: String,
+        required: false
+    },
     paymentID: {
         type: String,
         required: true

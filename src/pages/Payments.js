@@ -37,16 +37,24 @@ const userID = authenticationService.currentUserValue?.id;
 
 var query;
 if (isDoctor) {
-    query = "patientId";
+    query = "patientName";
 }
 else {
-    query = "doctorId";
+    query = "doctorName";
 }
-
+var title, color;
+if (isDoctor) {
+    title = "PATIENT";
+    color = "green";
+}
+else {
+    title = "DOCTOR";
+    color = "red";
+}
 console.log("isDoctor == ", isDoctor);
 const columns = [
     {
-        title: "PERSON",
+        title: title,
         dataIndex: "person",
         key: "person",
         width: "25%",
@@ -100,7 +108,7 @@ function Payments() {
                         ></Avatar>
                         <div className="avatar-info">
                             <Title level={5}>{payment_data[i][query]}</Title>
-                            <p>michael@gmail.com</p>
+                            <p>{title && title[0] + title.slice(1).toLowerCase()}</p>
                         </div>
                     </Avatar.Group>{" "}
                 </>
@@ -115,7 +123,7 @@ function Payments() {
             amount: (
                 <>
                     <div className="author-info">
-                        <Title level={5}>₹ {payment_data[i]['amount']}</Title>
+                        <Title level={5} style={{ color: color }}>₹ {payment_data[i]['amount']}</Title>
                     </div>
                 </>
             ),

@@ -18,6 +18,7 @@ router.post("/newAppointment", async (req, res) => {
         meetingurl: meetingurl,
         patientId: req.body.patientId,
         patientName: req.body.patientName,
+        doctorName: req.body.doctorName,
         status: "confirmed"
     });
     // res.send("temp"); 

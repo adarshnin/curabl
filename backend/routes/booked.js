@@ -13,7 +13,7 @@ router.post("/", async (req, res) => {
         console.log(data.date);
         // , userid: data.patientId Add this @@@@@@@@
         const filter = { doctorId: data.doctorId, date: data.date, slottime: data.timeslot, status: "processing" };
-        const update = { status: "booked", paymentid: data.paymentID, signature: data.signature, orderid: data.orderID, userid: data.userid, patientName: data.patientName };
+        const update = { status: "booked", paymentid: data.paymentID, signature: data.signature, orderid: data.orderID, userid: data.userid, patientName: data.patientName, doctorName: data.doctorName };
         let doc = await slotmodeltemplate.findOneAndUpdate(filter, update).exec((err, data) => {
             if (err) {
                 res.send("No Data found");

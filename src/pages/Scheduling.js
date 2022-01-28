@@ -45,10 +45,10 @@ function isBooked(slot) {
 function Scheduling() {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [PatientId, setPatientId] = useState("");
-    const [modalContent, setmodalContent] = useState(<div>Free Slot</div>);
+    const [modalContent, setmodalContent] = useState(<div><center><b>Free Slot</b></center></div>);
     const [schedule, setschedule] = useState([]);
     const [date, changeDate] = useState(moment());
-    // var modalContent = (<div>Free Slot</div>);
+    // var modalContent = (<div><center><b>Free Slot</b></center></div>);
     const showModal = async (slot) => {
         // if(slot?.)
         if (slot.userid) {
@@ -63,13 +63,13 @@ function Scheduling() {
     const handleOk = () => {
         setPatientId("")
         setIsModalVisible(false);
-        setmodalContent(<div>Free Slot</div>)
+        setmodalContent(<div><center><b>Free Slot</b></center></div>)
     };
 
     const handleCancel = () => {
         setPatientId("")
         setIsModalVisible(false);
-        setmodalContent(<div>Free Slot</div>)
+        setmodalContent(<div><center><b>Free Slot</b></center></div>)
     };
 
 
@@ -131,9 +131,37 @@ function Scheduling() {
 
                     (<div>
                         <h3>Slot Booked By</h3>
-                        <p>{data.firstName + " " + data.middleName + " " + data.lastName}</p>
-                        <p>Date : {date}</p>
-                        <p>Slot Time :{time}</p>
+                        <List
+                            itemLayout="horizontal"
+                            className="invoice-list"
+
+                        >
+                            <List.Item>
+                                <List.Item.Meta style={{ marginLeft: '5%' }}
+                                    title={
+                                        "Name"
+                                    }
+                                />
+                                <div className="amount" style={{ marginRight: '10%' }}>{data.firstName + " " + data.middleName + " " + data.lastName}</div>
+                            </List.Item>
+                            <List.Item>
+                                <List.Item.Meta style={{ marginLeft: '5%' }}
+                                    title={
+                                        "Date"
+                                    }
+                                />
+                                <div className="amount" style={{ marginRight: '10%' }}>{date}</div>
+                            </List.Item>
+                            <List.Item>
+                                <List.Item.Meta style={{ marginLeft: '5%' }}
+                                    title={
+                                        "Time"
+                                    }
+                                />
+                                <div className="amount" style={{ marginRight: '10%' }}>{time}</div>
+                            </List.Item>
+
+                        </List>
                     </div>);
             }
 
@@ -215,7 +243,7 @@ function Scheduling() {
 
                 </Col>
             </Row>
-            <Modal title="Slot" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+            <Modal title="Slot Info" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
 
                 {modalContent}
 

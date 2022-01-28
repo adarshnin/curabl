@@ -99,7 +99,7 @@ function Appointments() {
                         ></Avatar>
                         <div className="avatar-info">
                             <Title level={5}>{app_data[i][query]}</Title>
-                            <p>michael@gmail.com</p>
+                            <p>{title && title[0] + title.slice(1).toLowerCase()}</p>
                         </div>
                     </Avatar.Group>{" "}
                 </>
@@ -129,7 +129,8 @@ function Appointments() {
             status: (
                 <>
                     <div className="ant-employed">
-                        <span>{app_data[i]['status']}</span>
+                        <span>{
+                            app_data[i]['status']}</span>
                         <Button type="primary" danger >Cancel</Button>
                     </div>
                 </>

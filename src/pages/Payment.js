@@ -57,7 +57,7 @@ function Payment() {
 		},
 		{
 			title: "Name",
-			value: "Mr. Dev Patel",
+			value: authenticationService.currentUserValue?.username + " " + authenticationService.currentUserValue?.middleName + " " + authenticationService.currentUserValue?.lastName,
 		},
 		{
 			title: "Mode of Consultation",
@@ -79,7 +79,7 @@ function Payment() {
 		},
 		{
 			title: "Name",
-			value: "Mr. Dev Patel",
+			value: authenticationService.currentUserValue?.username + " " + authenticationService.currentUserValue?.middleName + " " + authenticationService.currentUserValue?.lastName,
 		},
 		{
 			title: "Email-id",
@@ -97,7 +97,7 @@ function Payment() {
 	const data_appointment = [
 		{
 			title: "Doctor",
-			value: "Dr. Rahul Prakash",
+			value: data_slot.doctorName,
 		},
 		{
 			title: "Appointment Time",
@@ -234,7 +234,6 @@ function Payment() {
 						date: data_slot.date,
 						doctorId: data_slot.doctorID,
 						patientId: data_slot.patientID,
-						patientName: authenticationService.currentUserValue?.username + " " + authenticationService.currentUserValue?.middleName + " " + authenticationService.currentUserValue?.lastName,
 						userid: userid,
 						timeslot: data_slot.timeslot,
 						paymentID: response.razorpay_payment_id,
@@ -253,6 +252,7 @@ function Payment() {
 							doctorId: data_slot.doctorID,
 							patientId: data_slot.patientID,
 							patientName: authenticationService.currentUserValue?.username + " " + authenticationService.currentUserValue?.middleName + " " + authenticationService.currentUserValue?.lastName,
+							doctorName: data_slot.doctorName,
 
 						});
 					} catch (err) {
@@ -274,6 +274,7 @@ function Payment() {
 						orderID: response.razorpay_order_id,
 						signature: response.razorpay_signature,
 						patientName: authenticationService.currentUserValue?.username + " " + authenticationService.currentUserValue?.middleName + " " + authenticationService.currentUserValue?.lastName,
+						doctorName: data_slot.doctorName,
 						amount: amount
 					});
 				} catch (err) {
@@ -283,7 +284,7 @@ function Payment() {
 					console.log(res2.data);
 			},
 			prefill: {
-				name: "Dev Patel",
+				name: authenticationService.currentUserValue?.username + " " + authenticationService.currentUserValue?.middleName + " " + authenticationService.currentUserValue?.lastName,
 				contact: "+919834783982",
 				email: 'dev.patel@gmail.com'
 			},
