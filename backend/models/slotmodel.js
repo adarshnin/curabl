@@ -8,7 +8,7 @@ const schedulingSchema = new mongoose.Schema({
     doctorId: {
         type: String,
         required: true
-    },
+    }, 
     date:{
         type: String,
         required:true

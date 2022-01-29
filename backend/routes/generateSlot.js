@@ -48,12 +48,14 @@ router.post("/", async (req, res) => {
             // console.log(slot);
             const userslot = new slotmodeltemplate({
                 doctorId: info.doctorId,
+                doctorName: info.doctorName,
                 date: info.Date,
                 slottime : slot,
                 slotperiod: info.slotperiod,
                 url: "",
                 userid : "",
                 paymentid: "",
+                patientName:"",
                 dayperiod: slot_period,
                 status : "free"
             });

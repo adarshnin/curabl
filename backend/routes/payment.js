@@ -74,6 +74,8 @@ router.post("/savePayment", async (req, res) => {
 		date: req.body.date,
 		patientId: req.body.patientId,
 		paymentID: req.body.paymentID,
+		patientName: req.body.patientName,
+		doctorName: req.body.doctorName,
 		orderID: req.body.orderID,
 		signature: req.body.signature,
 		amount: req.body.amount,

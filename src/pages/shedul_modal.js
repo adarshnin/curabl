@@ -47,6 +47,7 @@ class Modal_shed extends React.Component {
 
   handleOk = async () => {
     this.setState({ loading: true });
+    const doctorName = authenticationService.currentUserValue?.username + " " + authenticationService.currentUserValue?.middleName+ " " + authenticationService.currentUserValue?.lastName
     console.log("slottime", this.state.user.EstartTime[0].format("HH:mm"));
     console.log("slottime", this.state.user.EstartTime[0]);
     const serverURL = process.env.REACT_APP_SERVER_URL;
@@ -56,14 +57,15 @@ class Modal_shed extends React.Component {
       console.log("id : ",authenticationService.currentUserValue.id)
       res = await axios.post(` http://localhost:9000/generateSlot`, {
 
-        "doctorId": authenticationService.currentUserValue.id,
+        "doctorId": authenticationService.currentUserValue?.id,
         "Date": this.props.Date,
         "waitingPeriod": this.state.user.waitingPeriod,
         "slotperiod": this.state.user.slotPeriod,
         "MstartTime": this.state.user.MstartTime[0].format("HH:mm"),
         "MendTime": this.state.user.MstartTime[1].format("HH:mm"),
         "EstartTime": this.state.user.EstartTime[0].format("HH:mm"),
-        "EendTime": this.state.user.EstartTime[1].format("HH:mm")
+        "EendTime": this.state.user.EstartTime[1].format("HH:mm"),
+        "doctorName": doctorName
 
 
       });
