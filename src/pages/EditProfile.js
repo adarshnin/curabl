@@ -86,14 +86,18 @@ const EditProfile = () => {
     const { id, isDoctor } = authenticationService?.currentUserValue
     const serverURL = process.env.REACT_APP_SERVER_URL;
     const [form] = Form.useForm();
-    const [user, setUser] = useState();
-    const [userId, setUserId] = useState();
-    const [filelist, setFilelist] = useState([]);
-    const Countries = Country.getAllCountries();
-    const States = State.getAllStates()
-    const Cities = City.getCitiesOfState("IN", "MH");
+    const [country, setCountry] = useState('India');
+    const [stateCode, setStateCode] = useState('Maharashtra');
+    const [phoneCode, setPhoneCode] = useState('+91');
+    const [fileList, setFileList] = useState([]);
+    const countries = Country.getAllCountries();
+    const phoneCodes = [...new Set(countries.map(country => country.phonecode))]
+    // const [filelist, setFilelist] = useState([]);
+    // const Countries = countries;
+    // const States = State.getAllStates()
+    // const Cities = City.getCitiesOfState("IN", "MH");
 
-
+    console.log(form.getFieldsValue());
 
     useEffect(() => {
         const getUser = async () => {
@@ -109,19 +113,16 @@ const EditProfile = () => {
             }
             if (res?.data) {
                 data = res.data;
-                // console.log(data);
-                // setUserId(data.id);
                 delete data.id;
-                // setUser(data);
                 form.setFieldsValue({
-                    firstname: data?.name?.firstName,
-                    middlename: data?.name?.middleName,
-                    lastname: data?.name?.lastName,
+                    firstName: data?.name?.firstName,
+                    middleName: data?.name?.middleName,
+                    lastName: data?.name?.lastName,
                     email: data?.email,
-                    phone: data?.contactNo,
+                    contactNo: data?.contactNo,
                     dob: moment(data?.dob),
                     gender: data?.gender,
-                    bloodg: data?.bloodGroup,
+                    bloodGroup: data?.bloodGroup,
                     houseno: data?.address?.houseNo,
                     street: data?.address?.street,
                     landmark: data?.address?.landmark,
@@ -130,6 +131,16 @@ const EditProfile = () => {
                     state: data?.address?.state,
                     country: data?.address?.country,
                     pincode: data?.address?.postalCode,
+                    services: data?.services,
+                    specializations: data?.specializations,
+                    memberships: data?.memberships,
+                    experience: data?.experience,
+                    education: data?.education,
+                    registrations: data?.registrations,
+                    awardsAndRecognition: data?.awardsAndRecognition,
+                    disease: data?.disease,
+                    profileImage: data?.profileImage,
+                    consultation: data?.fees.consultation,
                 })
             }
             return () => {
@@ -140,33 +151,96 @@ const EditProfile = () => {
     }, []);
 
     const onFinish = async (values) => {
-        let res, data;
-        values = {
-            ...values,
-            id: userId,
-            $update: true,
+        console.log(values);
+        console.log(values['profileImage']);
+        let res, data = new FormData();
+        let name = {
+            firstName: values.firstName,
+            middleName: values.middleName,
+            lastName: values.lastName,
         }
-        console.log('Received values of form: ', values);
+        let address = {
+            houseNo: values.houseno,
+            street: values.street,
+            landmark: values.landmark,
+            area: values.city,
+            district: values.district,
+            state: values.state,
+            country: values.country,
+            postalCode: values.pincode,
+        }
+        let fees = {
+            consultation: values.consultation,
+        }
+        delete values.houseno
+        delete values.street
+        delete values.landmark
+        delete values.city
+        delete values.district
+        delete values.state
+        delete values.country
+        delete values.pincode
+        delete values.firstName
+        delete values.middleName
+        delete values.lastName
+        data.append('profileImage', values.profileImage.file.originFileObj);
+        data.append('fees', JSON.stringify(fees));
+        data.append('name', JSON.stringify(name));
+        data.append('address', JSON.stringify(address));
+        data.append('email', values.email);
+        data.append('contactNo', values.contactNo);
+        data.append('dob', values.dob);
+        data.append('gender', values.gender);
+        data.append('bloodGroup', values.bloodGroup);
+        data.append('services', JSON.stringify(values.services));
+        data.append('specializations', JSON.stringify(values.specializations));
+        data.append('memberships', JSON.stringify(values.memberships));
+        data.append('experience', values.experience);
+        data.append('education', JSON.stringify(values.education));
+        data.append('registrations', JSON.stringify(values.registrations));
+        data.append('awardsAndRecognition', JSON.stringify(values.awardsAndRecognition));
+        data.append('disease', JSON.stringify(values.disease));
+        data.append('id', authenticationService.currentUserValue.id);
+        data.append('isDoctor', authenticationService.currentUserValue.isDoctor);
+        // values = {
+        //     ...values,
+        //     name,
+        //     address,
+        //     profileImage: values.profileImage.file,
+        //     id: authenticationService.currentUserValue.id,
+        //     isDoctor: authenticationService.currentUserValue.isDoctor,
+        //     $update: true,
+        // }
+        console.log('Received values of form: ');
+        for (let i of data.values()) {
+            console.log(i);
+        }
         try {
-            res = await axios.post(`${serverURL}/profile/`, values);
+            res = await server.post(`/profile/`, data, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            });
         } catch (err) {
             console.error(err);
         }
-        data = res.data;
-        console.log(data);
-        setUserId(data.id);
-        delete data.id;
-        setUser(data);
+        console.log(res);
+        // data = res.data;
+        // console.log("Form Data", data);
+        // delete data.id;
     };
 
     const prefixSelector = (
-        <Form.Item name="prefix" noStyle>
+        <Form.Item name="phonePrefix" noStyle>
             <Select
+                onChange={onPhoneCodeChange}
                 style={{
                     width: 70,
                 }}
             >
-                <Option value="86">+91</Option>
+                {phoneCodes.map(code => {
+                    return code && <Option key={code} value={code[0] !== '+' ? `+${code}` : code}>{code[0] !== '+' ? `+${code}` : code}</Option>
+                })}
             </Select>
         </Form.Item>
     );
@@ -185,10 +259,24 @@ const EditProfile = () => {
     const [autoCompleteResult, setAutoCompleteResult] = useState([]);
 
     const handleFileUploadChange = (d) => {
-        const filelist = [...d.filelist];
-        filelist = filelist.slice(-1);
-
+        console.log("File Data", d);
+        let filelist = d.filelist;
+        // filelist = filelist.slice(-1);
+        // console.log(filelist);
+        setFileList(filelist)
     };
+    function onCountryChange(value) {
+        setCountry(value);
+        console.log(`selected ${value}`);
+    }
+    function onPhoneCodeChange(value) {
+        setPhoneCode(value);
+        console.log(`selected ${value}`);
+    }
+    function onStateChange(value) {
+        setStateCode(value);
+        console.log(`selected ${value}`);
+    }
     function onChange(value) {
         console.log(`selected ${value}`);
     }
@@ -199,7 +287,7 @@ const EditProfile = () => {
     return (
         <>
 
-            <Col span={24} md={16} className="mb-24">
+            <Col span={24} md={24} className="mb-24">
                 <Card
                     bordered={false}
                     title={<h6 className="font-semibold m-0">Profile Information</h6>}
@@ -213,16 +301,16 @@ const EditProfile = () => {
                         name="register"
                         onFinish={onFinish}
                         initialValues={{
-                            residence: ['zhejiang', 'hangzhou', 'xihu'],
-                            prefix: '86',
+                            country: "India",
+                            state: "Maharashtra",
+                            phonePrefix: '+91',
                         }}
                         scrollToFirstError
                     >
-                        <Title level={5} style={{ marginLeft: 20 }}>Personal Details</Title>
-
+                        <Title level={4} style={{ marginLeft: 20 }}>Personal Details</Title>
                         <Form.Item
                             label="First Name"
-                            name="firstname"
+                            name="firstName"
                             rules={[
                                 {
                                     required: true,
@@ -234,7 +322,7 @@ const EditProfile = () => {
                         </Form.Item>
                         <Form.Item
                             label="Middle Name"
-                            name="middlename"
+                            name="middleName"
                             rules={[
                                 {
                                     required: true,
@@ -246,7 +334,7 @@ const EditProfile = () => {
                         </Form.Item>
                         <Form.Item
                             label="Last Name"
-                            name="lastname"
+                            name="lastName"
                             rules={[
                                 {
                                     required: true,
@@ -256,8 +344,6 @@ const EditProfile = () => {
                         >
                             <Input maxLength="50" />
                         </Form.Item>
-
-
                         <Form.Item
                             name="email"
                             label="E-mail"
@@ -275,38 +361,23 @@ const EditProfile = () => {
                             <Input />
                         </Form.Item>
                         <Form.Item
-                            name="phone"
+                            name="contactNo"
                             label="Phone Number"
                             rules={[
                                 {
-                                    required: true,
-                                    message: 'Please input your phone number!'
-                                },
-                                {
                                     len: 10,
                                     message: "Please enter valid phone number"
-                                }]}
+                                }
+                            ]}
                         >
                             <Input maxLength="10" addonBefore={prefixSelector} style={{ width: '100%' }} />
                         </Form.Item>
-                        <Form.Item name="dob" label="Date of Birth"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your Date of Birth!',
-                                },
-                            ]}>
-                            <DatePicker value={user?.dob} />
+                        <Form.Item name="dob" label="Date of Birth" >
+                            <DatePicker />
                         </Form.Item>
                         <Form.Item
                             name="gender"
                             label="Gender"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please select gender!',
-                                },
-                            ]}
                         >
                             <Select placeholder="Select your Gender">
                                 <Option value="male">Male</Option>
@@ -316,13 +387,7 @@ const EditProfile = () => {
                         </Form.Item>
                         <Form.Item
                             label="Blood Group"
-                            name="bloodg"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please select Blood Group!',
-                                },
-                            ]}
+                            name="bloodGroup"
                         >
                             <Select placeholder="Select your Blood Group">
                                 <Option value="A+">A+</Option>
@@ -335,31 +400,16 @@ const EditProfile = () => {
                                 <Option value="AB-">AB-</Option>
                             </Select>
                         </Form.Item>
-
-
-                        <Title level={5} style={{ marginLeft: 20 }}>Address Details</Title>
-
+                        <Title level={4} style={{ marginLeft: 20 }}>Address Details</Title>
                         <Form.Item
                             label="Apartment Number"
                             name="houseno"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your Apartment Number',
-                                }
-                            ]}
                         >
                             <Input maxLength="10" />
                         </Form.Item>
                         <Form.Item
                             label="Street / Society"
                             name="street"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your Street / Society',
-                                }
-                            ]}
                         >
                             <Input maxLength="50" />
                         </Form.Item>
@@ -370,142 +420,244 @@ const EditProfile = () => {
                             <Input maxLength="20" />
                         </Form.Item>
                         <Form.Item
-                            label="Country"
-                            name="country"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your Country',
-                                }
-                            ]}
-                        >
-                            <Select
-                                showSearch
-                                placeholder="Select a Country"
-                                optionFilterProp="children"
-                                onChange={onChange}
-                                onSearch={onSearch}
-                                filterOption={(input, option) =>
-                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                }                      
-                                
-                            >
-                                {Object.keys(Countries).map((code) => (
-                                    <Option value={code}>{Countries[code].name}</Option>
-                                ))}
-                                
-                            </Select>
-                            {/* <Input maxLength="30" /> */}
+                            label="Village/City/Town"
+                            name="city"
+                        ><Input maxLength="30" />
+                        </Form.Item>
+                        <Form.Item
+                            label="District"
+                            name="district"
+                        > <Input maxLength="30" />
                         </Form.Item>
                         <Form.Item
                             label="State"
                             name="state"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your State',
-                                }
-                            ]}
                         >
                             <Select
                                 showSearch
                                 placeholder="Select a State"
                                 optionFilterProp="children"
-                                onChange={onChange}
+                                onChange={onStateChange}
                                 onSearch={onSearch}
                                 filterOption={(input, option) =>
-                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                }                      
-                                
+                                    option.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                }
+                                value={State.getStatesOfCountry(country).length === 0 ? '' : form.getFieldValue("state")}
                             >
-                                {Object.keys(States).map((code) => (
-                                    <Option value={code}>{States[code].name}</Option>
-                                ))}
-                                
+                                {State.getStatesOfCountry(country).map(state => {
+                                    return <Option key={state.isoCode} value={state.name}>{state.name}</Option>
+                                })}
+                                <Option key="" value="">None</Option>
                             </Select>
                             {/* <Input maxLength="30" /> */}
                         </Form.Item>
                         <Form.Item
-                            label="Village/City/Town"
-                            name="city"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your Village/City/Town',
-                                }
-                            ]}
+                            label="Country"
+                            name="country"
                         >
                             <Select
                                 showSearch
-                                placeholder="Select a City"
+                                placeholder="Select a Country"
                                 optionFilterProp="children"
-                                onChange={onChange}
+                                onChange={onCountryChange}
                                 onSearch={onSearch}
                                 filterOption={(input, option) =>
-                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                }                      
-                                
+                                    option.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                }
                             >
-                                {Object.keys(Cities).map((code) => (
-                                    <Option value={code}>{Cities[code].name}</Option>
-                                ))}
-                                
+                                {countries.map(country => {
+                                    return <Option key={country.isoCode} value={country.name}>{country.name}</Option>
+                                })}
                             </Select>
+
                             {/* <Input maxLength="30" /> */}
                         </Form.Item>
                         <Form.Item
-                            label="District"
-                            name="district"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your District',
-                                }
-                            ]}
-                        >
-                            <Input maxLength="30" />
-                        </Form.Item>
-                        
-                        
-                        <Form.Item
                             label="Pincode"
                             name="pincode"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your Pincode',
-                                }, {
-                                    len: 6,
-                                    message: "Please enter valid Pincode"
-                                }
+                            rules={[{
+                                len: 6,
+                                message: "Please enter valid Pincode"
+                            }
                             ]}
                         >
                             <Input maxLength="6" />
                         </Form.Item>
-                        <Title level={5} style={{ marginLeft: 20 }}>Professional Details</Title>
-                        <Form.List>
-                            {(fields, { add, remove }) => (
+                        <Title level={4} style={{ marginLeft: 20 }}>Professional Details</Title>
+                        <Form.Item
+                            name="experience"
+                            label="Years of experience"
+                        >
+                            <Input maxLength="2" style={{ width: '100%' }} />
+                        </Form.Item>
+                        <Title level={5} style={{ marginLeft: 20 }}>Services</Title>
+                        <Form.List name="services" label="Services">
+                            {(fields, { add, remove }, { errors }) => (
                                 <>
-                                    {fields.map(({ key, name }) => (
-                                        <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                                            <Form.Item
-                                                name='services'
-                                                rules={[{ required: true, message: 'Missing services' }]}
-                                            >
-                                                <Input placeholder="Enter Service name" />
-                                            </Form.Item>
-                                            <MinusCircleOutlined onClick={() => remove(name)} />
-                                        </Space>
-                                    ))}
+                                    {fields.map((field, index) => {
+                                        // console.log("Form Values", form.getFieldValue())
+                                        // console.log("Form", field.key, field.name,);
+                                        return (
+                                            <Space key={field.key} style={{ marginLeft: "20px", padding: "10px" }} align="baseline">
+                                                <Form.Item {...field}>
+                                                    <Input style={{ width: "100%" }} maxLength={30} placeholder="Enter a service name" />
+                                                </Form.Item>
+                                                <MinusCircleOutlined onClick={() => remove(field.name)} />
+                                            </Space>
+                                        )
+                                    })}
                                     <Form.Item>
                                         <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                                            Add field
+                                            Add a service
+                                        </Button>
+                                    </Form.Item>
+                                </>)}
+                        </Form.List>
+                        <Title level={5} style={{ marginLeft: 20 }}>Specializations</Title>
+                        <Form.List name="specializations" label="Specializations">
+                            {(fields, { add, remove }, { errors }) => (
+                                <>
+                                    {fields.map((field, index) => {
+                                        // console.log("Form Values", form.getFieldValue())
+                                        // console.log("Form", field.key, field.name,);
+                                        return (
+                                            <Space key={field.key} style={{ marginLeft: "20px", padding: "10px" }} align="baseline">
+                                                <Form.Item {...field}>
+                                                    <Input style={{ width: "100%" }} maxLength={30} placeholder="Enter a specialization" />
+                                                </Form.Item>
+                                                <MinusCircleOutlined onClick={() => remove(field.name)} />
+                                            </Space>
+                                        )
+                                    })}
+                                    <Form.Item>
+                                        <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                                            Add a specialization
+                                        </Button>
+                                    </Form.Item>
+                                </>)}
+                        </Form.List>
+                        <Title level={5} style={{ marginLeft: 20 }}>Memberships</Title>
+                        <Form.List name="memberships" label="Memberships">
+                            {(fields, { add, remove }, { errors }) => (
+                                <>
+                                    {fields.map((field, index) => {
+                                        // console.log("Form Values", form.getFieldValue())
+                                        // console.log("Form", field.key, field.name,);
+                                        return (
+                                            <Space key={field.key} style={{ marginLeft: "20px", padding: "10px" }} align="baseline">
+                                                <Form.Item {...field}>
+                                                    <Input style={{ width: "100%" }} maxLength={30} placeholder="Enter a membership" />
+                                                </Form.Item>
+                                                <MinusCircleOutlined onClick={() => remove(field.name)} />
+                                            </Space>
+                                        )
+                                    })}
+                                    <Form.Item>
+                                        <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                                            Add a membership
+                                        </Button>
+                                    </Form.Item>
+                                </>)}
+                        </Form.List>
+                        <Title level={5} style={{ marginLeft: 20 }}>Education</Title>
+                        <Form.List name="education" label="Education">
+                            {(fields, { add, remove }, { errors }) => (
+                                <>
+                                    {fields.map((field, index) => {
+                                        // console.log("Form Values", form.getFieldValue())
+                                        // console.log("Form", field.key, field.name,);
+                                        return (
+                                            <Space key={field.key} style={{ marginLeft: "20px", padding: "10px" }} align="baseline">
+                                                <Form.Item {...field}>
+                                                    <Input style={{ width: "100%" }} maxLength={30} placeholder="Enter educational details" />
+                                                </Form.Item>
+                                                <MinusCircleOutlined onClick={() => remove(field.name)} />
+                                            </Space>
+                                        )
+                                    })}
+                                    <Form.Item>
+                                        <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                                            Add about education
+                                        </Button>
+                                    </Form.Item>
+                                </>)}
+                        </Form.List>
+                        <Title level={5} style={{ marginLeft: 20 }}>Registrations</Title>
+                        <Form.List name="registrations" label="Registrations">
+                            {(fields, { add, remove }, { errors }) => (
+                                <>
+                                    {fields.map((field, index) => {
+                                        // console.log("Form Values", form.getFieldValue())
+                                        // console.log("Form", field.key, field.name,);
+                                        return (
+                                            <Space key={field.key} style={{ marginLeft: "20px", padding: "10px" }} align="baseline">
+                                                <Form.Item {...field}>
+                                                    <Input style={{ width: "100%" }} maxLength={30} placeholder="Enter registration details" />
+                                                </Form.Item>
+                                                <MinusCircleOutlined onClick={() => remove(field.name)} />
+                                            </Space>
+                                        )
+                                    })}
+                                    <Form.Item>
+                                        <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                                            Add registeration details
+                                        </Button>
+                                    </Form.Item>
+                                </>)}
+                        </Form.List>
+                        <Title level={5} style={{ marginLeft: 20 }}>Awards and Recognition</Title>
+                        <Form.List name="awardsAndRecognition" label="Awards and Recognition">
+                            {(fields, { add, remove }, { errors }) => (
+                                <>
+                                    {fields.map((field, index) => {
+                                        // console.log("Form Values", form.getFieldValue())
+                                        // console.log("Form", field.key, field.name,);
+                                        return (
+                                            <Space key={field.key} style={{ marginLeft: "20px", padding: "10px" }} align="baseline">
+                                                <Form.Item {...field}>
+                                                    <Input style={{ width: "100%" }} maxLength={30} placeholder="Enter any award or recognition" />
+                                                </Form.Item>
+                                                <MinusCircleOutlined onClick={() => remove(field.name)} />
+                                            </Space>
+                                        )
+                                    })}
+                                    <Form.Item>
+                                        <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                                            Add any award or Recognition
+                                        </Button>
+                                    </Form.Item>
+                                </>)}
+                        </Form.List>
+                        <Title level={5} style={{ marginLeft: 20 }}>I'm specialized in curing</Title>
+                        <Form.List name="disease" label="Disease">
+                            {(fields, { add, remove }, { errors }) => (
+                                <>
+                                    {fields.map((field, index) => {
+                                        // console.log("Form Values", form.getFieldValue())
+                                        // console.log("Form", field.key, field.name,);
+                                        return (
+                                            <Space key={field.key} style={{ marginLeft: "20px", padding: "10px" }} align="baseline">
+                                                <Form.Item {...field}>
+                                                    <Input style={{ width: "100%" }} maxLength={30} placeholder="Enter name of a disease" />
+                                                </Form.Item>
+                                                <MinusCircleOutlined onClick={() => remove(field.name)} />
+                                            </Space>
+                                        )
+                                    })}
+                                    <Form.Item>
+                                        <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                                            Add a service
                                         </Button>
                                     </Form.Item>
                                 </>)}
                         </Form.List>
                         <Form.Item
-                            name="profilePicture"
+                            label="Consultation Fees"
+                            name="consultation"
+                        > <Input maxLength="3" />
+                        </Form.Item>
+                        <Form.Item
+                            name="profileImage"
                             label="Profile Picture"
                             multiple={false}
                             listType="picture-card"
@@ -514,10 +666,18 @@ const EditProfile = () => {
                             extra="Upload your Profile Picture"
                         >
                             <Upload
-                                action='https://www.mocky.io/v2/5cc8019d300000980a055e76'
-                                onChange={handleFileUploadChange}
-                                // fileList={fileList}
-                                multiple={true}>
+                            // action='https://www.mocky.io/v2/5cc8019d300000980a055e76'
+                            // action='http://localhost:3000/uploads/avatars/'
+                            // onChange={handleFileUploadChange}
+                            // fileList={fileList}
+                            // // multiple={true}
+                            // listType="picture"
+                            // accept=".png,.jpeg"
+                            // beforeUploading={(file) => {
+                            //     console.log("file data ", { file });
+                            //     return false;
+                            // }}
+                            >
                                 <Button icon={<UploadOutlined />}>Upload</Button>
                             </Upload>
                         </Form.Item>
