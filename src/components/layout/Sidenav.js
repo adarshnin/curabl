@@ -43,7 +43,7 @@ function Sidenav({ color }) {
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      key={0}
+      key={1}
     >
       <path
         d="M9 2C8.44772 2 8 2.44772 8 3C8 3.55228 8.44772 4 9 4H11C11.5523 4 12 3.55228 12 3C12 2.44772 11.5523 2 11 2H9Z"
@@ -65,7 +65,7 @@ function Sidenav({ color }) {
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      key={0}
+      key={2}
     >
       <path
         d="M4 4C2.89543 4 2 4.89543 2 6V7H18V6C18 4.89543 17.1046 4 16 4H4Z"
@@ -87,7 +87,7 @@ function Sidenav({ color }) {
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      key={0}
+      key={3}
     >
       <path
         d="M4 4C2.89543 4 2 4.89543 2 6V7H18V6C18 4.89543 17.1046 4 16 4H4Z"
@@ -109,7 +109,7 @@ function Sidenav({ color }) {
   //     viewBox="0 0 20 20"
   //     fill="none"
   //     xmlns="http://www.w3.org/2000/svg"
-  //     key={0}
+  //     key={4}
   //   >
   //     <path
   //       fillRule="evenodd"
@@ -123,6 +123,7 @@ function Sidenav({ color }) {
   const appointment = [
 
     <svg
+      key={5}
       width="24px"
       height="24px"
       viewBox="-2 -2 24 24"
@@ -140,12 +141,12 @@ function Sidenav({ color }) {
   ];
   const scheduling = [
 
-    <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24"><path d="M19,4h-1V3c0-0.6-0.4-1-1-1s-1,0.4-1,1v1H8V3c0-0.6-0.4-1-1-1S6,2.4,6,3v1H5C3.3,4,2,5.3,2,7v1h20V7C22,5.3,20.7,4,19,4z M2,19c0,1.7,1.3,3,3,3h14c1.7,0,3-1.3,3-3v-9H2V19z M17,12c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S16.4,12,17,12z M17,16c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S16.4,16,17,16z M12,12c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S11.4,12,12,12z M12,16c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S11.4,16,12,16z M7,12c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S6.4,12,7,12z M7,16c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S6.4,16,7,16z" /></svg>
+    <svg key={6} width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24"><path d="M19,4h-1V3c0-0.6-0.4-1-1-1s-1,0.4-1,1v1H8V3c0-0.6-0.4-1-1-1S6,2.4,6,3v1H5C3.3,4,2,5.3,2,7v1h20V7C22,5.3,20.7,4,19,4z M2,19c0,1.7,1.3,3,3,3h14c1.7,0,3-1.3,3-3v-9H2V19z M17,12c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S16.4,12,17,12z M17,16c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S16.4,16,17,16z M12,12c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S11.4,12,12,12z M12,16c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S11.4,16,12,16z M7,12c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S6.4,12,7,12z M7,16c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S6.4,16,7,16z" /></svg>
     ,
   ];
   const myappointments = [
 
-    <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24"><path d="M19,4h-1V3c0-0.6-0.4-1-1-1s-1,0.4-1,1v1H8V3c0-0.6-0.4-1-1-1S6,2.4,6,3v1H5C3.3,4,2,5.3,2,7v1h20V7C22,5.3,20.7,4,19,4z M2,19c0,1.7,1.3,3,3,3h14c1.7,0,3-1.3,3-3v-9H2V19z M17,12c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S16.4,12,17,12z M17,16c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S16.4,16,17,16z M12,12c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S11.4,12,12,12z M12,16c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S11.4,16,12,16z M7,12c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S6.4,12,7,12z M7,16c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S6.4,16,7,16z" /></svg>
+    <svg key={7} width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24"><path d="M19,4h-1V3c0-0.6-0.4-1-1-1s-1,0.4-1,1v1H8V3c0-0.6-0.4-1-1-1S6,2.4,6,3v1H5C3.3,4,2,5.3,2,7v1h20V7C22,5.3,20.7,4,19,4z M2,19c0,1.7,1.3,3,3,3h14c1.7,0,3-1.3,3-3v-9H2V19z M17,12c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S16.4,12,17,12z M17,16c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S16.4,16,17,16z M12,12c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S11.4,12,12,12z M12,16c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S11.4,16,12,16z M7,12c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S6.4,12,7,12z M7,16c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S6.4,16,7,16z" /></svg>
     ,
   ];
 
@@ -156,7 +157,7 @@ function Sidenav({ color }) {
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      key={0}
+      key={8}
     >
       <path
         fillRule="evenodd"
@@ -173,7 +174,7 @@ function Sidenav({ color }) {
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      key={0}
+      key={9}
     >
       <path
         fillRule="evenodd"
@@ -190,7 +191,7 @@ function Sidenav({ color }) {
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      key={0}
+      key={10}
     >
       <path
         fillRule="evenodd"
@@ -208,7 +209,7 @@ function Sidenav({ color }) {
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      key={0}
+      key={11}
     >
       <path
         fillRule="evenodd"
@@ -225,7 +226,7 @@ function Sidenav({ color }) {
       width="14"
       height="14"
       viewBox="0 0 14 14"
-      key={0}
+      key={12}
     >
       <path
         d="M0,2A2,2,0,0,1,2,0H8a2,2,0,0,1,2,2V8a2,2,0,0,1-2,2H2A2,2,0,0,1,0,8Z"
@@ -241,7 +242,6 @@ function Sidenav({ color }) {
 
 
   var schedulingContent;
-  
 
   if (authenticationService.currentUserValue?.isDoctor) {
     console.log("in if", authenticationService.currentUserValue?.isDoctor)
@@ -272,7 +272,7 @@ function Sidenav({ color }) {
       </div>
       <hr />
       <Menu theme="light" mode="inline">
-        <Menu.Item key="1">
+        <Menu.Item key="0">
           <NavLink to="/dashboard">
             <span
               className="icon"
@@ -288,7 +288,7 @@ function Sidenav({ color }) {
 
 
 
-        {/* <Menu.Item key="12">
+        {/* <Menu.Item key="1">
           <NavLink to="/appointment">
             <span
               className="icon"
@@ -308,7 +308,7 @@ function Sidenav({ color }) {
 
         {schedulingContent}
 
-        <Menu.Item key="13">
+        <Menu.Item key="2">
           <NavLink to="/myappointments">
             <span
               className="icon"
@@ -321,7 +321,7 @@ function Sidenav({ color }) {
             <span className="label">My Appointments</span>
           </NavLink>
         </Menu.Item>
-        <Menu.Item key="15">
+        <Menu.Item key="3">
           <NavLink to="/payments">
             <span
               className="icon"
@@ -335,10 +335,10 @@ function Sidenav({ color }) {
           </NavLink>
         </Menu.Item>
 
-        <Menu.Item className="menu-item-header" key="5">
+        <Menu.Item className="menu-item-header" key="4">
           Account Pages
         </Menu.Item>
-        <Menu.Item key="6">
+        <Menu.Item key="5">
           <NavLink to="/profile">
             <span
               className="icon"
@@ -351,7 +351,7 @@ function Sidenav({ color }) {
             <span className="label">Profile</span>
           </NavLink>
         </Menu.Item>
-        <Menu.Item key="7">
+        <Menu.Item key="6">
           <NavLink to="/editprofile">
             <span
               className="icon"
@@ -364,7 +364,7 @@ function Sidenav({ color }) {
             <span className="label">Edit Profile</span>
           </NavLink>
         </Menu.Item>
-        <Menu.Item key="14">
+        <Menu.Item key="7">
           <NavLink to="/chat">
             <span
               className="icon"
@@ -377,7 +377,7 @@ function Sidenav({ color }) {
             <span className="label">Chat</span>
           </NavLink>
         </Menu.Item>
-        {/* <Menu.Item key="10">
+        {/* <Menu.Item key="8">
           <NavLink to="/call">
             <span
               className="icon"
@@ -390,14 +390,14 @@ function Sidenav({ color }) {
             <span className="label">Video Call</span>
           </NavLink>
         </Menu.Item> */}
-        <Menu.Item key="8">
+        <Menu.Item key="9">
           <NavLink to="/log-out">
             <span className="icon">{logout}</span>
             <span className="label">Log out</span>
             {/* <Button onClick={()=>{authenticationService.logout()}}>log out</Button> */}
           </NavLink>
         </Menu.Item>
-        {/* <Menu.Item key="9">
+        {/* <Menu.Item key="10">
           <NavLink to="/sign-up">
             <span className="icon">{signup}</span>
             <span className="label">Sign Up</span>

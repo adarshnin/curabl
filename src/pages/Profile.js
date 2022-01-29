@@ -8,7 +8,7 @@ import {
   Card,
   Avatar,
 } from "antd";
-import axios from "axios";
+import server from "../libs/axios";
 
 import BgProfile from "../assets/images/bg-profile.jpg";
 import PatientProfile from '../components/Profiles/PatientProfile/PatientProfile'
@@ -26,7 +26,7 @@ function Profile() {
       let res, data;
       try {
         console.log(serverURL, auth);
-        res = await axios.post(`${serverURL}profile/getUser`, {
+        res = await server.post(`/profile/getUser`, {
           id: auth.id,
           isDoctor: auth.isDoctor,
         }, {

@@ -31,11 +31,11 @@ router.post("/", async (req, res) => {
         
         console.log("this info",info);
         
-        morningSlot = generateSlot(info.MstartTime,info.MendTime,info.slotperiod,info.waitingPeriod);
-        eveningSlot = generateSlot(info.EstartTime,info.EendTime,info.slotperiod,info.waitingPeriod);
+        slots = generateSlot(info.MstartTime,info.MendTime,info.slotperiod,info.waitingPeriod);
+        // eveningSlot = generateSlot(info.EstartTime,info.EendTime,info.slotperiod,info.waitingPeriod);
         // console.log("morningSlot",morningSlot);
         // console.log("evening",eveningSlot);
-        slots = morningSlot.concat(eveningSlot);
+        // slots = morningSlot.concat(eveningSlot);
         // console.log(slots);
         {slots.map(slot => {
             // const isValid = validator ? validator(slot) : true;
@@ -45,7 +45,7 @@ router.post("/", async (req, res) => {
             }else{
                 slot_period = "evening";
             }
-            // console.log(slot);
+            console.log(slot);
             const userslot = new slotmodeltemplate({
                 doctorId: info.doctorId,
                 doctorName: info.doctorName,

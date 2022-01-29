@@ -21,9 +21,9 @@ var paymentRouter = require('./routes/payment');
 var getslotRouter = require('./routes/getslot');
 var profileRouter = require('./routes/profile');
 var reserveslotRouter = require('./routes/reserveSlots.js');
-var rocketChatRouter = require('./routes/rocketchat.js');
-var BookSlotRouter =  require('./routes/booked');
-var isAuthRouter =  require('./routes/isAuth');
+// var rocketChatRouter = require('./routes/rocketchat.js');
+var BookSlotRouter = require('./routes/booked');
+var isAuthRouter = require('./routes/isAuth');
 var getPatientDetails = require("./routes/getPatientDetails");
 
 var appointmentsRounter = require('./routes/appointments')
@@ -36,7 +36,9 @@ app.set('view engine', 'jade');
 
 app.use(cors());
 app.use((req, res, next) => {
-  res.set("Access-Control-Allow-Origin", '*');
+  // let origin = ["http://localhost:9000/",'https://chat.curabl.me'];
+
+  res.set("Access-Control-Allow-Origin", req.headers.origin);
   res.set('Access-Control-Allow-Credentials', 'true');
   next();
 })
@@ -56,10 +58,10 @@ app.use('/generateSlot', generateSlot);
 app.use('/getSlot', getslotRouter);
 app.use('/reserveSlot', reserveslotRouter);
 app.use('/payment', paymentRouter);
-app.use('/rocketchat', rocketChatRouter);
+// app.use('/rocketchat', rocketChatRouter);
 app.use('/bookSlot', BookSlotRouter);
 app.use('/isAuth', isAuthRouter);
-app.use("/getPatientDetails",getPatientDetails);
+app.use("/getPatientDetails", getPatientDetails);
 
 app.use('/myappointments', appointmentsRounter);
 

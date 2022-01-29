@@ -20,7 +20,7 @@ import logo3 from "../assets/images/Google__G__Logo.svg.png";
 import axios from 'axios';
 
 
-import { Link ,useHistory} from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   DribbbleOutlined,
   TwitterOutlined,
@@ -113,12 +113,12 @@ const signin = [
 export default class SignUp extends Component {
   state = {
     loading: false,
-    isDoctor:false
+    isDoctor: false
   }
   render() {
     // const [loading,setloading]= useState(false)
     const onFinish = async (values) => {
-      console.log("Success:", values,this.state.isDoctor);
+      console.log("Success:", values, this.state.isDoctor);
       var res = "";
       try {
         res = await axios.post(`http://localhost:9000/signup`, {
@@ -294,7 +294,7 @@ export default class SignUp extends Component {
                   name="isDoctor"
                   className="aligin-center"
                   valuePropName="checked"
-                  // initialValue={this.state.isDoctor}
+                // initialValue={this.state.isDoctor}
                 >
                   <span style={{ marginLeft: "30%" }}>Are you a doctor?</span>
                   <Switch style={{ marginLeft: "3%" }} onChange={onChange} />

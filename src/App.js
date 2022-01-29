@@ -1,6 +1,6 @@
 
 import React, { Component } from "react";
-import { Switch, Route, Redirect, Router } from "react-router-dom";
+import { Switch, Route, Redirect,  } from "react-router-dom";
 import EditProfile from "./pages/EditProfile";
 import Home from "./pages/Home";
 
@@ -15,8 +15,10 @@ import SignIn from "./pages/SignIn";
 import RocketChat from "./pages/RocketChat";
 import logout from "./pages/logout";
 import VideoCall from "./pages/Tabs";
+import Pescription from "./pages/Tabs";
+
+
 import Main from "./components/layout/Main";
-import TabToolbar from "./pages/Tabs";
 import "antd/dist/antd.css";
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
@@ -68,6 +70,7 @@ class App extends Component {
             <ProtectedRoute exact path="/payments" component={Payments} />
             <ProtectedRoute exact path="/appointment" component={Appointment} />
             <ProtectedDoctorRoute exact path="/scheduling" component={Scheduling} />
+            <ProtectedDoctorRoute exact path="/Pescription" component={Pescription} />
             <ProtectedRoute exact path="/myappointments" component={myAppointments} />
             <ProtectedRoute exact path="/call" component={VideoCall} />
             <ProtectedRoute exact path="/profile" component={Profile} />
