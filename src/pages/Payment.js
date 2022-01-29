@@ -9,6 +9,7 @@ import {
 	Avatar,
 	Result,
 	Layout,
+	Input
 } from "antd";
 import { Divider } from 'antd';
 import { useLocation } from 'react-router-dom'
@@ -42,6 +43,10 @@ const __DEV__ = document.domain === 'localhost'
 
 function Payment() {
 	const [pay_status, changePaymentStatus] = useState("");
+
+	const [email, setEmail] = useState("");
+	const [phone, setPhone] = useState("+91");
+
 	const location = useLocation()
 	const { from, data_slot } = location.state;
 	console.log("@@@@@@@@", from, data_slot);
@@ -83,11 +88,32 @@ function Payment() {
 		},
 		{
 			title: "Email-id",
-			value: "dev.patel@gmail.com",
+			value: <Input value={email} placeholder='Enter your email'
+				onChange={(value) => {
+					console.log("email = ", value["nativeEvent"]["data"], email)
+					if (value["nativeEvent"]["data"] == null) {
+						var temp = email;
+						temp = temp.slice(0, -1);
+						setEmail(temp);
+					}
+					else
+						setEmail(email + value["nativeEvent"]["data"]);
+				}} />,
 		},
 		{
 			title: "Mobile",
-			value: "+91 9834783982",
+			value: <Input value={phone} placeholder='Enter your mobile'
+				onChange={(value) => {
+					console.log("phone = ", value["nativeEvent"]["data"], phone)
+					if (value["nativeEvent"]["data"] == null) {
+						var temp = phone;
+						temp = temp.slice(0, -1);
+						setPhone(temp);
+					}
+					else
+						setPhone(phone + value["nativeEvent"]["data"]);
+				}}
+			/>,
 		},
 		{
 			title: "Mode of Consultation",
@@ -285,8 +311,8 @@ function Payment() {
 			},
 			prefill: {
 				name: authenticationService.currentUserValue?.username + " " + authenticationService.currentUserValue?.middleName + " " + authenticationService.currentUserValue?.lastName,
-				contact: "+919834783982",
-				email: 'dev.patel@gmail.com'
+				contact: phone,
+				email: email
 			},
 			theme: {
 				"color": "#086cfc"

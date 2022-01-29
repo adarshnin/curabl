@@ -28,6 +28,9 @@ import {
   GithubOutlined,
 } from "@ant-design/icons";
 
+import logo from "../assets/images/curabl-blue-trans.png"
+import doctorphoto from "../assets/images/doctor-photo.jpg"
+
 const { Title } = Typography;
 const { Header, Footer, Content } = Layout;
 const template = [
@@ -177,24 +180,20 @@ export default class SignIn extends Component {
         <Layout className="layout-default layout-signin">
           <Header>
             <div className="header-col header-brand">
-              <h5>curabl</h5>
+              <span><img src={logo} width="134" height="30" alt="" /></span>
+
             </div>
             <div className="header-col header-nav">
               <Menu mode="horizontal" defaultSelectedKeys={["1"]}>
-                <Menu.Item key="1">
-                  <Link to="/dashboard">
-                    {template}
-                    <span> Dashboard</span>
-                  </Link>
-                </Menu.Item>
 
-                <Menu.Item key="3">
+
+                <Menu.Item key="1">
                   <Link to="/sign-up">
                     {signup}
                     <span> Sign Up</span>
                   </Link>
                 </Menu.Item>
-                <Menu.Item key="4">
+                <Menu.Item key="2">
                   <Link to="/sign-in">
                     {signin}
                     <span> Sign In</span>
@@ -206,9 +205,20 @@ export default class SignIn extends Component {
           </Header>
           <Content className="signin">
             <Row gutter={[24, 0]} justify="space-around">
+
+              <Col
+                className="sign-img"
+                style={{ padding: 12 }}
+                xs={{ span: 24 }}
+                lg={{ span: 6 }}
+                md={{ span: 6 }}
+              >
+                <img src={doctorphoto} alt="" />
+              </Col>
+
               <Col
                 xs={{ span: 24, offset: 0 }}
-                lg={{ span: 6, offset: 2 }}
+                lg={{ span: 10, offset: 2 }}
                 md={{ span: 12 }}
               >
                 <Title className="mb-15">Sign In</Title>
@@ -274,15 +284,7 @@ export default class SignIn extends Component {
                   </p>
                 </Form>
               </Col>
-              <Col
-                className="sign-img"
-                style={{ padding: 12 }}
-                xs={{ span: 24 }}
-                lg={{ span: 12 }}
-                md={{ span: 12 }}
-              >
-                <img src={signinbg} alt="" />
-              </Col>
+
             </Row>
           </Content>
           <Footer>
