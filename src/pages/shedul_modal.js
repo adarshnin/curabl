@@ -18,10 +18,10 @@ class Modal_shed extends React.Component {
     console.log(e);
     this.setState({ user: { ...this.state.user, MstartTime: e } });
   }
-  handleEveningSlot = (e) => {
-    console.log(e);
-    this.setState({ user: { ...this.state.user, EstartTime: e } })
-  }
+  // handleEveningSlot = (e) => {
+  //   console.log(e);
+  //   this.setState({ user: { ...this.state.user, EstartTime: e } })
+  // }
   handleslotPeriod = (e) => {
     console.log(e);
     this.setState({ user: { ...this.state.user, slotPeriod: e } })
@@ -35,7 +35,7 @@ class Modal_shed extends React.Component {
     loading: false,
     visible: false,
     user: {
-      MstartTime: "", EstartTime: "", slotPeriod: "", waitingPeriod: ""
+      MstartTime: "",  slotPeriod: 0, waitingPeriod: 0
     }
   };
 
@@ -48,8 +48,8 @@ class Modal_shed extends React.Component {
   handleOk = async () => {
     this.setState({ loading: true });
     const doctorName = authenticationService.currentUserValue?.username + " " + authenticationService.currentUserValue?.middleName+ " " + authenticationService.currentUserValue?.lastName
-    console.log("slottime", this.state.user.EstartTime[0].format("HH:mm"));
-    console.log("slottime", this.state.user.EstartTime[0]);
+    // console.log("slottime", this.state.user.EstartTime[0].format("HH:mm"));
+    // console.log("slottime", this.state.user.EstartTime[0]);
     const serverURL = process.env.REACT_APP_SERVER_URL;
     let res, data;
     try {
@@ -63,8 +63,8 @@ class Modal_shed extends React.Component {
         "slotperiod": this.state.user.slotPeriod,
         "MstartTime": this.state.user.MstartTime[0].format("HH:mm"),
         "MendTime": this.state.user.MstartTime[1].format("HH:mm"),
-        "EstartTime": this.state.user.EstartTime[0].format("HH:mm"),
-        "EendTime": this.state.user.EstartTime[1].format("HH:mm"),
+        // "EstartTime": this.state.user.EstartTime[0].format("HH:mm"),
+        // "EendTime": this.state.user.EstartTime[1].format("HH:mm"),
         "doctorName": doctorName
 
 
@@ -114,7 +114,7 @@ class Modal_shed extends React.Component {
           <div >
             <Card bordered={false} style={{ width: 300 }}>
               {/* <time_sheduling /> */}
-              <p>Morning
+              <p>Slots
                 <TimePicker.RangePicker
                   format={format}
                   value={user.MstartTime}
@@ -122,12 +122,12 @@ class Modal_shed extends React.Component {
 
                 />
               </p>
-              <p>Evening
+              {/* <p>Evening
                 <TimePicker.RangePicker format={format}
                   value={user.EstartTime}
                   onChange={this.handleEveningSlot}
                 />
-              </p>
+              </p> */}
               <p>Slot period (in mins)<br></br>
                 <InputNumber
                   min={1}

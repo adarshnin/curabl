@@ -15,6 +15,9 @@ import SignIn from "./pages/SignIn";
 import RocketChat from "./pages/RocketChat";
 import logout from "./pages/logout";
 import VideoCall from "./pages/Tabs";
+import Pescription from "./pages/Tabs";
+
+
 import Main from "./components/layout/Main";
 import "antd/dist/antd.css";
 import "./assets/styles/main.css";
@@ -67,6 +70,7 @@ class App extends Component {
             <ProtectedRoute exact path="/payments" component={Payments} />
             <ProtectedRoute exact path="/appointment" component={Appointment} />
             <ProtectedDoctorRoute exact path="/scheduling" component={Scheduling} />
+            <ProtectedDoctorRoute exact path="/Pescription" component={Pescription} />
             <ProtectedRoute exact path="/myappointments" component={myAppointments} />
             <ProtectedRoute exact path="/call" component={VideoCall} />
             <ProtectedRoute exact path="/profile" component={Profile} />
