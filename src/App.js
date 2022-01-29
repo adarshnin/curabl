@@ -1,6 +1,6 @@
 
 import React, { Component } from "react";
-import { Switch, Route, Redirect, Router } from "react-router-dom";
+import { Switch, Route, Redirect,  } from "react-router-dom";
 import EditProfile from "./pages/EditProfile";
 import Home from "./pages/Home";
 
@@ -14,15 +14,11 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import RocketChat from "./pages/RocketChat";
 import logout from "./pages/logout";
-// import VideoCall from "./pages/VideoCall
 import Main from "./components/layout/Main";
-import TabToolbar from "./pages/Tabs";
 import "antd/dist/antd.css";
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
-import {ProtectedDoctorRoute,ProtectedRoute,ProtectedPatientRoute} from "./services/protectedRoutes";
-import axios from 'axios';
-import userAuthentication from "./middleware/isauth"
+import {ProtectedDoctorRoute,ProtectedRoute,} from "./services/protectedRoutes";
 import { history } from './helper/history';
 import { authenticationService } from './services/authservice';
 import SearchedProfile from "./pages/SearchedProfile";
