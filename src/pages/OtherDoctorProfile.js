@@ -26,7 +26,7 @@ function OtherDoctorProfile({ userId, isDoctor }) {
   }, [userId]);
   return <>
     {/* <Button type="link" icon={<LeftCircleFilled />} onClick={() => history.goBack()}>Go to Results</Button> */}
-    { <DisplayDetails user={user} /> }
+    <DisplayDetails user={user} />
   </>;
 }
 
