@@ -42,7 +42,7 @@ function isBooked(slot) {
     if (slot.status == "free")
         return 1;
 }
-function Appointment({ doctorID, doctorName }) {
+function Appointment({ doctorID, doctorName, fees }) {
     const patientID = authenticationService.currentUserValue.id;
     const isDoctor = authenticationService.currentUserValue.isDoctor;
     // const doctorID = "61eece80ac8c37feaaa12a25";

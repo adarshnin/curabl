@@ -130,7 +130,8 @@ function SearchComponent() {
                         state: {
                           id: item?.userId,
                           isDoctor: item?.isDoctor,
-                          name: item?.name
+                          name: item?.name,
+                          fees: item?.fees.consultation,
                         }
                       }}>
                         <h1><b>{item?.name}</b></h1>

@@ -147,7 +147,14 @@ const address = {
 
 const userValidationSchema = {
   'isDoctor': signUpSchema['isDoctor'],
-  'password': signUpSchema['password'],
+  'password': {
+    in: 'body',
+    trim: true,
+    isString: {
+      errorMessage: 'invalid password',
+      bail: true,
+    },
+  },
   'email': {
     in: 'body',
     exists: {
