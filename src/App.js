@@ -15,7 +15,7 @@ import SignIn from "./pages/SignIn";
 import RocketChat from "./pages/RocketChat";
 import logout from "./pages/logout";
 import VideoCall from "./pages/Tabs";
-import Pescription from "./pages/Tabs";
+import Pescription from "./pages/Prescription";
 
 
 import Main from "./components/layout/Main";

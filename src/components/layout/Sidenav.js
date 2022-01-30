@@ -377,8 +377,8 @@ function Sidenav({ color }) {
             <span className="label">Chat</span>
           </NavLink>
         </Menu.Item>
-        {/* <Menu.Item key="8">
-          <NavLink to="/call">
+        <Menu.Item key="8">
+          <NavLink to="/Pescription">
             <span
               className="icon"
               style={{
@@ -387,9 +387,9 @@ function Sidenav({ color }) {
             >
               {call}
             </span>
-            <span className="label">Video Call</span>
+            <span className="label">Prescription</span>
           </NavLink>
-        </Menu.Item> */}
+        </Menu.Item>
         <Menu.Item key="9">
           <NavLink to="/log-out">
             <span className="icon">{logout}</span>
