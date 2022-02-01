@@ -60,7 +60,7 @@ function Appointment({ doctorID, doctorName, fees }) {
             to={{
                 pathname: "/payment",
                 state: {
-                    from: 'appointment', data_slot: { date: date, timeslot: timeslot, doctorID: doctorID, patientID: patientID, doctorName: doctorName }
+                    from: 'appointment', data_slot: { date: date, timeslot: timeslot, doctorID: doctorID, patientID: patientID, doctorName: doctorName, fees: fees }
                 }
             }
             } />);

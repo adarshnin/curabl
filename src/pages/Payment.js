@@ -53,12 +53,12 @@ function Payment() {
 	const userid = authenticationService.currentUserValue?.id;
 
 	// @@@@@@@@@@@@ fetch amount from db
-	const amount = 99;
+	const amount = data_slot.fees;
 
 	const payment_data = [
 		{
 			title: "Amount",
-			value: "₹ 99",
+			value: "₹ " + amount,
 		},
 		{
 			title: "Name",
@@ -80,7 +80,7 @@ function Payment() {
 	const data = [
 		{
 			title: "Amount",
-			value: "₹ 99",
+			value: "₹ " + amount,
 		},
 		{
 			title: "Name",
