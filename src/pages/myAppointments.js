@@ -32,57 +32,57 @@ const { Title } = Typography;
 const { Header, Footer, Content } = Layout;
 
 
-// Get from login state
-const patientID = "test123";
-const isDoctor = authenticationService.currentUserValue?.isDoctor
 
-const userID = authenticationService.currentUserValue?.id;
-
-var query;
-
-if (isDoctor) {
-    query = "patientName";
-}
-else {
-    query = "doctorName";
-}
-var title;
-if (isDoctor) {
-    title = "PATIENT";
-}
-else {
-    title = "DOCTOR";
-}
-const columns = [
-    {
-        title: title,
-        dataIndex: "dname",
-        key: "dname",
-        width: "32%",
-    },
-    {
-        title: "SLOT",
-        dataIndex: "slot",
-        key: "slot",
-    },
-
-    {
-        title: "MEETING",
-        key: "meeting",
-        dataIndex: "meeting",
-    },
-    {
-        title: "STATUS",
-        key: "status",
-        dataIndex: "status",
-    },
-];
 
 
 
 function Appointments() {
     console.log("in mu appointments")
     const [app_data, getAppointments] = useState("");
+    const isDoctor = authenticationService.currentUserValue?.isDoctor
+
+    const userID = authenticationService.currentUserValue?.id;
+
+    var query;
+
+    if (isDoctor) {
+        query = "patientName";
+    }
+    else {
+        query = "doctorName";
+    }
+    var title;
+    if (isDoctor) {
+        title = "PATIENT";
+    }
+    else {
+        title = "DOCTOR";
+    }
+    const columns = [
+        {
+            title: title,
+            dataIndex: "dname",
+            key: "dname",
+            width: "32%",
+        },
+        {
+            title: "SLOT",
+            dataIndex: "slot",
+            key: "slot",
+        },
+
+        {
+            title: "MEETING",
+            key: "meeting",
+            dataIndex: "meeting",
+        },
+        {
+            title: "STATUS",
+            key: "status",
+            dataIndex: "status",
+        },
+    ];
+
     const data = [];
     for (let i = 0; i < app_data.length; i++) {
         console.log(i, "$$$");
