@@ -15,7 +15,7 @@ import SignIn from "./pages/SignIn";
 import RocketChat from "./pages/RocketChat";
 import logout from "./pages/logout";
 import VideoCall from "./pages/Tabs";
-import Pescription from "./pages/Prescription";
+import Prescription from "./pages/Prescription";
 
 
 import Main from "./components/layout/Main";
@@ -70,7 +70,7 @@ class App extends Component {
             <ProtectedRoute exact path="/payments" component={Payments} />
             <ProtectedRoute exact path="/appointment" component={Appointment} />
             <ProtectedDoctorRoute exact path="/scheduling" component={Scheduling} />
-            <ProtectedDoctorRoute exact path="/Pescription" component={Pescription} />
+            <ProtectedDoctorRoute exact path="/Prescription" component={Prescription} />
             <ProtectedRoute exact path="/myappointments" component={myAppointments} />
             <ProtectedRoute exact path="/call" component={VideoCall} />
             <ProtectedRoute exact path="/profile" component={Profile} />
