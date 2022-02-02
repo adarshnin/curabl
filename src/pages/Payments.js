@@ -31,66 +31,67 @@ const { Title } = Typography;
 const { Header, Footer, Content } = Layout;
 
 
-const isDoctor = authenticationService.currentUserValue?.isDoctor
-
-const userID = authenticationService.currentUserValue?.id;
-
-var query;
-if (isDoctor) {
-    query = "patientName";
-}
-else {
-    query = "doctorName";
-}
-var title, color;
-if (isDoctor) {
-    title = "PATIENT";
-    color = "green";
-}
-else {
-    title = "DOCTOR";
-    color = "red";
-}
-console.log("isDoctor == ", isDoctor);
-const columns = [
-    {
-        title: title,
-        dataIndex: "person",
-        key: "person",
-        width: "25%",
-    },
-    {
-        title: "DATE",
-        dataIndex: "date",
-        key: "date",
-    },
-    {
-        title: "AMOUNT",
-        key: "amount",
-        dataIndex: "amount",
-    },
-    {
-        title: "PAYMENT ID",
-        key: "paymentid",
-        dataIndex: "paymentid",
-    },
-    {
-        title: "ORDER ID",
-        key: "orderid",
-        dataIndex: "orderid",
-    },
-    {
-        title: "STATUS",
-        key: "status",
-        dataIndex: "status",
-    },
-];
 
 
 
 function Payments() {
     console.log("in mu payments")
     const [payment_data, getPayments] = useState("");
+    const isDoctor = authenticationService.currentUserValue?.isDoctor
+
+    const userID = authenticationService.currentUserValue?.id;
+
+    var query;
+    if (isDoctor) {
+        query = "patientName";
+    }
+    else {
+        query = "doctorName";
+    }
+    var title, color;
+    if (isDoctor) {
+        title = "PATIENT";
+        color = "green";
+    }
+    else {
+        title = "DOCTOR";
+        color = "red";
+    }
+    console.log("isDoctor == ", isDoctor);
+    const columns = [
+        {
+            title: title,
+            dataIndex: "person",
+            key: "person",
+            width: "25%",
+        },
+        {
+            title: "DATE",
+            dataIndex: "date",
+            key: "date",
+        },
+        {
+            title: "AMOUNT",
+            key: "amount",
+            dataIndex: "amount",
+        },
+        {
+            title: "PAYMENT ID",
+            key: "paymentid",
+            dataIndex: "paymentid",
+        },
+        {
+            title: "ORDER ID",
+            key: "orderid",
+            dataIndex: "orderid",
+        },
+        {
+            title: "STATUS",
+            key: "status",
+            dataIndex: "status",
+        },
+    ];
+
     const data = [];
     console.log("######", userID);
     for (let i = 0; i < payment_data.length; i++) {
