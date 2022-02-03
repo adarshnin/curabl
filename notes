@@ -1,12 +1,13 @@
-Issues:
-    GET doctor name from ID
+Add:
+    Chat with past doctors
+    add client side prescriptions
+    Profile photo issue
     /payment should be inaccessible from URL
-    morning/evening should be only on frontend. doctor should be able to select any number of slots
-    renew certificates
     redirection to dashboard disable
-    profile photo
-    create route to get name from ID
+    renew certificates
 
+    create route to get name from ID
+    
 Things left:
     How will doctors receive payment
     Chat
@@ -16,21 +17,13 @@ Things left:
 change svgs of other pages
 
 Ghanshyam
-        When clicked on slot, show addtional details - patient details
         Nodemailer - send mail
 
 Adarsh
     Cancel appointment - refund
     in processing slots add
-    Get useriD of logged in person and do queries
     change api /razorpay
+
 Chaitanya
 
-    add form for awards in edit profile
-    Experience
-    Degree, years
-
-Points:
-    Check apperance of pages on different Displays
-    Split payment page into two ? for window resize issues
 

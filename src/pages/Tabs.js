@@ -1,7 +1,7 @@
 import { Tabs, Radio, Space } from 'antd';
 import VideoConference from './VideoCall';
+import Prescription from "./Prescription"
 const { TabPane } = Tabs;
-
 
 function TabToolbar() {
 
@@ -29,8 +29,8 @@ function TabToolbar() {
                 <TabPane tab="Stethoscope" key="6">
                     Content of Tab 6
                 </TabPane>
-                <TabPane tab="Example" key="7">
-                    Content of Tab 7
+                <TabPane tab="Prescription" key="7">
+                    <Prescription />
                 </TabPane>
                 <TabPane tab="Example" key="8">
                     Content of Tab 8
