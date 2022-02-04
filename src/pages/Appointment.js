@@ -123,7 +123,7 @@ function Appointment({ doctorID, doctorName, fees }) {
     </div>
     );
     const submitContent = (
-        <div><Header style={{ fontWeight: 900, fontSize: "22px" }} orientation="left">Appointment Datails</Header>
+        <div><Header style={{ fontWeight: 900, fontSize: "22px" }} orientation="left">Appointment Details</Header>
 
             <List
                 itemLayout="horizontal"

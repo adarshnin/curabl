@@ -28,88 +28,160 @@ const { TabPane } = Tabs;
 
 function TabToolbar() {
     const [pres_data, getPrescriptions] = useState("");
+    const location = useLocation()
+    const { patientName, doctorName, date, slottime, patientId, doctorId } = location.state;
 
 
-   
-    var title = "DOCTOR", query = "is";
 
     const columns = [
         {
-            title: title,
-            dataIndex: "dname",
-            key: "dname",
-            width: "32%",
+            title: "DRUG",
+            dataIndex: "drug",
+            key: "drug",
         },
         {
-            title: "SLOT",
-            dataIndex: "slot",
-            key: "slot",
+            title: "MORNING",
+            dataIndex: "morning",
+            key: "morning",
+            width: "5%",
+
         },
 
         {
-            title: "MEETING",
-            key: "meeting",
-            dataIndex: "meeting",
+            title: "AFTERNOON",
+            key: "afternoon",
+            dataIndex: "afternoon",
+            width: "5%",
+
         },
         {
-            title: "STATUS",
-            key: "status",
-            dataIndex: "status",
+            title: "NIGHT",
+            key: "night",
+            dataIndex: "night",
+            width: "5%",
+
         },
-        
+        {
+            title: "DAYS",
+            key: "days",
+            dataIndex: "days",
+            width: "5%",
+
+        },
+        {
+            title: "BEFORE/AFTER FOOD",
+            key: "bfaf",
+            dataIndex: "bfaf",
+            width: "20%",
+
+        },
+
     ];
 
     const data = [];
-    for (let i = 0; i < pres_data.length; i++) {
-        console.log(i, "$$$");
-        data.push({
-            key: i,
-            dname: (
-                <>
+    if (pres_data != "") {
 
-                    <div className="avatar-info">
-                        <Title level={5}>{pres_data[i]["doctorName"]}</Title>
-                        <p>{title && title[0] + title.slice(1).toLowerCase()}</p>
-                    </div>
+        console.log("pres_data", pres_data[0]["medicines"]);
+        for (let i = 0; i < pres_data[0]["medicines"]?.length; i++) {
+            var med = pres_data[0]["medicines"][i]
+            console.log(i, "$$$");
+            data.push({
+                key: i,
+                drug: (
+                    <>
 
-                </>
-            ),
-            slot: (
-                <>
-                    <div className="author-info">
-                        <Title level={5}>{pres_data[i]['date']}</Title>
-                        <p>{pres_data[i]['slottime']}</p>
-                    </div>
-                </>
-            ),
-            meeting: (
-                <>
-                    <Link
-                        to={{
-                            pathname: '/call',
-                            state: { from: 'myAppointments', meetingurl: pres_data[i]['meetingurl'], patientName: pres_data[i]["patientName"], doctorName: pres_data[i]["doctorName"], date: pres_data[i]['date'], slottime: pres_data[i]['slottime'], patientId: pres_data[i]['patientId'] }
-                        }}
-                    >
-                        <Button type="primary" className="tag-primary">
-                            JOIN MEETING
-                        </Button>
-                    </Link>
-                </>
-            ),
-            status: (
-                <>
-                    <div className="ant-employed">
-                        <span>{
-                            pres_data[i]['status']}</span>
-                        <Button type="primary" danger >Cancel</Button>
-                    </div>
-                </>
-            ),
-        });
+                        <div className="avatar-info">
+                            <Title level={5}>{med.medicine}</Title>
+                            <p></p>
+                        </div>
+
+                    </>
+                ),
+                morning: (
+                    <>
+                        <div className="author-info">
+                            <center>{med.morning}</center>
+                            {/* <p>{med}</p> */}
+                        </div>
+                    </>
+                ),
+                afternoon: (
+                    <>
+                        <div className="author-info">
+                            <center> {med.Afternoon}</center>
+                            {/* <p>{med}</p> */}
+                        </div>
+                    </>
+                ),
+                night: (
+                    <>
+                        <div className="author-info">
+                            <center>   {med.night}</center>
+                        </div>
+                    </>
+                ),
+                days: (
+                    <>
+
+                        <div className="avatar-info">
+                            <center>   <Title level={5}>{med.duration}</Title></center>
+                            <p></p>
+                        </div>
+
+                    </>
+                ),
+                bfaf: (
+                    <>
+                        <div className="author-info">
+                            {med.MedTime.toUpperCase()}
+                        </div>
+                    </>
+                ),
+            });
+        }
     }
+
     var content;
     const prescription = (<Prescription />)
-    const patientTable = (
+    const patientTable = (<div>
+        <Card bordered={false}
+            className="header-solid h-full ant-invoice-card"
+            style={{ padding: "2%", marginBlockEnd: "5%" }}
+        >
+
+            <List
+                itemLayout="horizontal"
+                className="invoice-list"
+
+            >
+
+                <List.Item>
+                    <List.Item.Meta style={{ marginLeft: '17%' }}
+                        title={"Doctor"}
+                    />
+                    <div className="amount" style={{ marginRight: '22%' }}>{doctorName}</div>
+                </List.Item>
+                <List.Item>
+                    <List.Item.Meta style={{ marginLeft: '17%' }}
+                        title={"Disease"}
+                    />
+                    <div className="amount" style={{ marginRight: '22%' }}>{pres_data[0]?.disease}</div>
+                </List.Item>
+                <List.Item>
+                    <List.Item.Meta style={{ marginLeft: '17%' }}
+                        title={"Date"}
+                    />
+                    <div className="amount" style={{ marginRight: '22%' }}>{date}</div>
+                </List.Item>
+                <List.Item>
+                    <List.Item.Meta style={{ marginLeft: '17%' }}
+                        title={"Patient"}
+                    />
+                    <div className="amount" style={{ marginRight: '22%' }}>{patientName}</div>
+                </List.Item>
+
+            </List>
+        </Card>
         <div className="table-responsive">
 
             <Table
@@ -121,7 +193,7 @@ function TabToolbar() {
                 className="ant-border-space"
 
             />
-        </div>
+        </div></div>
     );
 
     const isDoctor = authenticationService?.currentUserValue?.isDoctor;
@@ -130,8 +202,7 @@ function TabToolbar() {
     } else {
         content = patientTable;
     }
-    const location = useLocation()
-    const { patientName, doctorName, date, slottime, patientId, doctorId } = location.state;
+
 
     useEffect(async () => {
         // Your code here
@@ -140,10 +211,10 @@ function TabToolbar() {
             var res = "";
             try {
                 res = await axios.post(`http://localhost:9000/getPrescription`, {
-                    doctorId:doctorId ,
-                    patientId:patientId,
-                    slotTime:slottime,
-                    date:date
+                    doctorId: doctorId,
+                    patientId: patientId,
+                    slotTime: slottime,
+                    date: date
                 });
             } catch (err) {
                 console.error(err);
@@ -163,9 +234,8 @@ function TabToolbar() {
         <>
             <Tabs tabPosition={"left"}>
                 <TabPane tab="Video Call" key="1">
-                    <VideoConference>
+                    {/* <VideoConference /> */}
 
-                    </VideoConference>
                 </TabPane>
                 <TabPane tab="ECG" key="2">
                     Content of Tab 2
