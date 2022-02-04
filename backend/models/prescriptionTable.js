@@ -25,7 +25,7 @@ const PrescriptionSchema = new mongoose.Schema({
     },
 
     
-    userid:{
+    patientId:{
         type: String,
         required: false
     },
@@ -44,6 +44,10 @@ const PrescriptionSchema = new mongoose.Schema({
 
     medicines:{
         type: [medicine],
+        required:true
+    },
+    slotTime:{
+        type: String,
         required:true
     }
 

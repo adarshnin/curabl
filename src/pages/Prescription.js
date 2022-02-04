@@ -1,42 +1,46 @@
 import { Form, Input, Button, Space, InputNumber, Checkbox, Radio, Row, Col, Divider, Card } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import {authenticationService} from "../services/authservice"
+import { authenticationService } from "../services/authservice"
+import { useLocation } from 'react-router-dom'
 
 import axios from 'axios';
 import React from "react";
 
 const Prescription = () => {
-  
+
+  const location = useLocation()
+  const { patientName, doctorName, date, slottime, patientId } = location.state;
+
   const onFinish = async (values) => {
     console.log('Received values of form:', values);
     var res = "";
-        try {
-            res = await axios.post(`http://localhost:9000/prescription`, {
-                // userid: date.format("DD-MM-YYYY"),
-                doctorId: authenticationService.currentUserValue?.id,                 
-                date:Date(),                
-                userid:"123",
-                patientName:"Vikram",
-                doctorName:"Doctor Name",
-                disease:values.disease,            
-                medicines:values.medicine
+    try {
+      res = await axios.post(`http://localhost:9000/prescription`, {
+        // userid: date.format("DD-MM-YYYY"),
+        doctorId: authenticationService.currentUserValue?.id,
+        date: date,
+        patientId: patientId,
+        patientName: patientName,
+        doctorName: doctorName,
+        disease: values.disease,
+        medicines: values.medicine,
+        slotTime: slottime
 
-
-            });
-        } catch (err) {
-            console.error(err);
-        }
-        if (res?.data) {
-            if (res.data.length < 1) {
-                console.log("empty");
-                // setschedule([])
-            }
-            else {
-              console.log(res.data);
-              // console.log(res.data[0], res.data[0].slottime);
-              // setschedule(res.data);
-          }
-        }
+      });
+    } catch (err) {
+      console.error(err);
+    }
+    if (res?.data) {
+      if (res.data.length < 1) {
+        console.log("empty");
+        // setschedule([])
+      }
+      else {
+        console.log(res.data);
+        // console.log(res.data[0], res.data[0].slottime);
+        // setschedule(res.data);
+      }
+    }
   };
 
   return (
@@ -96,12 +100,12 @@ const Prescription = () => {
                         rules={[{ required: true, message: 'Duration Missing' }]}
                       >
                         {/* <p>Duration</p> */}
-                        <InputNumber 
+                        <InputNumber
                           min={1}
                           style={{
                             width: "80%",
                           }}
-                        placeholder="Duration" />
+                          placeholder="Duration" />
 
                       </Form.Item>
                     </Col>

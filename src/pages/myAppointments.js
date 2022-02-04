@@ -20,13 +20,13 @@ import {
     Skeleton,
     Calendar, Select, Typography, Empty, List, Divider, Space
 } from 'antd';
+import { Link } from 'react-router-dom';
 import face from "../assets/images/face-1.jpg";
 import face2 from "../assets/images/face-2.jpg";
 import face3 from "../assets/images/face-3.jpg";
 import face4 from "../assets/images/face-4.jpg";
 import face5 from "../assets/images/face-5.jpeg";
 import face6 from "../assets/images/face-6.jpeg";
-import { Link } from 'react-router-dom';
 
 const { Title } = Typography;
 const { Header, Footer, Content } = Layout;
@@ -37,13 +37,15 @@ const { Header, Footer, Content } = Layout;
 
 
 function Appointments() {
-    console.log("in mu appointments")
+    console.log("in my appointments")
     const [app_data, getAppointments] = useState("");
     const isDoctor = authenticationService.currentUserValue?.isDoctor
 
     const userID = authenticationService.currentUserValue?.id;
 
     var query;
+
+
 
     if (isDoctor) {
         query = "patientName";
@@ -117,7 +119,7 @@ function Appointments() {
                     <Link
                         to={{
                             pathname: '/call',
-                            state: { from: 'myAppointments', meetingurl: app_data[i]['meetingurl'] }
+                            state: { from: 'myAppointments', meetingurl: app_data[i]['meetingurl'], patientName: app_data[i]["patientName"], doctorName: app_data[i]["doctorName"], date: app_data[i]['date'], slottime: app_data[i]['slottime'], patientId: app_data[i]['patientId'], doctorId: app_data[i]['doctorId'] }
                         }}
                     >
                         <Button type="primary" className="tag-primary">

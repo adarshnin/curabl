@@ -11,11 +11,12 @@ router.post("/", async (req, res) => {
     const Prescription = new PrescriptionSchema({
         doctorId: req.body.doctorId,                 
         date:req.body.date,                
-        userid:req.body.userid,
+        patientId:req.body.patientId,
         patientName:req.body.patientName,
         doctorName:req.body.doctorName,
         disease:req.body.disease,            
-        medicines:req.body.medicines
+        medicines:req.body.medicines,
+        slotTime:req.body.slotTime
         
     });
     // res.send("temp"); 

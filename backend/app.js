@@ -26,6 +26,7 @@ var BookSlotRouter = require('./routes/booked');
 var isAuthRouter = require('./routes/isAuth');
 var getPatientDetails = require("./routes/getPatientDetails");
 var prescription = require("./routes/prescription");
+var getPrescription = require("./routes/getPrescription");
 
 var appointmentsRounter = require('./routes/appointments')
 
@@ -64,8 +65,8 @@ app.use('/bookSlot', BookSlotRouter);
 app.use('/isAuth', isAuthRouter);
 app.use("/getPatientDetails", getPatientDetails);
 app.use("/prescription", prescription);
-
 app.use('/myappointments', appointmentsRounter);
+app.use("/getPrescription",getPrescription);
 
 
 
