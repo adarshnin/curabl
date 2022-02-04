@@ -146,7 +146,7 @@ function TabToolbar() {
     const patientTable = (<div>
         <Card bordered={false}
             className="header-solid h-full ant-invoice-card"
-            style={{ padding: "2%", marginBlockEnd: "5%" }}
+            style={{ padding: "2%", marginBlockEnd: "5%", width: "60%", minWidth: "500px"}}
         >
 
             <List
@@ -234,12 +234,11 @@ function TabToolbar() {
         <>
             <Tabs tabPosition={"left"}>
                 <TabPane tab="Video Call" key="1">
-                    {/* <VideoConference /> */}
+                    <VideoConference />
 
                 </TabPane>
-                <TabPane tab="ECG" key="2">
-                    Content of Tab 2
-                    record 10/20 sec - send via bluetooth - receive .wav file from instrument - Record heart sound - already Applied ML on it - doctor can view if normal / not
+                <TabPane tab="Prescription" key="2">
+                    {content}
                 </TabPane>
                 <TabPane tab="Temperature" key="3">
                     Content of Tab 3
@@ -253,8 +252,9 @@ function TabToolbar() {
                 <TabPane tab="Stethoscope" key="6">
                     Content of Tab 6
                 </TabPane>
-                <TabPane tab="Prescription" key="7">
-                    {content}
+                <TabPane tab="ECG" key="7">
+                    Content of Tab 2
+                    record 10/20 sec - send via bluetooth - receive .wav file from instrument - Record heart sound - already Applied ML on it - doctor can view if normal / not
                 </TabPane>
                 <TabPane tab="Example" key="8">
                     Content of Tab 8

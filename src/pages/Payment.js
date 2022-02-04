@@ -54,7 +54,7 @@ function Payment() {
 
 	// @@@@@@@@@@@@ fetch amount from db
 	const amount = data_slot.fees;
-
+	console.log("amount --- ", amount);
 	const payment_data = [
 		{
 			title: "Amount",
@@ -233,7 +233,12 @@ function Payment() {
 			return
 		}
 
-		const data = await fetch('http://localhost:9000/payment/razorpay', { method: 'POST' }).then((t) =>
+		const data = await fetch('http://localhost:9000/payment/razorpay', {
+			method: 'POST', headers: {
+				'Content-Type': 'application/json'
+				// 'Content-Type': 'application/x-www-form-urlencoded',
+			}, body: JSON.stringify({ amount: amount })
+		}).then((t) =>
 			t.json()
 		)
 
