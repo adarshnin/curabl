@@ -16,6 +16,7 @@ import RocketChat from "./pages/RocketChat";
 import logout from "./pages/logout";
 import Tabs from "./pages/Tabs";
 import Prescription from "./pages/Prescription";
+import MedicalGraphs from "./pages/MedicineTable";
 
 
 import Main from "./components/layout/Main";
@@ -71,6 +72,7 @@ class App extends Component {
             <ProtectedRoute exact path="/appointment" component={Appointment} />
             <ProtectedDoctorRoute exact path="/scheduling" component={Scheduling} />
             <ProtectedDoctorRoute exact path="/Prescription" component={Prescription} />
+            <ProtectedRoute exact path="/MedicalGraphs" component={MedicalGraphs} />
             <ProtectedRoute exact path="/myappointments" component={myAppointments} />
             <ProtectedRoute exact path="/call" component={Tabs} />
             <ProtectedRoute exact path="/profile" component={Profile} />

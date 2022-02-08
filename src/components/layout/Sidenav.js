@@ -397,6 +397,13 @@ function Sidenav({ color }) {
             {/* <Button onClick={()=>{authenticationService.logout()}}>log out</Button> */}
           </NavLink>
         </Menu.Item>
+        <Menu.Item key="10">
+          <NavLink to="/MedicalGraphs">
+            <span className="icon">{dashboard}</span>
+            <span className="label">Medical Graphs</span>
+            {/* <Button onClick={()=>{authenticationService.logout()}}>log out</Button> */}
+          </NavLink>
+        </Menu.Item>
         {/* <Menu.Item key="10">
           <NavLink to="/sign-up">
             <span className="icon">{signup}</span>

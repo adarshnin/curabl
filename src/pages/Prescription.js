@@ -1,10 +1,11 @@
-import { Form, Input, Button, Space, InputNumber, Checkbox, Radio, Row, Col, Divider, Card } from 'antd';
+import { Form, Input, Button, Space, InputNumber, Checkbox, Radio, Row, Col, Divider, Card, Select } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { authenticationService } from "../services/authservice"
 import { useLocation } from 'react-router-dom'
 
 import axios from 'axios';
 import React from "react";
+const { Option } = Select;
 
 const Prescription = () => {
 
@@ -42,6 +43,10 @@ const Prescription = () => {
       }
     }
   };
+  function handleChange(value) {
+    console.log(`selected ${value}`);
+  }
+
 
   return (
     <>
@@ -75,6 +80,7 @@ const Prescription = () => {
                   <Row>
                     <Col flex={1}>
 
+
                       <Form.Item
                         {...restField}
                         name={[name, 'medicine']}
@@ -84,6 +90,20 @@ const Prescription = () => {
                       </Form.Item>
 
                     </Col>
+                    <Col flex={1}>
+                      <Form.Item
+                        {...restField}
+                        name={[name, 'type']}
+                        rules={[{ required: true, message: 'Missing medicine name' }]}
+                      >
+                        <Select defaultValue="tablet" style={{ width: 120 }} onChange={handleChange}>
+                          <Option value="tablet">Tablet</Option>
+                          <Option value="syrup">Syrup</Option>
+                          <Option value="others">Others</Option>
+                        </Select>
+                      </Form.Item>
+                    </Col>
+
 
                   </Row>
 
@@ -112,7 +132,7 @@ const Prescription = () => {
                     <Col flex={2} style={{ marginLeft: '10%' }}>
                       <Space key={key} >
                         <Col>
-                          <p>Morning</p>
+                          <p>Morning (tablet/ml)</p>
                           <Form.Item
                             {...restField}
                             name={[name, 'morning']}
@@ -124,7 +144,7 @@ const Prescription = () => {
                                 width: "35%",
                               }}
                               min={0}
-                              max={10}
+                              // max={10}
                               //  keyboard={mkeyboard}
                               step="0.5"
                               onChange={(value) => { console.log('changed', value) }}
@@ -134,7 +154,7 @@ const Prescription = () => {
                           </Form.Item>
                         </Col>
                         <Col>
-                          <p>Afternoon</p>
+                          <p>Afternoon (tablet/ml)</p>
                           <Form.Item
                             {...restField}
                             name={[name, 'Afternoon']}
@@ -146,7 +166,7 @@ const Prescription = () => {
                                 width: "35%",
                               }}
                               min={0}
-                              max={10}
+                              // max={10}
                               //  keyboard={akeyboard}
                               step="0.5"
                               onChange={(value) => { console.log('changed', value) }}
@@ -155,7 +175,7 @@ const Prescription = () => {
                         </Col>
 
                         <Col>
-                          <p>Night</p>
+                          <p>Night (tablet/ml)</p>
                           <Form.Item
                             {...restField}
                             name={[name, 'night']}
@@ -167,7 +187,7 @@ const Prescription = () => {
                                 width: "35%",
                               }}
                               min={0}
-                              max={10}
+                              // max={10}
                               //  keyboard={nkeyboard}
                               step="0.5"
                               onChange={(value) => { console.log('changed', value) }}
