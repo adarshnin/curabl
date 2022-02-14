@@ -1,33 +1,32 @@
 import { Table } from 'antd';
+export default function MedicineTable() {
+    const columns = [
+        {
+            title: 'Medicines',
+            dataIndex: 'Medicines',
+            width: 150,
+        },
+        {
+            title: 'Quantity',
+            dataIndex: 'Quantity',
+            width: 150,
+        },
 
-const columns = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    width: 150,
-  },
-  {
-    title: 'Age',
-    dataIndex: 'age',
-    width: 150,
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
-  },
-];
+    ];
 
-const data = [];
-for (let i = 0; i < 100; i++) {
-  data.push({
-    key: i,
-    name: `Edward King ${i}`,
-    age: 32,
-    address: `London, Park Lane no. ${i}`,
-  });
+    const data = [];
+    for (let i = 0; i < 100; i++) {
+        data.push({
+            key: i,
+            Medicines: `Edward King ${i}`,
+            Quantity: i
+        });
+    }
+    return (
+        <>
+            <Table style={{ width: "50%" }} columns={columns} dataSource={data} scroll={{ y: 240 }} />
+        </>
+    );
+
 }
 
-ReactDOM.render(
-  <Table columns={columns} dataSource={data} pagination={{ pageSize: 50 }} scroll={{ y: 240 }} />,
-  mountNode,
-);
