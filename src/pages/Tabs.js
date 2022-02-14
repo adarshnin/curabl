@@ -146,7 +146,7 @@ function TabToolbar() {
     const patientTable = (<div>
         <Card bordered={false}
             className="header-solid h-full ant-invoice-card"
-            style={{ padding: "2%", marginBlockEnd: "5%", width: "60%", minWidth: "500px"}}
+            style={{ padding: "2%", marginBlockEnd: "5%", width: "60%", minWidth: "500px" }}
         >
 
             <List
@@ -225,6 +225,16 @@ function TabToolbar() {
             }
         }
 
+        var res = "";
+        try {
+            res = await axios.get(`https://geolocation-db.com/json/d802faa0-10bd-11ec-b2fe-47a0872c6708`);
+        } catch (err) {
+            console.error(err);
+        }
+        if (res?.data) {
+
+            console.log("MY LOCATION ___ ", res.data);
+        }
 
 
     }, []);
