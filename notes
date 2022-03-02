@@ -47,3 +47,52 @@ Stethoscope - sd card, NANO -
 
 Process flow 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## clinic\
+clinic id 
+mobile Raspberry
+
+
+clinic id :
+paitient -> clinic book (id) =>  [patient]-> doctor 
+database :
+
+1 instruments : {}
+2 patient id : xxx 
+3 doctor id :  
+4 timestamp (date and time ): xxxx
+kab se kab tak
+5 clinic id:
+
+
+clinic database :
+location: 
+address:
+id:
+instruments in clinic :[object]
+
+instruments database:
+device id
+and device
+
+
+
+
+dual booking clinic booking
+
+
+admin register 
