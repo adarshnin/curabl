@@ -10,7 +10,9 @@ import {
   Input,
   Checkbox,
   Switch,
-  message
+  message,
+  Select,
+  
 } from "antd";
 import validator from 'validator'
 
@@ -18,6 +20,13 @@ import logo1 from "../assets/images/logos-facebook.svg";
 import logo2 from "../assets/images/logo-apple.svg";
 import logo3 from "../assets/images/Google__G__Logo.svg.png";
 import axios from 'axios';
+import { Country, State, City } from 'country-state-city';
+
+
+
+
+
+
 
 
 import { Link, useHistory } from "react-router-dom";
@@ -27,6 +36,9 @@ import {
   InstagramOutlined,
   GithubOutlined,
 } from "@ant-design/icons";
+
+
+const { Option } = Select;
 
 const { Title } = Typography;
 const { Header, Footer, Content } = Layout;
@@ -113,10 +125,18 @@ const signin = [
 export default class SignUp extends Component {
   state = {
     loading: false,
-    isDoctor: false
+    isDoctor: false,
+    country:"India",
+    stateCode:"Maharashtra",
+    phoneCode:"+91"
+    
   }
+  
+    
+  
   render() {
     // const [loading,setloading]= useState(false)
+    const countries = Country.getAllCountries();
     const onFinish = async (values) => {
       console.log("Success:", values, this.state.isDoctor);
       var res = "";
@@ -257,6 +277,56 @@ export default class SignUp extends Component {
                 >
                   <Input placeholder="email" />
                 </Form.Item>
+                {/* <Form.Item
+                    label="Village/City/Town"
+                    name="city"
+                ><Input maxLength="30" />
+                </Form.Item>
+                <Form.Item
+                    label="District"
+                    name="district"
+                > <Input maxLength="30" />
+                </Form.Item> */}
+                {/* <Form.Item
+                    label="State"
+                    name="state"
+                >
+                    <Select
+                        showSearch
+                        placeholder="Select a State"
+                        optionFilterProp="children"
+                        onChange={onStateChange}
+                        onSearch={onSearch}
+                        filterOption={(input, option) =>
+                            option.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        }
+                        value={State.getStatesOfCountry(country).length === 0 ? '' : form.getFieldValue("state")}
+                    >
+                        {State.getStatesOfCountry(country).map(state => {
+                            return <Option key={state.isoCode} value={state.name}>{state.name}</Option>
+                        })}
+                        <Option key="" value="">None</Option>
+                    </Select>
+                </Form.Item> */}
+                {/* <Form.Item
+                    label="Country"
+                    name="country"
+                >
+                    <Select
+                        showSearch
+                        placeholder="Select a Country"
+                        optionFilterProp="children"
+                        onChange={onCountryChange}
+                        onSearch={onSearch}
+                        
+                    >
+                        {countries.map(country => {
+                            return <Option key={country.isoCode} value={country.name}>{country.name}</Option>
+                        })}
+                    </Select>
+
+                  
+                </Form.Item> */}
                 <Form.Item
                   name="password"
                   rules={[

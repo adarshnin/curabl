@@ -3,7 +3,6 @@ dotenv.config();
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
-const mongoose = require("mongoose");
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require("cors");
@@ -27,8 +26,9 @@ var isAuthRouter = require('./routes/isAuth');
 var getPatientDetails = require("./routes/getPatientDetails");
 var prescription = require("./routes/prescription");
 var getPrescription = require("./routes/getPrescription");
-
 var appointmentsRounter = require('./routes/appointments')
+var adminSigin = require("./routes/adminSignin")
+require("./routes/testAPI")
 
 const app = express();
 
@@ -52,7 +52,7 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/profile', profileRouter); // Profile
-app.use('/testAPI', testAPIRouter);
+// app.use('/testAPI', testAPIRouter);
 app.use('/signup', signupRouter);
 app.use('/signin', signinRouter);
 app.use('/addslot', slotRouter);
@@ -67,6 +67,7 @@ app.use("/getPatientDetails", getPatientDetails);
 app.use("/prescription", prescription);
 app.use('/myappointments', appointmentsRounter);
 app.use("/getPrescription",getPrescription);
+app.use("/adminSigin",adminSigin);
 
 
 
