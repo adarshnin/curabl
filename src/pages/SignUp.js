@@ -378,6 +378,7 @@ export default class SignUp extends Component {
                     </a>
                   </Checkbox>
                 </Form.Item>
+                
 
                 <Form.Item>
                   <Button
