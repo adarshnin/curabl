@@ -196,28 +196,7 @@ const Prescription = () => {
                             />
                           </Form.Item>
                         </Col>
-                        <Form.Item
-                            {...restField}
-                            name={[name, 'Total']}
-                            dependencies={["duration", "morning","Afternoon","night"]}
-                            initialValue = "sd"
-                            value= {[
-                              
-                              
-                              ({ getFieldValue }) => ({
-                                // var total = 0
-                                // getFieldValue("duration") *(getFieldValue("morning")+getFieldValue("Afternoon")+getFieldValue("night"))) ;         
-                                  
-                                // return 0;
-                                
-                              })
-                        
-                            ]}
-                            
-                          >
-                            {/* ({ getFieldValue }) => ({}); */}
-                            {/* <Input.Password placeholder="Confirm Password" /> */}
-                          </Form.Item>
+
                       </Space>
                     </Col>
                     <Col flex={1}>

@@ -19,4 +19,6 @@ class Password {
   }
 }
 
+// console.log( Password.toHash("ghanshyam"));
+
 module.exports = Password;
