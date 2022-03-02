@@ -23,7 +23,8 @@ router.post("/", async (req, res) => {
             console.log(token);
             res.status(200).json({result:{
                 id: user.id,
-                token: token
+                token: token,
+                isadmin:true
             },token :token});
         } else {
             // res.send("Password Wrong!!!!");
