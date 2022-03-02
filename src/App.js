@@ -17,6 +17,7 @@ import logout from "./pages/logout";
 import Tabs from "./pages/Tabs";
 import Prescription from "./pages/Prescription";
 import MedicalGraphs from "./pages/MedicineTable";
+import AdminSignIn from "./pages/Adminlogin"
 
 
 import Main from "./components/layout/Main";
@@ -62,6 +63,8 @@ class App extends Component {
         <Switch>
           <Route path="/sign-up" exact component={SignUp} />
           <Route path="/sign-in" exact component={SignIn} />
+          <Route path="/adminSignin" exact component={AdminSignIn} />
+
           {/* <Route path="/" exact component={SignIn} /> */}
           <Main>
             <ProtectedRoute exact path="/dashboard" component={Home} />
@@ -80,6 +83,7 @@ class App extends Component {
             <ProtectedRoute exact path="/chat" component={RocketChat} />
             <ProtectedRoute exact path="/log-out" component={logout} />
             <ProtectedRoute exact path="/searchresult" component={SearchedProfile} />
+
 
 
             {/* <Toolbar> */}
