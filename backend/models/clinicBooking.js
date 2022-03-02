@@ -2,7 +2,12 @@ require("dotenv").config({ path: __dirname + '/.env' });
 
 const mongoose = require("mongoose");
 //const jwt = require("jsonwebtoken");
-const InstrumentSchema
+
+const InstrumentData = new mongoose.Schema({ 
+    deviceID: String,
+    deviceName: String,
+    data: String,
+});
 
 const clinicBooking = new mongoose.Schema({
     date: {
@@ -41,6 +46,10 @@ const clinicBooking = new mongoose.Schema({
     },
     clinicID: {
         type: String,
+        required: false
+    },
+    InstrumentData: {
+        type: [InstrumentData],
         required: false
     },
 })
