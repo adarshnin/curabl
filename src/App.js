@@ -18,7 +18,7 @@ import Tabs from "./pages/Tabs";
 import Prescription from "./pages/Prescription";
 import MedicalGraphs from "./pages/MedicineTable";
 import AdminSignIn from "./pages/Adminlogin"
-
+import AdminDashboard from "./pages/AdminDashboard"
 
 import Main from "./components/layout/Main";
 import "antd/dist/antd.css";
@@ -83,7 +83,8 @@ class App extends Component {
             <ProtectedRoute exact path="/chat" component={RocketChat} />
             <ProtectedRoute exact path="/log-out" component={logout} />
             <ProtectedRoute exact path="/searchresult" component={SearchedProfile} />
-
+            <Route exact path="/adminDashboard" component={AdminDashboard} />
+            
 
 
             {/* <Toolbar> */}

@@ -118,7 +118,7 @@ export default class AdminSignIn extends Component {
 
     // redirect to home if already logged in
     if (authenticationService.currentUserValue) {
-      this.props.history.push('/');
+      this.props.history.push('/adminDashboard');
     }
   }
   state = {
