@@ -6,6 +6,7 @@ import { authenticationService } from './authservice';
 
 
 export const ProtectedAdminRoute = ({ component: Component, ...rest }) => {
+    console.log("IN proted route");
     return (
         // console.log("in protected route");
         <Route {...rest} render={props => {

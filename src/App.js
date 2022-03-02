@@ -24,7 +24,7 @@ import Main from "./components/layout/Main";
 import "antd/dist/antd.css";
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
-import { ProtectedDoctorRoute, ProtectedRoute, ProtectedPatientRoute } from "./services/protectedRoutes";
+import { ProtectedDoctorRoute, ProtectedRoute, ProtectedPatientRoute,ProtectedAdminRoute } from "./services/protectedRoutes";
 import axios from 'axios';
 import userAuthentication from "./middleware/isauth"
 import { history } from './helper/history';
@@ -83,7 +83,7 @@ class App extends Component {
             <ProtectedRoute exact path="/chat" component={RocketChat} />
             <ProtectedRoute exact path="/log-out" component={logout} />
             <ProtectedRoute exact path="/searchresult" component={SearchedProfile} />
-            <Route exact path="/adminDashboard" component={AdminDashboard} />
+            <ProtectedAdminRoute exact path="/adminDashboard" component={AdminDashboard} />
             
 
 
