@@ -19,6 +19,7 @@ import Prescription from "./pages/Prescription";
 import MedicalGraphs from "./pages/MedicineTable";
 import AdminSignIn from "./pages/Adminlogin"
 import AdminDashboard from "./pages/AdminDashboard"
+import AddClinic from "./pages/AddClinic"
 
 import Main from "./components/layout/Main";
 import "antd/dist/antd.css";
@@ -96,6 +97,7 @@ class App extends Component {
 
             <ProtectedRoute exact path="/log-out" component={logout} />
             <ProtectedAdminRoute exact path="/adminDashboard" component={AdminDashboard} />
+            <ProtectedAdminRoute exact path="/addClinic" component={AddClinic} />
             
 
 

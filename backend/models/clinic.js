@@ -32,7 +32,7 @@ const addressSchema = new Schema({
 const clinicInfoSchema = new mongoose.Schema({
     clinicId: {
         type: String,
-        required: true
+        required: false
     },
     address:{
         type: addressSchema,

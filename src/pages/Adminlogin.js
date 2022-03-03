@@ -160,7 +160,7 @@ export default class AdminSignIn extends Component {
           // auth.login();
           // console.log("is authentated",auth.isAuthenticated());
           // await userAuthentication();
-        //   this.props.history.push("/admindashboard");
+          this.props.history.push("/adminDashboard");
         }
       }
 

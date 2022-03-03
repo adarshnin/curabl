@@ -27,8 +27,8 @@ export const ProtectedAdminRoute = ({ component: Component, ...rest }) => {
                 if (currentUser?.isadmin) {
                     return <Component {...props} />
                 } else {
-                    // <Redirect to={{ pathname: '/admindashboard', state: { from: props.location } }} />
-                    <Redirect to={{ pathname: '/adminSignin', state: { from: props.location } }} />
+                    <Redirect to={{ pathname: '/admindashboard', state: { from: props.location } }} />
+                    // <Redirect to={{ pathname: '/adminSignin', state: { from: props.location } }} />
                 }
             }
             // authorised so return component
