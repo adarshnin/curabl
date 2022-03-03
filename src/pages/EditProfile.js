@@ -91,6 +91,7 @@ const EditProfile = () => {
     const [phoneCode, setPhoneCode] = useState('+91');
     const [fileList, setFileList] = useState([]);
     const countries = Country.getAllCountries();
+    // const States = 
     const phoneCodes = [...new Set(countries.map(country => country.phonecode))]
     // const [filelist, setFilelist] = useState([]);
     // const Countries = countries;
@@ -461,9 +462,9 @@ const EditProfile = () => {
                                 optionFilterProp="children"
                                 onChange={onCountryChange}
                                 onSearch={onSearch}
-                                // filterOption={(input, option) =>
-                                //     // option.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                // }
+                            // filterOption={(input, option) =>
+                            //     // option.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                            // }
                             >
                                 {countries.map(country => {
                                     return <Option key={country.isoCode} value={country.name}>{country.name}</Option>
