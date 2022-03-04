@@ -282,6 +282,7 @@ export default class SignIn extends Component {
                       Sign Up
                     </Link>
                   </p>
+
                 </Form>
               </Col>
 
@@ -295,6 +296,11 @@ export default class SignIn extends Component {
               <Menu.Item>Products</Menu.Item>
               <Menu.Item>Blogs</Menu.Item>
               <Menu.Item>Pricing</Menu.Item>
+              <Menu.Item>
+               Admin Access
+                <Link to="/adminSignin" className="text-dark">
+                </Link>
+              </Menu.Item>
             </Menu>
             <Menu mode="horizontal" className="menu-nav-social">
               <Menu.Item>
