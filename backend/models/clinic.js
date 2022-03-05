@@ -34,10 +34,6 @@ const clinicInfoSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    clinicName: {
-        type: String,
-        required: false
-    },
     address:{
         type: addressSchema,
         required: true

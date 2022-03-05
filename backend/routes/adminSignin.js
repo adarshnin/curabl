@@ -11,8 +11,8 @@ const router = express.Router();
 router.post("/", async (req, res) => {
     try {
         console.log(req.body);
-        const emailid = req.body?.email;
-        const pass = req.body?.password;
+        const emailid = req.body.email;
+        const pass = req.body.password;
         const user = await adminSchema.findOne({
             email: emailid
         });

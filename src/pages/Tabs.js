@@ -266,7 +266,7 @@ function TabToolbar() {
                     Content of Tab 2
                     record 10/20 sec - send via bluetooth - receive .wav file from instrument - Record heart sound - already Applied ML on it - doctor can view if normal / not
                 </TabPane>
-                <TabPane tab="Example" key="8">
+                {/* <TabPane tab="Example" key="8">
                     Content of Tab 8
                 </TabPane>
                 <TabPane tab="Example" key="9">
@@ -277,7 +277,7 @@ function TabToolbar() {
                 </TabPane>
                 <TabPane tab="Example" key="11">
                     Content of Tab 11
-                </TabPane>
+                </TabPane> */}
             </Tabs>
         </>
     );

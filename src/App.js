@@ -16,7 +16,7 @@ import RocketChat from "./pages/RocketChat";
 import logout from "./pages/logout";
 import Tabs from "./pages/Tabs";
 import Prescription from "./pages/Prescription";
-import MedicalGraphs from "./pages/MedicineTable";
+// import MedicalGraphs from "./pages/MedicineTable";
 import AdminSignIn from "./pages/Adminlogin"
 import AdminDashboard from "./pages/AdminDashboard"
 import AddClinic from "./pages/AddClinic"
@@ -74,7 +74,7 @@ class App extends Component {
             <ProtectedDoctorRoute exact path="/appointment" component={Appointment} />
             <ProtectedDoctorRoute exact path="/scheduling" component={Scheduling} />
             <ProtectedDoctorRoute exact path="/Prescription" component={Prescription} />
-            <ProtectedDoctorRoute exact path="/MedicalGraphs" component={MedicalGraphs} />
+            {/* <ProtectedDoctorRoute exact path="/MedicalGraphs" component={MedicalGraphs} /> */}
             <ProtectedDoctorRoute exact path="/myappointments" component={myAppointments} />
             <ProtectedDoctorRoute exact path="/call" component={Tabs} />
             <ProtectedDoctorRoute exact path="/profile" component={Profile} />
@@ -87,7 +87,7 @@ class App extends Component {
             <ProtectedPatientRoute exact path="/payment" component={Payment} />
             <ProtectedPatientRoute exact path="/payments" component={Payments} />
             <ProtectedPatientRoute exact path="/appointment" component={Appointment} />
-            <ProtectedPatientRoute exact path="/MedicalGraphs" component={MedicalGraphs} />
+            {/* <ProtectedPatientRoute exact path="/MedicalGraphs" component={MedicalGraphs} /> */}
             <ProtectedPatientRoute exact path="/myappointments" component={myAppointments} />
             <ProtectedPatientRoute exact path="/call" component={Tabs} />
             <ProtectedPatientRoute exact path="/profile" component={Profile} />

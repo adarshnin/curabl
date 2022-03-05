@@ -1,6 +1,6 @@
-const capitalize = (s) => (typeof s == "string") ? `${s.slice(0, 1).toUpperCase()}${s.slice(1)}` : s;
+export const capitalize = (s) => (typeof s == "string") ? `${s.slice(0, 1).toUpperCase()}${s.slice(1)}` : s;
 
-const addressTranslator = (a) => {
+export const addressTranslator = (a) => {
   let address = '';
   if (a?.houseNo) { address += `${a.houseNo}, ` }
   if (a?.street) { address += `${a.street}, ` }
@@ -13,7 +13,7 @@ const addressTranslator = (a) => {
   return address;
 }
 
-const nameTranslator = (n) => {
+export const nameTranslator = (n) => {
   let name = '';
   if (n?.designation) {
     name += `${capitalize(n.designation)} `;
@@ -32,7 +32,7 @@ const nameTranslator = (n) => {
   return name;
 }
 
-const arrayTranslator = (a) => {
+export const arrayTranslator = (a) => {
   if (a) {
     let s = '';
     for (let i of a.slice(0, a.length - 1)) {
@@ -44,13 +44,13 @@ const arrayTranslator = (a) => {
   return a;
 }
 
-const imageUrlTranslator = (imageUrl) => {
+export const imageUrlTranslator = (imageUrl) => {
   const serverURL = process.env.REACT_APP_SERVER_URL;
   const url = `${serverURL}${imageUrl?.replace(/public/g, "")}`;
   return url;
 }
 
-const urlTranslator = (...urls) => {
+export const urlTranslator = (...urls) => {
   let currentURL, finalURL = '';
   for(let url of urls) {
     currentURL = (url[0] === '/') ? url.slice(1,): url;
@@ -60,4 +60,4 @@ const urlTranslator = (...urls) => {
   return finalURL;
 }
 
-module.exports = { imageUrlTranslator, urlTranslator, arrayTranslator, capitalize, addressTranslator, nameTranslator };
+// module.exports = { imageUrlTranslator, urlTranslator, arrayTranslator, capitalize, addressTranslator, nameTranslator };

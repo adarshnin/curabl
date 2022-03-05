@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Image, Row, Col } from 'antd';
-import { addressTranslator, nameTranslator, imageUrlTranslator, urlTranslator } from '../../../libs/utils';
+import { nameTranslator, addressTranslator, imageUrlTranslator } from '../../../libs/utils';
 import Section from './Section';
 import SectionForArray from './SectionForArray';
 
