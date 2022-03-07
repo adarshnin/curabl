@@ -52,7 +52,7 @@ function AddClinic() {
     const phoneCodes = [...new Set(countries.map(country => country.phonecode))]
 
     const onFinish = async (values) => {
-        console.log(values);
+        console.log("values === ", values);
 
         let address = {
             houseNo: values.houseno,
@@ -63,6 +63,25 @@ function AddClinic() {
             state: values.state,
             country: values.country,
             postalCode: values.pincode,
+        }
+        
+        var res;
+        try {
+            res = await axios.post(`http://localhost:9000/addClinic`, {
+                date: values.date,
+                address: address,
+                clinicname: values.clinicname,
+                instruments: values.instruments
+            });
+        } catch (err) {
+            console.error(err);
+        }
+        if (res?.data) {
+            console.log("success@@@@@@@@@@");
+
+        }
+        else {
+            console.log("response failed");
         }
 
     };
@@ -78,18 +97,10 @@ function AddClinic() {
         setStateCode(value);
         console.log(`selected ${value}`);
     }
-    function onChange(value) {
-        if (person === "WardBoy") {
-            setPerson("Doctor");
-        }
-        else if (person === "Doctor")
-            setPerson("WardBoy");
-    }
 
     function onSearch(val) {
         console.log('search:', val);
     }
-
 
     return (
         <Form
@@ -114,7 +125,6 @@ function AddClinic() {
 
         >
             <Title level={4} style={{ marginLeft: 20 }}>Clinic Details</Title>
-
             <Form.Item label="Clinic Name"
                 name="clinicname"
             >
@@ -126,14 +136,7 @@ function AddClinic() {
                     format={"DD-MM-YYYY"}
                 />
             </Form.Item>
-            <Form.Item label="Person" name="person">
-          
-                    <Select defaultValue={"Select"}style={{ width: 120 }} >
-                        <Option value="doctor">Doctor</Option>
-                        <Option value="wardboy">WardBoy</Option>
-                    </Select>
 
-            </Form.Item>
             <Title level={4} style={{ marginLeft: 20 }}>Address Details</Title>
             <Form.Item
                 label="Office Number"
@@ -225,7 +228,7 @@ function AddClinic() {
                             <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
                                 <Form.Item
                                     {...restField}
-                                    name={[name, 'first']}
+                                    name={[name, 'name']}
                                     rules={[{ required: true, message: 'Missing first name' }]}
                                     style={{ minWidth: "250px" }}
                                 >
@@ -234,7 +237,7 @@ function AddClinic() {
                                 </Form.Item>
                                 <Form.Item
                                     {...restField}
-                                    name={[name, 'last']}
+                                    name={[name, 'Working']}
                                     rules={[{ required: true, message: 'Missing last name' }]}
                                     label="Working?"
                                     style={{ minWidth: "250%" }}
