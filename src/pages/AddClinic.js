@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import {
     Form,
     Input,
@@ -22,7 +23,7 @@ import {
 } from "antd";
 import server from '../libs/axios';
 import moment from 'moment';
-import axios from 'axios';
+// import axios from 'axios';
 import { Country, State, City } from 'country-state-city';
 import { nameTranslator } from '../libs/utils';
 
@@ -52,16 +53,7 @@ function AddClinic() {
     const onFinish = async (values) => {
         console.log(values);
 
-        let address = {
-            houseNo: values.houseno,
-            street: values.street,
-            landmark: values.landmark,
-            area: values.city,
-            district: values.district,
-            state: values.state,
-            country: values.country,
-            postalCode: values.pincode,
-        }
+        
 
     };
     function onCountryChange(value) {

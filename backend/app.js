@@ -28,6 +28,7 @@ var prescription = require("./routes/prescription");
 var getPrescription = require("./routes/getPrescription");
 var appointmentsRounter = require('./routes/appointments')
 var adminSigin = require("./routes/adminSignin")
+var addInstructor = require("./routes/addinst")
 require("./routes/testAPI")
 
 const app = express();
@@ -68,6 +69,7 @@ app.use("/prescription", prescription);
 app.use('/myappointments', appointmentsRounter);
 app.use("/getPrescription",getPrescription);
 app.use("/adminSigin",adminSigin);
+app.use("/addInstructor",addInstructor);
 
 
 

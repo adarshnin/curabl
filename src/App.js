@@ -31,6 +31,7 @@ import userAuthentication from "./middleware/isauth"
 import { history } from './helper/history';
 import { authenticationService } from './services/authservice';
 import SearchedProfile from "./pages/SearchedProfile";
+import AddInstructor from "./pages/AddInstructor"
 
 
 
@@ -98,6 +99,8 @@ class App extends Component {
             <ProtectedRoute exact path="/log-out" component={logout} />
             <ProtectedAdminRoute exact path="/adminDashboard" component={AdminDashboard} />
             <ProtectedAdminRoute exact path="/addClinic" component={AddClinic} />
+            <ProtectedAdminRoute exact path="/addInst" component={AddInstructor} />
+            
             
 
 
