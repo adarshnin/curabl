@@ -44,11 +44,13 @@ const tailFormItemLayout = {
 
 function AddClinic() {
     const [form] = Form.useForm();
+    const [person, setPerson] = useState("WardBoy");
     const [country, setCountry] = useState('India');
     const [stateCode, setStateCode] = useState('');
     const [phoneCode, setPhoneCode] = useState('+91');
     const countries = Country.getAllCountries();
     const phoneCodes = [...new Set(countries.map(country => country.phonecode))]
+
     const onFinish = async (values) => {
         console.log(values);
 
@@ -77,7 +79,11 @@ function AddClinic() {
         console.log(`selected ${value}`);
     }
     function onChange(value) {
-        console.log(`selected ${value}`);
+        if (person === "WardBoy") {
+            setPerson("Doctor");
+        }
+        else if (person === "Doctor")
+            setPerson("WardBoy");
     }
 
     function onSearch(val) {
@@ -114,24 +120,19 @@ function AddClinic() {
             >
                 <Input />
             </Form.Item>
-            <Form.Item label="Select">
-                <Select>
-                    <Select.Option value="demo">Demo</Select.Option>
-                </Select>
-            </Form.Item>
+
             <Form.Item label="DatePicker" name="date">
                 <DatePicker
                     format={"DD-MM-YYYY"}
                 />
             </Form.Item>
-            <Form.Item label="InputNumber">
-                <InputNumber />
-            </Form.Item>
-            <Form.Item label="WardBoy" valuePropName="checked">
-                <Switch /> Doctor
-            </Form.Item>
-            <Form.Item label="Button">
-                <Button>Button</Button>
+            <Form.Item label="Person" name="person">
+          
+                    <Select defaultValue={"Select"}style={{ width: 120 }} >
+                        <Option value="doctor">Doctor</Option>
+                        <Option value="wardboy">WardBoy</Option>
+                    </Select>
+
             </Form.Item>
             <Title level={4} style={{ marginLeft: 20 }}>Address Details</Title>
             <Form.Item
@@ -160,7 +161,7 @@ function AddClinic() {
             <Form.Item
                 label="District"
                 name="district"
-            > <Input maxLength="30" />
+            ><Input maxLength="30" />
             </Form.Item>
             <Form.Item
                 label="State"
@@ -217,7 +218,7 @@ function AddClinic() {
                 <Input maxLength="6" />
             </Form.Item>
             <Title level={4} style={{ marginLeft: 20 }}>Instruments</Title>
-            <Form.List name="users">
+            <Form.List name="instruments">
                 {(fields, { add, remove }) => (
                     <>
                         {fields.map(({ key, name, ...restField }) => (
@@ -236,14 +237,12 @@ function AddClinic() {
                                     name={[name, 'last']}
                                     rules={[{ required: true, message: 'Missing last name' }]}
                                     label="Working?"
+                                    style={{ minWidth: "250%" }}
+
                                 >
-                                    <Select defaultValue="lucy" style={{ width: 120 }} >
-                                        <Option value="jack">Jack</Option>
-                                        <Option value="lucy">Lucy</Option>
-                                        <Option value="disabled" disabled>
-                                            Disabled
-                                        </Option>
-                                        <Option value="Yiminghe">yiminghe</Option>
+                                    <Select defaultValue="Select" style={{ width: 120 }} >
+                                        <Option value="yes">Yes</Option>
+                                        <Option value="no">No</Option>
                                     </Select>
                                 </Form.Item>
                                 <MinusCircleOutlined onClick={() => remove(name)} />
