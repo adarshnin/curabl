@@ -5,12 +5,16 @@ import {
     Button,
     Radio,
     Select,
+    Space,
     Cascader,
     DatePicker,
     InputNumber,
     TreeSelect,
     Switch,
+    Menu, Dropdown, message
 } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
+import { UploadOutlined, InboxOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import {
     Card,
     Typography,
@@ -22,8 +26,21 @@ import axios from 'axios';
 import { Country, State, City } from 'country-state-city';
 import { nameTranslator } from '../libs/utils';
 
+
 const { Title } = Typography;
 const { Option } = Select;
+const tailFormItemLayout = {
+    wrapperCol: {
+        xs: {
+            span: 24,
+            offset: 0,
+        },
+        sm: {
+            span: 16,
+            offset: 8,
+        },
+    },
+};
 
 function AddClinic() {
     const [form] = Form.useForm();
@@ -70,7 +87,9 @@ function AddClinic() {
 
     return (
         <Form
-        form={form} 
+            form={form}
+            onFinish={onFinish}
+
             labelCol={{
                 span: 4,
             }}
@@ -82,13 +101,17 @@ function AddClinic() {
             initialValues={{
                 country: "IN",
                 state: "Maharashtra",
+                date: moment()
             }}
             scrollToFirstError
 
 
         >
+            <Title level={4} style={{ marginLeft: 20 }}>Clinic Details</Title>
 
-            <Form.Item label="Input">
+            <Form.Item label="Clinic Name"
+                name="clinicname"
+            >
                 <Input />
             </Form.Item>
             <Form.Item label="Select">
@@ -96,40 +119,10 @@ function AddClinic() {
                     <Select.Option value="demo">Demo</Select.Option>
                 </Select>
             </Form.Item>
-            <Form.Item label="TreeSelect">
-                <TreeSelect
-                    treeData={[
-                        {
-                            title: 'Light',
-                            value: 'light',
-                            children: [
-                                {
-                                    title: 'Bamboo',
-                                    value: 'bamboo',
-                                },
-                            ],
-                        },
-                    ]}
+            <Form.Item label="DatePicker" name="date">
+                <DatePicker
+                    format={"DD-MM-YYYY"}
                 />
-            </Form.Item>
-            <Form.Item label="Cascader">
-                <Cascader
-                    options={[
-                        {
-                            value: 'zhejiang',
-                            label: 'Zhejiang',
-                            children: [
-                                {
-                                    value: 'hangzhou',
-                                    label: 'Hangzhou',
-                                },
-                            ],
-                        },
-                    ]}
-                />
-            </Form.Item>
-            <Form.Item label="DatePicker">
-                <DatePicker />
             </Form.Item>
             <Form.Item label="InputNumber">
                 <InputNumber />
@@ -142,13 +135,13 @@ function AddClinic() {
             </Form.Item>
             <Title level={4} style={{ marginLeft: 20 }}>Address Details</Title>
             <Form.Item
-                label="Apartment Number"
+                label="Office Number"
                 name="houseno"
             >
                 <Input maxLength="10" />
             </Form.Item>
             <Form.Item
-                label="Street / Society"
+                label="Street / Road"
                 name="street"
             >
                 <Input maxLength="50" />
@@ -223,7 +216,52 @@ function AddClinic() {
             >
                 <Input maxLength="6" />
             </Form.Item>
-
+            <Title level={4} style={{ marginLeft: 20 }}>Instruments</Title>
+            <Form.List name="users">
+                {(fields, { add, remove }) => (
+                    <>
+                        {fields.map(({ key, name, ...restField }) => (
+                            <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                                <Form.Item
+                                    {...restField}
+                                    name={[name, 'first']}
+                                    rules={[{ required: true, message: 'Missing first name' }]}
+                                    style={{ minWidth: "250px" }}
+                                >
+                                    <Input
+                                        placeholder="Instrument Name" />
+                                </Form.Item>
+                                <Form.Item
+                                    {...restField}
+                                    name={[name, 'last']}
+                                    rules={[{ required: true, message: 'Missing last name' }]}
+                                    label="Working?"
+                                >
+                                    <Select defaultValue="lucy" style={{ width: 120 }} >
+                                        <Option value="jack">Jack</Option>
+                                        <Option value="lucy">Lucy</Option>
+                                        <Option value="disabled" disabled>
+                                            Disabled
+                                        </Option>
+                                        <Option value="Yiminghe">yiminghe</Option>
+                                    </Select>
+                                </Form.Item>
+                                <MinusCircleOutlined onClick={() => remove(name)} />
+                            </Space>
+                        ))}
+                        <Form.Item>
+                            <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                                Add field
+                            </Button>
+                        </Form.Item>
+                    </>
+                )}
+            </Form.List>
+            <Form.Item  {...tailFormItemLayout}>
+                <Button type="primary" htmlType="submit">
+                    Update
+                </Button>
+            </Form.Item>
         </Form>
     );
 };
