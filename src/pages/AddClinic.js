@@ -45,15 +45,45 @@ const tailFormItemLayout = {
 
 function AddClinic() {
     const [form] = Form.useForm();
+    const [person, setPerson] = useState("WardBoy");
     const [country, setCountry] = useState('India');
     const [stateCode, setStateCode] = useState('');
     const [phoneCode, setPhoneCode] = useState('+91');
     const countries = Country.getAllCountries();
     const phoneCodes = [...new Set(countries.map(country => country.phonecode))]
-    const onFinish = async (values) => {
-        console.log(values);
 
+    const onFinish = async (values) => {
+        console.log("values === ", values);
+
+        let address = {
+            houseNo: values.houseno,
+            street: values.street,
+            landmark: values.landmark,
+            area: values.city,
+            district: values.district,
+            state: values.state,
+            country: values.country,
+            postalCode: values.pincode,
+        }
         
+        var res;
+        try {
+            res = await axios.post(`http://localhost:9000/addClinic`, {
+                date: values.date,
+                address: address,
+                clinicname: values.clinicname,
+                instruments: values.instruments
+            });
+        } catch (err) {
+            console.error(err);
+        }
+        if (res?.data) {
+            console.log("success@@@@@@@@@@");
+
+        }
+        else {
+            console.log("response failed");
+        }
 
     };
     function onCountryChange(value) {
@@ -68,14 +98,10 @@ function AddClinic() {
         setStateCode(value);
         console.log(`selected ${value}`);
     }
-    function onChange(value) {
-        console.log(`selected ${value}`);
-    }
 
     function onSearch(val) {
         console.log('search:', val);
     }
-
 
     return (
         <Form
@@ -100,31 +126,18 @@ function AddClinic() {
 
         >
             <Title level={4} style={{ marginLeft: 20 }}>Clinic Details</Title>
-
             <Form.Item label="Clinic Name"
                 name="clinicname"
             >
                 <Input />
             </Form.Item>
-            <Form.Item label="Select">
-                <Select>
-                    <Select.Option value="demo">Demo</Select.Option>
-                </Select>
-            </Form.Item>
+
             <Form.Item label="DatePicker" name="date">
                 <DatePicker
                     format={"DD-MM-YYYY"}
                 />
             </Form.Item>
-            <Form.Item label="InputNumber">
-                <InputNumber />
-            </Form.Item>
-            <Form.Item label="WardBoy" valuePropName="checked">
-                <Switch /> Doctor
-            </Form.Item>
-            <Form.Item label="Button">
-                <Button>Button</Button>
-            </Form.Item>
+
             <Title level={4} style={{ marginLeft: 20 }}>Address Details</Title>
             <Form.Item
                 label="Office Number"
@@ -152,7 +165,7 @@ function AddClinic() {
             <Form.Item
                 label="District"
                 name="district"
-            > <Input maxLength="30" />
+            ><Input maxLength="30" />
             </Form.Item>
             <Form.Item
                 label="State"
@@ -209,14 +222,14 @@ function AddClinic() {
                 <Input maxLength="6" />
             </Form.Item>
             <Title level={4} style={{ marginLeft: 20 }}>Instruments</Title>
-            <Form.List name="users">
+            <Form.List name="instruments">
                 {(fields, { add, remove }) => (
                     <>
                         {fields.map(({ key, name, ...restField }) => (
                             <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
                                 <Form.Item
                                     {...restField}
-                                    name={[name, 'first']}
+                                    name={[name, 'name']}
                                     rules={[{ required: true, message: 'Missing first name' }]}
                                     style={{ minWidth: "250px" }}
                                 >
@@ -225,17 +238,15 @@ function AddClinic() {
                                 </Form.Item>
                                 <Form.Item
                                     {...restField}
-                                    name={[name, 'last']}
+                                    name={[name, 'Working']}
                                     rules={[{ required: true, message: 'Missing last name' }]}
                                     label="Working?"
+                                    style={{ minWidth: "250%" }}
+
                                 >
-                                    <Select defaultValue="lucy" style={{ width: 120 }} >
-                                        <Option value="jack">Jack</Option>
-                                        <Option value="lucy">Lucy</Option>
-                                        <Option value="disabled" disabled>
-                                            Disabled
-                                        </Option>
-                                        <Option value="Yiminghe">yiminghe</Option>
+                                    <Select defaultValue="Select" style={{ width: 120 }} >
+                                        <Option value="yes">Yes</Option>
+                                        <Option value="no">No</Option>
                                     </Select>
                                 </Form.Item>
                                 <MinusCircleOutlined onClick={() => remove(name)} />

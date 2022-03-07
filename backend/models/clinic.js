@@ -1,18 +1,19 @@
 require("dotenv").config({ path: __dirname + '/.env' });
 
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
 //const jwt = require("jsonwebtoken");
 
 const InstrumentSchema = new mongoose.Schema({ 
     name: String,
     Working : {
         type: Boolean,
-        require: true,
+        required: true,
         default: false,
     },
     state: {
         type: Boolean,
-        require: true,
+        required: false,
         default: false,
     },
 
@@ -23,14 +24,13 @@ const addressSchema = new Schema({
     landmark: String,
     area: String, // Village/City/Town
     district: String,
-    
     state: String,
     country: String,
     postalCode: String,
 });
 
 const clinicInfoSchema = new mongoose.Schema({
-    clinicId: {
+    clinicName: {
         type: String,
         required: false
     },
@@ -38,16 +38,13 @@ const clinicInfoSchema = new mongoose.Schema({
         type: addressSchema,
         required: true
     },
-    pincode:{
-        type:Number,
-        required:false
-    },
-    timestamp: {
+    date: {
         type: String,
         required: true
     },
     instrument: {
         type: [InstrumentSchema],
+        required: false
     },
     
 })
