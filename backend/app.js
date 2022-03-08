@@ -30,7 +30,7 @@ var appointmentsRounter = require('./routes/appointments')
 var adminSigin = require("./routes/adminSignin")
 var addInstructor = require("./routes/addinst")
 var addClinic = require("./routes/addClinic")
-require("./routes/testAPI")
+// require("./routes/testAPI")
 
 const app = express();
 
@@ -43,6 +43,7 @@ app.use((req, res, next) => {
   // let origin = ["http://localhost:9000/",'https://chat.curabl.me'];
 
   res.set("Access-Control-Allow-Origin", req.headers.origin);
+
   res.set('Access-Control-Allow-Credentials', 'true');
   next();
 })

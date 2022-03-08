@@ -1,6 +1,5 @@
 const moment = require("moment");
 const express = require("express");
-const slotmodeltemplate = require("../models/slotmodel");
 const clinicAssistantSchema = require("../models/clinicAssistant");
 
 const router = express.Router();
@@ -30,9 +29,7 @@ router.post("/", async (req, res) => {
             length: 8,
             numbers: true
         });
-        // const user = await clinicAssistantSchema.findOne({
-        //     email: emailid
-        // });
+        
         const data = new clinicAssistantSchema({
             email: req.body?.Email,
             name:req.body?.Name,
@@ -59,8 +56,12 @@ router.post("/", async (req, res) => {
                 if (err) {
                 //   res.json(err);
                     console.log("from email",err);
+                    // 
+                    // .remove({'title':'MongoDB Overview'})
+                    res.send({error:"Email not send. Please submit information again"})
                 } else {
                   console.log("from email",info);
+                  res.send({data:"Successfully generate user"})
                 //   res.json(info);
                 }
               });
