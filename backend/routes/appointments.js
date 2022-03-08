@@ -73,4 +73,22 @@ router.post('/getAppointments', async (req, res, next) => {
 
 });
 
+router.post("/count", async (req, res) => {
+    console.log("in app here");
+    try {
+        // var Date = req.body.Date;
+        // var doctor_id = req.body.
+        appointmentmodeltemplate.count({}).exec((err, count) => {
+            if (err) {
+                res.send(err);
+                return;
+            }
+            console.log("total appointments = ", count);
+            res.send({count: count});
+        });
+    } catch (error) {
+        res.send(error);
+    }
+});
+
 module.exports = router;

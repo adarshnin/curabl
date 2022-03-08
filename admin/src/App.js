@@ -1,6 +1,6 @@
 
 import React, { Component } from "react";
-import { Switch, Route,  } from "react-router-dom";
+import { Switch, Route, } from "react-router-dom";
 import Home from "./pages/Home";
 
 import logout from "./pages/logout";
@@ -12,7 +12,7 @@ import Main from "./components/layout/Main";
 import "antd/dist/antd.css";
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
-import { ProtectedDoctorRoute, ProtectedRoute, ProtectedPatientRoute,ProtectedAdminRoute } from "./services/protectedRoutes";
+import { ProtectedDoctorRoute, ProtectedRoute, ProtectedPatientRoute, ProtectedAdminRoute } from "./services/protectedRoutes";
 import axios from 'axios';
 import userAuthentication from "./middleware/isauth"
 import { history } from './helper/history';
@@ -51,20 +51,14 @@ class App extends Component {
         <Switch>
 
           <Route path="/adminSignin" exact component={AdminSignIn} />
+          <Route path="/" exact component={AdminSignIn} />
 
-          {/* <Route path="/" exact component={SignIn} /> */}
           <Main>
             <Route exact path="/dashboard" component={Home} />
-                  
-
-
-
             <Route exact path="/log-out" component={logout} />
             <Route exact path="/adminDashboard" component={AdminDashboard} />
             <Route exact path="/addClinic" component={AddClinic} />
             <Route exact path="/addInst" component={AddInstructor} />
-            
-            
 
 
             {/* <Toolbar> */}

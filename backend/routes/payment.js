@@ -119,14 +119,28 @@ router.post("/getPayments", async (req, res) => {
 
 
 		});
-		// res.send("Date response got");
-
-		// slotmodeltemplate("date")
-
 
 	} catch (error) {
-		// res.status(400).send(error);
+		res.send(error);
+	}
 
+});
+
+
+router.post("/count", async (req, res) => {
+	try {
+		paymentmodeltemplate.find({}).exec((err, data) => {
+			if (err) {
+				res.send("Errors");
+				console.log(err);
+			}
+			else {
+				console.log("payment data = ", data);
+				res.send(data);
+			}
+		});
+
+	} catch (error) {
 		res.send(error);
 	}
 
