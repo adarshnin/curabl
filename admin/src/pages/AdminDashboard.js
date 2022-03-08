@@ -18,11 +18,12 @@ import { Link } from "react-router-dom";
 
 function AdminDashboard() {
     return (
-        <Link to="/addClinic">
-            <Button type="primary" className="tag-primary">
-                Add Clinic Person
-            </Button>
-        </Link>
+        // <Link to="/addClinic">
+        //     <Button type="primary" className="tag-primary">
+        //         Add Clinic Person
+        //     </Button>
+        // </Link>
+        <div></div>
     );
 }
 
