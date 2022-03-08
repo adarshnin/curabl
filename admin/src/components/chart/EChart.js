@@ -7,20 +7,20 @@ function EChart() {
 
   const items = [
     {
-      Title: "3,6K",
+      Title: "33",
       user: "Users",
     },
     {
-      Title: "2m",
+      Title: "439",
       user: "Clicks",
     },
     {
-      Title: "$772",
-      user: "Sales",
+      Title: "2",
+      user: "Unique Entity",
     },
     {
-      Title: "82",
-      user: "Items",
+      Title: "9",
+      user: "Months",
     },
   ];
 
@@ -41,8 +41,7 @@ function EChart() {
           than last week <span className="bnb2">+30%</span>
         </Paragraph>
         <Paragraph className="lastweek">
-          We have created multiple options for you to put together and customise
-          into pixel perfect pages.
+          Data regarding the platform.
         </Paragraph>
         <Row gutter>
           {items.map((v, index) => (
