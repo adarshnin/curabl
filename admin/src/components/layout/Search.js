@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { EnvironmentOutlined, MessageOutlined, UpSquareFilled, } from '@ant-design/icons';
 import { Button, Input, Skeleton, Avatar, Empty, List, Popover } from 'antd';
 import { addressTranslator, nameTranslator, arrayTranslator, imageUrlTranslator, urlTranslator } from "../../libs/utils";
-import RocketChat from '../../pages/RocketChat';
 import { authenticationService } from "../../services/authservice";
 
 const { Search } = Input;
@@ -100,20 +99,6 @@ function SearchComponent() {
                       size="large"
                       icon={
                         <EnvironmentOutlined
-                          style={{ marginLeft: "5px" }}
-                        />
-                      } />
-                  </Popover>,
-                  <Popover
-                    trigger="click"
-                    placement="topRight"
-                    title="Address"
-                    content={<RocketChat />}>
-                    <Button
-                      block shape="circle"
-                      size="large"
-                      icon={
-                        <MessageOutlined
                           style={{ marginLeft: "5px" }}
                         />
                       } />
