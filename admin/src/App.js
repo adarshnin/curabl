@@ -54,11 +54,11 @@ class App extends Component {
           <Route path="/" exact component={AdminSignIn} />
 
           <Main>
-            <Route exact path="/dashboard" component={Home} />
-            <Route exact path="/log-out" component={logout} />
-            <Route exact path="/adminDashboard" component={AdminDashboard} />
-            <Route exact path="/addClinic" component={AddClinic} />
-            <Route exact path="/addInst" component={AddInstructor} />
+            <ProtectedRoute exact path="/dashboard" component={Home} />
+            <ProtectedRoute exact path="/log-out" component={logout} />
+            <ProtectedRoute exact path="/adminDashboard" component={AdminDashboard} />
+            <ProtectedRoute exact path="/addClinic" component={AddClinic} />
+            <ProtectedRoute exact path="/addInst" component={AddInstructor} />
 
 
             {/* <Toolbar> */}
@@ -78,7 +78,7 @@ class App extends Component {
 //   // let routes = (
 //   //   <Switch>
 //   //       <Route path="/sign-up" exact component={SignUp} />
-//   //       <Route path="/sign-in" exact component={SignIn} />
+//   //       <Route path="/" exact component={SignIn} />
 //   //       <Main>
 //   //         <Route exact path="/dashboard" component={Home} />
 //   //         <Route exact path="/tables" component={Tables} />
