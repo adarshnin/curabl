@@ -56,10 +56,23 @@ function AddInstructor() {
       try {
         res = await axios.post(`http://localhost:9000/addInstructor`, values);
       } catch (err) {
-        console.error();
+        console.log("error",err);
         message.error("Check your Internet Connection.");
       }
-      console.log("resdata",res?.data);
+      console.log("resdata", res);
+      if(res?.data?.error){
+        console.log("error",res?.data?.error);
+        message.error(res?.data?.error?.msg);
+      }else if(res?.data?.errors){
+          var string = "";
+          for (let i of res?.data?.errors ){
+            message.error(i.msg);
+          }
+        //   message.error(string);
+      }else if(res?.data?.status == "success"){
+            message.success('Assistant is sucessfully added to clinic');
+            form.resetFields()
+      }
     //   if (res?.data) {
     //     if (res.data?.error) {
     //       message.error(res.data?.message, 10);

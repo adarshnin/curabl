@@ -1,6 +1,10 @@
 const moment = require("moment");
 const express = require("express");
 const clinicAssistantSchema = require("../models/clinicAssistant");
+const {  validateRequest,AssistantSchema } = require("../validators");
+const { checkSchema } = require('express-validator');
+
+
 
 const router = express.Router();
 var generator = require('generate-password');
@@ -22,7 +26,10 @@ let transport = nodemailer.createTransport({
 
   
   
-router.post("/", async (req, res) => {
+router.post("/", [
+    checkSchema(AssistantSchema),
+    validateRequest],
+    async (req, res) =>    {
     try {
         console.log("hello",req.body);
         var password = generator.generate({
@@ -41,7 +48,7 @@ router.post("/", async (req, res) => {
         });
         data.save()
         .then(data => {
-            res.json(data);
+            // res.json(data);
             console.log("inschema",data);
             let mailOptions = {
                 from: process.env.CLINIC_EMAIL,
@@ -58,10 +65,13 @@ router.post("/", async (req, res) => {
                     console.log("from email",err);
                     // 
                     // .remove({'title':'MongoDB Overview'})
-                    res.send({error:"Email not send. Please submit information again"})
+
+                    res.status(200).json({ status: 200, error: {msg:"Email not send. Please submit information again",param:"mailer",location:"send mail"} })
+                    // res.send({error:"Email not send. Please submit information again"})
                 } else {
                   console.log("from email",info);
-                  res.send({data:"Successfully generate user"})
+                //   res.send({data:"Successfully generate user"})
+                  res.status(200).json({ status: "success",data:{ msg:"Successfully generate user" }})
                 //   res.json(info);
                 }
               });
