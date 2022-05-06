@@ -74,30 +74,43 @@ function AddInstructor() {
         console.log(values);
 
         var res = "";
-        try {
-            res = await axios.post(`http://localhost:9000/addInstructor`, values);
-        } catch (err) {
-            console.error();
-            message.error("Check your Internet Connection.");
-        }
-        console.log("resdata", res?.data);
-        //   if (res?.data) {
-        //     if (res.data?.error) {
-        //       message.error(res.data?.message, 10);
-        //     }
-        //     else if (res.data?.result) {
-        //       console.log("resdata", res.data.result, res.data.token);
-        //       localStorage.setItem("token", res.data.token)
-        //       localStorage.setItem('currentUser', JSON.stringify(res.data.result));
-        //       currentUserSubject.next(res.data.result);
-        //       // const { from } = this.props.location.state || { from: { pathname: "/dashboard" } };
-        //       // this.props.history.push(from);
-        //       // auth.login();
-        //       // console.log("is authentated",auth.isAuthenticated());
-        //       // await userAuthentication();
-        //       this.props.history.push("/adminDashboard");
-        //     }
-        //   }
+      try {
+        res = await axios.post(`http://localhost:9000/addInstructor`, values);
+      } catch (err) {
+        console.log("error",err);
+        message.error("Check your Internet Connection.");
+      }
+      console.log("resdata", res);
+      if(res?.data?.error){
+        console.log("error",res?.data?.error);
+        message.error(res?.data?.error?.msg);
+      }else if(res?.data?.errors){
+          var string = "";
+          for (let i of res?.data?.errors ){
+            message.error(i.msg);
+          }
+        //   message.error(string);
+      }else if(res?.data?.status == "success"){
+            message.success('Assistant is sucessfully added to clinic');
+            form.resetFields()
+      }
+    //   if (res?.data) {
+    //     if (res.data?.error) {
+    //       message.error(res.data?.message, 10);
+    //     }
+    //     else if (res.data?.result) {
+    //       console.log("resdata", res.data.result, res.data.token);
+    //       localStorage.setItem("token", res.data.token)
+    //       localStorage.setItem('currentUser', JSON.stringify(res.data.result));
+    //       currentUserSubject.next(res.data.result);
+    //       // const { from } = this.props.location.state || { from: { pathname: "/dashboard" } };
+    //       // this.props.history.push(from);
+    //       // auth.login();
+    //       // console.log("is authentated",auth.isAuthenticated());
+    //       // await userAuthentication();
+    //       this.props.history.push("/adminDashboard");
+    //     }
+    //   }
 
     };
 

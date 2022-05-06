@@ -3050,3 +3050,46 @@ section.ant-layout.ant-layout-has-sider.layout-dashboard.layout-profile
   path {
   fill: #8c8c8c;
 }
+
+#google_translate_element {
+  resize: none;
+}
+
+#google_translate_element * {
+  resize: none;
+}
+
+#google_translate_element .goog-te-gadget {
+  font-family: open sans, Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  height: 40px;
+}
+
+#google_translate_element .goog-te-gadget-simple {
+  border: 1px solid #ccc;
+  border-radius: 5%;
+  padding: 0;
+  height: 40px;
+  display: table;
+  resize: none;
+}
+
+#google_translate_element:focus *:focus {
+  border: 1px solid #1890ff;
+  border-radius: 5%;
+}
+
+#google_translate_element .goog-te-gadget-simple > span {
+  height: 100%;
+  display: table-cell;
+}
+
+#google_translate_element .goog-te-gadget-simple > img {
+  display: none;
+}
+
+.goog-te-menu-frame * {
+  font-family: open sans, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  color: #000;
+}

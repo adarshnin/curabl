@@ -29,6 +29,18 @@
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
+  <script type="text/javascript"> 
+      function googleTranslateElementInit() {
+          new google.translate.TranslateElement(
+              {
+                pageLanguage: navigator.language.slice(0, 2),
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+              },
+              'google_translate_element',
+          );
+      }
+  </script>
+  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   <div id="root"></div>
   <!--
       This HTML file is a template.

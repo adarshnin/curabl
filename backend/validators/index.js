@@ -2,6 +2,7 @@ const { validationResult } = require('express-validator');
 const { userValidationSchema } = require('./profile');
 const { signUpSchema } = require('./signup');
 const { signInSchema } = require('./signin');
+const {AssistantSchema} = require("./validateClnAssistant");
 
 
 const validateRequest = (req, res, next) => {
@@ -10,9 +11,9 @@ const validateRequest = (req, res, next) => {
     if (!result.isEmpty()) {
       const errors = result.array();
       if (errors.length === 1) {
-        return res.status(400).json({ status: 400, error: errors[0] });
+        return res.status(200).json({ status: 200, error: errors[0] });
       } else {
-        return res.status(400).json({ status: 400, errors: errors });
+        return res.status(200).json({ status: 200, errors: errors });
       }
     }
     next();
@@ -21,4 +22,4 @@ const validateRequest = (req, res, next) => {
   }
 };
 
-module.exports = { userValidationSchema, signUpSchema, signInSchema, validateRequest, };
+module.exports = { userValidationSchema, signUpSchema, signInSchema, validateRequest,AssistantSchema };
