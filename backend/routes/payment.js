@@ -135,8 +135,13 @@ router.post("/count", async (req, res) => {
 				console.log(err);
 			}
 			else {
-				console.log("payment data = ", data);
-				res.send(data);
+				let total = 0;
+				console.log("payment data = ", data.length);
+				for (let i = 0; i < data.length; i++){
+					total += data[i]["amount"];
+				}
+				console.log("total = ", total);
+				res.send({count: total});
 			}
 		});
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Form,
     Input,
@@ -13,6 +13,7 @@ import {
     Switch,
     Menu, Dropdown, message
 } from 'antd';
+import { addressTranslator } from '../libs/utils';
 import { DownOutlined } from '@ant-design/icons';
 import { UploadOutlined, InboxOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import {
@@ -29,6 +30,7 @@ import { nameTranslator } from '../libs/utils';
 
 const { Title } = Typography;
 const { Option } = Select;
+
 const tailFormItemLayout = {
     wrapperCol: {
         xs: {
@@ -45,10 +47,29 @@ const tailFormItemLayout = {
 function AddInstructor() {
     const [form] = Form.useForm();
     const [country, setCountry] = useState('India');
+    const [clinics, setClinics] = useState([]);
+
     const [stateCode, setStateCode] = useState('');
     const [phoneCode, setPhoneCode] = useState('+91');
     const countries = Country.getAllCountries();
     const phoneCodes = [...new Set(countries.map(country => country.phonecode))]
+    useEffect(() => {
+        const getClinics = async () => {
+            let res;
+            try {
+                res = await server.post(`/addClinic/getall`, {
+                });
+                if (res?.data) {
+                    console.log("data = ", res.data[0]["clinicName"]);
+                    setClinics(res.data);
+
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        getClinics();
+    }, []);
     const onFinish = async (values) => {
         console.log(values);
 
@@ -93,7 +114,7 @@ function AddInstructor() {
 
     };
 
-    
+
     function onCountryChange(value) {
         setCountry(value);
         console.log(`selected ${value}`);
@@ -115,16 +136,16 @@ function AddInstructor() {
     }
     const prefixSelector = (
         <Form.Item name="prefix" noStyle>
-          <Select
-            style={{
-              width: 70,
-            }}
-          >
-            <Option value="91">+91</Option>
-            <Option value="87">+87</Option>
-          </Select>
+            <Select
+                style={{
+                    width: 70,
+                }}
+            >
+                <Option value="91">+91</Option>
+                <Option value="87">+87</Option>
+            </Select>
         </Form.Item>
-      );
+    );
 
 
     return (
@@ -154,10 +175,10 @@ function AddInstructor() {
                 name="Name"
                 rules={[
                     {
-                    required: true,
-                    message: 'Please input Name!',
+                        required: true,
+                        message: 'Please input Name!',
                     },
-                    
+
                 ]}
             >
                 <Input />
@@ -166,30 +187,30 @@ function AddInstructor() {
                 name="Email"
                 rules={[
                     {
-                    required: true,
-                    message: 'Please input Email!',
+                        required: true,
+                        message: 'Please input Email!',
                     },
-                    
+
                 ]}
             >
                 <Input />
-            </Form.Item>           
-            
-            
-            
+            </Form.Item>
+
+
+
             <Form.Item label="Person" name="person"
-            rules={[
-                {
-                required: true,
-                message: 'Please select the option',
-                },
-                
-            ]}>
-          
-                    <Select defaultValue={"Select"}style={{ width: 120 }} >
-                        <Option value="doctor">Doctor</Option>
-                        <Option value="wardboy">WardBoy</Option>
-                    </Select>
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please select the option',
+                    },
+
+                ]}>
+
+                <Select defaultValue={"Select"} style={{ width: 120 }} >
+                    <Option value="doctor">Doctor</Option>
+                    <Option value="wardboy">WardBoy</Option>
+                </Select>
 
             </Form.Item>
             <Form.Item
@@ -197,30 +218,30 @@ function AddInstructor() {
                 label="Phone Number"
                 rules={[
                     {
-                    required: true,
-                    len: 10,
-                    message: 'Please input your phone number!',
+                        required: true,
+                        len: 10,
+                        message: 'Please input your phone number!',
                     },
-                    
-                ]}
-                >
-                    <Input maxLength="10" addonBefore={prefixSelector} style={{ width: '100%' }} />
-                
 
-                
+                ]}
+            >
+                <Input maxLength="10" addonBefore={prefixSelector} style={{ width: '100%' }} />
+
+
+
             </Form.Item>
-           
-            
+
+
             <Form.Item
                 label="Clinic"
                 name="Clinic"
-                // rules={[
-                //     {
-                //     required: true,
-                //     message: 'Please select an Clinic!',
-                //     },
-                    
-                // ]}
+            // rules={[
+            //     {
+            //     required: true,
+            //     message: 'Please select an Clinic!',
+            //     },
+
+            // ]}
             >
                 <Select
                     showSearch
@@ -228,23 +249,26 @@ function AddInstructor() {
                     optionFilterProp="children"
                     onChange={onStateChange}
                     onSearch={onSearch}
-                    // filterOption={(input, option) =>
-                    //     option.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                    // }
-                    value={State.getStatesOfCountry(country).length === 0 ? '' : form.getFieldValue("state")}
+                // filterOption={(input, option) =>
+                //     option.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                // }
+                // clinics[0]["clinicName"]
+                // value={clnic.length === 0 ? '' : form.getFieldValue("state")}
                 >
-                    {State.getStatesOfCountry(country).map(state => {
-                        return <Option key={state.isoCode} value={state.isoCode}>{state.name}</Option>
-                    })}
+                    {
+                        clinics.map(clinic => {
+                            console.log(clinic);
+                            return <Option key={clinic["_id"]} value={clinic["_id"]}>{clinic["clinicName"] + ", " + addressTranslator((clinic["address"]))}</Option>
+                        })}
                     <Option key="" value="">None</Option>
                 </Select>
                 {/* <Input maxLength="30" /> */}
             </Form.Item>
-            
-            
+
+
             <Form.Item  {...tailFormItemLayout}>
                 <Button type="primary" htmlType="submit">
-                    Add 
+                    Add
                 </Button>
             </Form.Item>
         </Form>

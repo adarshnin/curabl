@@ -16,7 +16,7 @@ router.post("/", async (req, res) => {
 
     console.log(data.instruments)
 
-    
+
     try {
         // Date = moment(Date);
         let clinic = new clinicmodeltemplate({
@@ -48,6 +48,34 @@ router.post("/", async (req, res) => {
         console.log("in catch", error);
         res.send(null);
     }
+
+});
+
+router.post("/getall", async (req, res) => {
+    console.log("in get clinic")
+
+    var data = req.body;
+    console.log("Data - ", data);
+
+    try {
+        clinicmodeltemplate.find({}).exec((err, data) => {
+            if (err) {
+                res.send("Errors");
+                console.log(err);
+            }
+            else {
+                console.log("clinic data = ", data);
+
+                res.send(data);
+            }
+        });
+
+    } catch (error) {
+        res.send(error);
+    }
+
+
+
 
 });
 
