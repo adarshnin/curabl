@@ -359,7 +359,7 @@ function Header({
               </a>
             </Dropdown>
           </Badge> */}
-
+          
           <Button type="link" onClick={showDrawer}>
             {logsetting}
           </Button>
@@ -370,6 +370,7 @@ function Header({
           >
             {toggler}
           </Button>
+          <div id="google_translate_element"></div>
 
           <Drawer
             className="settings-drawer"

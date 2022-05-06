@@ -1,6 +1,6 @@
 
 import React, { Component } from "react";
-import { Switch, Route, Redirect,  } from "react-router-dom";
+import { Switch, Route, Redirect, } from "react-router-dom";
 import EditProfile from "./pages/EditProfile";
 import Home from "./pages/Home";
 
@@ -35,13 +35,12 @@ import AddInstructor from "./pages/AddInstructor"
 
 
 
-
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      currentUser: null
+      currentUser: null,
     };
   }
 
@@ -61,57 +60,54 @@ class App extends Component {
     const { currentUser } = this.state;
     return (
       <div className="App">
-        {/* <Router history={history}> */}
-        <Switch>
-          <Route path="/sign-up" exact component={SignUp} />
-          <Route path="/sign-in" exact component={SignIn} />
-          <Route path="/adminSignin" exact component={AdminSignIn} />
+          {/* <Router history={history}> */}
+          <Switch>
+            <Route path="/sign-up" exact component={SignUp} />
+            <Route path="/sign-in" exact component={SignIn} />
+            <Route path="/adminSignin" exact component={AdminSignIn} />
 
-          {/* <Route path="/" exact component={SignIn} /> */}
-          <Main>
-            <ProtectedDoctorRoute exact path="/dashboard" component={Home} />
-            <ProtectedDoctorRoute exact path="/payment" component={Payment} />
-            <ProtectedDoctorRoute exact path="/payments" component={Payments} />
-            <ProtectedDoctorRoute exact path="/appointment" component={Appointment} />
-            <ProtectedDoctorRoute exact path="/scheduling" component={Scheduling} />
-            <ProtectedDoctorRoute exact path="/Prescription" component={Prescription} />
-            {/* <ProtectedDoctorRoute exact path="/MedicalGraphs" component={MedicalGraphs} /> */}
-            <ProtectedDoctorRoute exact path="/myappointments" component={myAppointments} />
-            <ProtectedDoctorRoute exact path="/call" component={Tabs} />
-            <ProtectedDoctorRoute exact path="/profile" component={Profile} />
-            <ProtectedDoctorRoute exact path="/editprofile" component={EditProfile} />
-            <ProtectedDoctorRoute exact path="/chat" component={RocketChat} />            
-            <ProtectedDoctorRoute exact path="/searchresult" component={SearchedProfile} />
-
-
-            <ProtectedPatientRoute exact path="/dashboard" component={Home} />
-            <ProtectedPatientRoute exact path="/payment" component={Payment} />
-            <ProtectedPatientRoute exact path="/payments" component={Payments} />
-            <ProtectedPatientRoute exact path="/appointment" component={Appointment} />
-            {/* <ProtectedPatientRoute exact path="/MedicalGraphs" component={MedicalGraphs} /> */}
-            <ProtectedPatientRoute exact path="/myappointments" component={myAppointments} />
-            <ProtectedPatientRoute exact path="/call" component={Tabs} />
-            <ProtectedPatientRoute exact path="/profile" component={Profile} />
-            <ProtectedPatientRoute exact path="/editprofile" component={EditProfile} />
-            <ProtectedPatientRoute exact path="/chat" component={RocketChat} />
-            <ProtectedPatientRoute exact path="/searchresult" component={SearchedProfile} />
-
-            <ProtectedRoute exact path="/log-out" component={logout} />
-            <ProtectedAdminRoute exact path="/adminDashboard" component={AdminDashboard} />
-            <ProtectedAdminRoute exact path="/addClinic" component={AddClinic} />
-            <ProtectedAdminRoute exact path="/addInst" component={AddInstructor} />
-            
-            
+            {/* <Route path="/" exact component={SignIn} /> */}
+            <Main>
+              <ProtectedDoctorRoute exact path="/dashboard" component={Home} />
+              <ProtectedDoctorRoute exact path="/payment" component={Payment} />
+              <ProtectedDoctorRoute exact path="/payments" component={Payments} />
+              <ProtectedDoctorRoute exact path="/appointment" component={Appointment} />
+              <ProtectedDoctorRoute exact path="/scheduling" component={Scheduling} />
+              <ProtectedDoctorRoute exact path="/Prescription" component={Prescription} />
+              {/* <ProtectedDoctorRoute exact path="/MedicalGraphs" component={MedicalGraphs} /> */}
+              <ProtectedDoctorRoute exact path="/myappointments" component={myAppointments} />
+              <ProtectedDoctorRoute exact path="/call" component={Tabs} />
+              <ProtectedDoctorRoute exact path="/profile" component={Profile} />
+              <ProtectedDoctorRoute exact path="/editprofile" component={EditProfile} />
+              <ProtectedDoctorRoute exact path="/chat" component={RocketChat} />
+              <ProtectedDoctorRoute exact path="/searchresult" component={SearchedProfile} />
 
 
-            {/* <Toolbar> */}
-            {/* <ProtectedRoute exact path="/call" component={TabToolbar} /> */}
-            {/* </Toolbar> */}
-            {/* <Redirect from="*" to="/dashboard" /> */}
-            {/* <Redirect path="*" component={() => "404 NOT FOUND"} /> */}
-          </Main>
-        </Switch>
-        {/* </Router> */}
+              <ProtectedPatientRoute exact path="/dashboard" component={Home} />
+              <ProtectedPatientRoute exact path="/payment" component={Payment} />
+              <ProtectedPatientRoute exact path="/payments" component={Payments} />
+              <ProtectedPatientRoute exact path="/appointment" component={Appointment} />
+              {/* <ProtectedPatientRoute exact path="/MedicalGraphs" component={MedicalGraphs} /> */}
+              <ProtectedPatientRoute exact path="/myappointments" component={myAppointments} />
+              <ProtectedPatientRoute exact path="/call" component={Tabs} />
+              <ProtectedPatientRoute exact path="/profile" component={Profile} />
+              <ProtectedPatientRoute exact path="/editprofile" component={EditProfile} />
+              <ProtectedPatientRoute exact path="/chat" component={RocketChat} />
+              <ProtectedPatientRoute exact path="/searchresult" component={SearchedProfile} />
+
+              <ProtectedRoute exact path="/log-out" component={logout} />
+              <ProtectedAdminRoute exact path="/adminDashboard" component={AdminDashboard} />
+              <ProtectedAdminRoute exact path="/addClinic" component={AddClinic} />
+              <ProtectedAdminRoute exact path="/addInst" component={AddInstructor} />
+
+              {/* <Toolbar> */}
+              {/* <ProtectedRoute exact path="/call" component={TabToolbar} /> */}
+              {/* </Toolbar> */}
+              {/* <Redirect from="*" to="/dashboard" /> */}
+              {/* <Redirect path="*" component={() => "404 NOT FOUND"} /> */}
+            </Main>
+          </Switch>
+          {/* </Router> */}
       </div>
     );
   }
