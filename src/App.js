@@ -1,5 +1,5 @@
 
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import { Switch, Route, Redirect,  } from "react-router-dom";
 import EditProfile from "./pages/EditProfile";
 import Home from "./pages/Home";
@@ -8,7 +8,7 @@ import Payment from "./pages/Payment";
 import Payments from "./pages/Payments";
 import Appointment from "./pages/Appointment";
 import Scheduling from "./pages/Scheduling";
-import myAppointments from "./pages/myAppointments"
+import myAppointments from "./pages/myAppointments";
 import Profile from "./pages/Profile";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
@@ -32,8 +32,11 @@ import { history } from './helper/history';
 import { authenticationService } from './services/authservice';
 import SearchedProfile from "./pages/SearchedProfile";
 import AddInstructor from "./pages/AddInstructor"
+import { Widget, addResponseMessage  } from 'react-chat-widget';
 
+import 'react-chat-widget/lib/styles.css';
 
+import logo from './assets/images/logo.png'
 
 
 class App extends Component {
@@ -47,6 +50,8 @@ class App extends Component {
 
   componentDidMount() {
     authenticationService.currentUser.subscribe(x => this.setState({ currentUser: x }));
+    addResponseMessage('Hello, please enter your symptoms');
+
   }
   // componentWillUnmount(){
   //   authenticationService.currentUser.
@@ -59,9 +64,23 @@ class App extends Component {
 
   render() {
     const { currentUser } = this.state;
+    const handleNewUserMessage = (newMessage) => {
+      console.log(`New message incoming! ${newMessage}`);
+      // Now send the message throught the backend API
+      addResponseMessage("You might be suffering from Typhoid fever.");
+      addResponseMessage("Please consult our doctors to get thorough examination and consultation.");
+      
+    };
+
     return (
       <div className="App">
         {/* <Router history={history}> */}
+        <Widget 
+                handleNewUserMessage={handleNewUserMessage}
+                title = "Chat"
+                subtitle = "Disease prediction in an instant......."
+        />
+
         <Switch>
           <Route path="/sign-up" exact component={SignUp} />
           <Route path="/sign-in" exact component={SignIn} />
